@@ -31,6 +31,7 @@ jobs:
         with:
           personal_token: ${{ secrets.GH_DEPLOY_TOKEN }}
           external_repository: YutangShi/YutangShi.github.io
-          publish_branch: main
+          publish_branch: gh-pages
           publish_dir: ./public
+
 
