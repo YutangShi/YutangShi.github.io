@@ -1,7 +1,36 @@
-- name: Deploy to GitHub Pages
-  uses: peaceiris/actions-gh-pages@v3
-  with:
-    personal_token: ${{ secrets.GH_DEPLOY_TOKEN }}
-    external_repository: YutangShi/YutangShi.github.io
-    publish_branch: main
-    publish_dir: ./public
+name: Deploy Hexo site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate static files
+        run: npx hexo generate
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GH_DEPLOY_TOKEN }}  # ✅ 正確寫法
+          external_repository: YutangShi/YutangShi.github.io  # ✅ 必加！因為目標是不同 repo
+          publish_branch: gh-pages
+          publish_dir: ./public
+
