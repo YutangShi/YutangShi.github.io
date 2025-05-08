@@ -103,5 +103,5 @@ theme: stellar
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/YutangShi/YutangShi.github.io.git
+  repo: git@github.com:YutangShi/YutangShi.github.io.git
   branch: gh-pages
