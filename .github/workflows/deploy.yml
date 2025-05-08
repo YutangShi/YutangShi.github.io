@@ -26,6 +26,9 @@ jobs:
 
       - name: Generate static files
         run: npx hexo generate
+        
+      - name: List installed packages
+        run: npm list hexo-deployer-git
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
