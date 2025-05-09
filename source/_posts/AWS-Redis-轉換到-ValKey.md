@@ -104,7 +104,7 @@ Valkey 是一個由 Linux Foundation 支持的 Redis 開源分支，它提供與
 
 ## 1. 新建立 Valkey 環境
 
-![AWS Valkey](valkey.png)
+![AWS Valkey](/images/valkey.png)
 
 ## 2. AWS 提供了從自我託管的 Redis OSS 遷移到 ElastiCache for Valkey 的線上遷移功能，以下是遷移步驟：
 
