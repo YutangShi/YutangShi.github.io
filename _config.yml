@@ -8,7 +8,10 @@ subtitle: ''
 description: ''
 keywords:
 author: AllenShi
-language: zh-TW
+language:
+  - zh-TW
+  - en
+  - zh-CN
 timezone: 'Asia/Taipei'
 
 # URL
