@@ -31,18 +31,21 @@ jobs:
           node-version: 18.20.8
           cache: 'npm'
           
+      - name: 列出目錄結構
+        run: |
+          pwd
+          ls -la
+          
       - name: 安裝依賴
-        working-directory: ./absolute-antimatter
         run: npm ci
         
       - name: 構建網站
-        working-directory: ./absolute-antimatter
         run: npm run build
         
       - name: 上傳頁面
         uses: actions/upload-pages-artifact@v3
         with:
-          path: absolute-antimatter/dist
+          path: ./dist
 
   deploy:
     environment:
