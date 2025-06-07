@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="800" height="400" fill="#E8F5E9"/>
+  
+  <!-- 圓圈設計 -->
+  <circle cx="400" cy="200" r="160" fill="#81C784" fill-opacity="0.2" stroke="#4CAF50" stroke-width="3"/>
+  <circle cx="400" cy="200" r="120" fill="#4DB6AC" fill-opacity="0.2" stroke="#009688" stroke-width="3"/>
+  <circle cx="400" cy="200" r="80" fill="#4FC3F7" fill-opacity="0.2" stroke="#03A9F4" stroke-width="3"/>
+  
+  <!-- 中心圖標 -->
+  <circle cx="400" cy="200" r="40" fill="#03A9F4" fill-opacity="0.7"/>
+  
+  <!-- 連接線 -->
+  <line x1="400" y1="80" x2="400" y2="160" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="520" y1="200" x2="440" y2="200" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="400" y1="320" x2="400" y2="240" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="280" y1="200" x2="360" y2="200" stroke="#4CAF50" stroke-width="3"/>
+  
+  <!-- 四個健康元素圖標 -->
+  <circle cx="400" cy="80" r="25" fill="#4CAF50" fill-opacity="0.9"/>
+  <text x="400" y="85" font-family="Arial" font-size="24" fill="white" text-anchor="middle">🍃</text>
+  
+  <circle cx="520" cy="200" r="25" fill="#009688" fill-opacity="0.9"/>
+  <text x="520" y="205" font-family="Arial" font-size="24" fill="white" text-anchor="middle">💧</text>
+  
+  <circle cx="400" cy="320" r="25" fill="#03A9F4" fill-opacity="0.9"/>
+  <text x="400" y="325" font-family="Arial" font-size="24" fill="white" text-anchor="middle">🧘</text>
+  
+  <circle cx="280" cy="200" r="25" fill="#4DB6AC" fill-opacity="0.9"/>
+  <text x="280" y="205" font-family="Arial" font-size="24" fill="white" text-anchor="middle">❤️</text>
+  
+  <!-- 文字 -->
+  <text x="400" y="200" font-family="Arial" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Circle</text>
+  <text x="400" y="225" font-family="Arial" font-size="20" font-weight="bold" fill="white" text-anchor="middle">We Life</text>
+</svg> 

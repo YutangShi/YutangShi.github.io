@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-TW"> <head><meta charset="UTF-8"><meta name="description" content="深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.9.0"><!-- Canonical URL --><link rel="canonical" href="https://yutangshi.github.io/blog/react-hooks-guide/"><!-- Primary Meta Tags --><title>React Hooks 完整指南：從基礎到進階 - Allen 技術微光</title><meta name="title" content="React Hooks 完整指南：從基礎到進階 - Allen 技術微光"><meta name="description" content="深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。"><meta name="author" content="Allen 技術微光"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://yutangshi.github.io/blog/react-hooks-guide/"><meta property="og:title" content="React Hooks 完整指南：從基礎到進階 - Allen 技術微光"><meta property="og:description" content="深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。"><meta property="og:image" content="https://yutangshi.github.io/images/blog/react-hooks.svg"><meta property="og:site_name" content="Allen - Senior SRE &#38; 軟體工程師"><meta property="og:locale" content="zh-TW"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://yutangshi.github.io/blog/react-hooks-guide/"><meta property="twitter:title" content="React Hooks 完整指南：從基礎到進階 - Allen 技術微光"><meta property="twitter:description" content="深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。"><meta property="twitter:image" content="https://yutangshi.github.io/images/blog/react-hooks.svg"><meta property="twitter:creator" content="@allenshi"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="Allen - Senior SRE &#38; 軟體工程師" href="/rss.xml"><!-- Sitemap --><link rel="sitemap" href="/sitemap-index.xml"><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_slug_.CFV4D7ZX.css">
+<link rel="stylesheet" href="/_astro/about.DN_3frF7.css"></head> <body>  <header class="header" data-astro-cid-3ef6ksr2> <div class="container" data-astro-cid-3ef6ksr2> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/" class="logo" data-astro-cid-3ef6ksr2> <span class="logo-text" data-astro-cid-3ef6ksr2>Allen 技術微光</span> </a> <div class="nav-links" data-astro-cid-3ef6ksr2> <a href="/" class="nav-link " data-astro-cid-3ef6ksr2> 首頁 </a><a href="/blog" class="nav-link " data-astro-cid-3ef6ksr2> 部落格 </a><a href="/portfolio" class="nav-link " data-astro-cid-3ef6ksr2> 作品集 </a><a href="/about" class="nav-link " data-astro-cid-3ef6ksr2> 關於我 </a><a href="/contact" class="nav-link " data-astro-cid-3ef6ksr2> 聯絡我 </a><a href="/services" class="nav-link " data-astro-cid-3ef6ksr2> 服務項目 </a> </div> <button class="mobile-menu-toggle" aria-label="開啟選單" data-astro-cid-3ef6ksr2> <span data-astro-cid-3ef6ksr2></span> <span data-astro-cid-3ef6ksr2></span> <span data-astro-cid-3ef6ksr2></span> </button> </nav> </div> </header>  <script type="module">document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".mobile-menu-toggle"),t=document.querySelector(".nav-links");e&&t&&e.addEventListener("click",()=>{t.classList.toggle("mobile-open"),e.classList.toggle("active")})});</script>  <main data-astro-cid-ouamjn2i>  <article class="blog-post" data-astro-cid-7jjqptxk> <div class="container" data-astro-cid-7jjqptxk> <!-- Post Header --> <header class="post-header" data-astro-cid-7jjqptxk> <div class="post-meta" data-astro-cid-7jjqptxk> <span class="post-category" data-astro-cid-7jjqptxk>前端開發</span> <span class="post-reading-time" data-astro-cid-7jjqptxk>6 分鐘閱讀</span> </div> <h1 class="post-title" data-astro-cid-7jjqptxk>React Hooks 完整指南：從基礎到進階</h1> <p class="post-description" data-astro-cid-7jjqptxk>深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。</p> <div class="post-info" data-astro-cid-7jjqptxk> <div class="post-author" data-astro-cid-7jjqptxk> <span data-astro-cid-7jjqptxk>作者：您的姓名</span> </div> <div class="post-dates" data-astro-cid-7jjqptxk> <time datetime="2024-01-15T00:00:00.000Z" data-astro-cid-7jjqptxk>
+發布於 2024年1月15日 </time>  </div> </div> <div class="post-tags" data-astro-cid-7jjqptxk> <a href="/blog/tag/React" class="tag" data-astro-cid-7jjqptxk>#React</a><a href="/blog/tag/JavaScript" class="tag" data-astro-cid-7jjqptxk>#JavaScript</a><a href="/blog/tag/Hooks" class="tag" data-astro-cid-7jjqptxk>#Hooks</a> </div> </header> <!-- Hero Image --> <div class="post-hero" data-astro-cid-7jjqptxk> <img src="/images/blog/react-hooks.svg" alt="React Hooks 完整指南：從基礎到進階" data-astro-cid-7jjqptxk> </div> <!-- Post Content --> <div class="post-container" data-astro-cid-7jjqptxk> <aside class="table-of-contents" data-astro-cid-7jjqptxk> <h3 data-astro-cid-7jjqptxk>目錄</h3> <nav data-astro-cid-7jjqptxk> <ul data-astro-cid-7jjqptxk> <li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#什麼是-react-hooks" data-astro-cid-7jjqptxk>什麼是 React Hooks？</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#hooks-的優勢" data-astro-cid-7jjqptxk>Hooks 的優勢</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#基礎-hooks" data-astro-cid-7jjqptxk>基礎 Hooks</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#usestate---狀態管理" data-astro-cid-7jjqptxk>useState - 狀態管理</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#useeffect---副作用處理" data-astro-cid-7jjqptxk>useEffect - 副作用處理</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#usecontext---上下文管理" data-astro-cid-7jjqptxk>useContext - 上下文管理</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#進階-hooks" data-astro-cid-7jjqptxk>進階 Hooks</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#usereducer---複雜狀態管理" data-astro-cid-7jjqptxk>useReducer - 複雜狀態管理</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#usememo---性能優化" data-astro-cid-7jjqptxk>useMemo - 性能優化</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#usecallback---函數緩存" data-astro-cid-7jjqptxk>useCallback - 函數緩存</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#自定義-hooks" data-astro-cid-7jjqptxk>自定義 Hooks</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#uselocalstorage---本地存儲-hook" data-astro-cid-7jjqptxk>useLocalStorage - 本地存儲 Hook</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#usefetch---數據獲取-hook" data-astro-cid-7jjqptxk>useFetch - 數據獲取 Hook</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#hooks-使用規則" data-astro-cid-7jjqptxk>Hooks 使用規則</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#最佳實踐" data-astro-cid-7jjqptxk>最佳實踐</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#1-合理使用依賴數組" data-astro-cid-7jjqptxk>1. 合理使用依賴數組</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#2-避免過度優化" data-astro-cid-7jjqptxk>2. 避免過度優化</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#3-合理拆分狀態" data-astro-cid-7jjqptxk>3. 合理拆分狀態</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#總結" data-astro-cid-7jjqptxk>總結</a> </li> </ul> </nav> </aside> <div class="post-content prose" data-astro-cid-7jjqptxk> <p>React Hooks 自 React 16.8 版本引入以來，徹底改變了我們編寫 React 組件的方式。它讓我們能夠在函數組件中使用狀態和其他 React 特性，使代碼更加簡潔和易於理解。</p>
+<h2 id="什麼是-react-hooks">什麼是 React Hooks？</h2>
+<p>Hooks 是一些特殊的函數，讓你能夠在函數組件中「掛鉤」到 React 的特性。它們的名稱都以 <code>use</code> 開頭，這是一個重要的約定。</p>
+<h3 id="hooks-的優勢">Hooks 的優勢</h3>
+<ol>
+<li><strong>更簡潔的代碼</strong>：減少了類組件的樣板代碼</li>
+<li><strong>更好的邏輯重用</strong>：通過自定義 Hooks 實現邏輯共享</li>
+<li><strong>更容易測試</strong>：函數組件更容易進行單元測試</li>
+<li><strong>更好的性能</strong>：避免了類組件的一些性能問題</li>
+</ol>
+<h2 id="基礎-hooks">基礎 Hooks</h2>
+<h3 id="usestate---狀態管理">useState - 狀態管理</h3>
+<p><code>useState</code> 是最常用的 Hook，用於在函數組件中添加狀態。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React, { useState } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> Counter</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">count</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setCount</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>你點擊了 {count} 次&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> setCount</span><span style="color:#E1E4E8">(count </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">)}></span></span>
+<span class="line"><span style="color:#E1E4E8">        點擊我</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>重要提醒</strong>：</p>
+<ul>
+<li>狀態更新是異步的</li>
+<li>如果新狀態依賴於前一個狀態，使用函數形式：<code>setCount(prev => prev + 1)</code></li>
+</ul>
+<h3 id="useeffect---副作用處理">useEffect - 副作用處理</h3>
+<p><code>useEffect</code> 用於處理副作用，如 API 調用、訂閱、手動 DOM 操作等。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React, { useState, useEffect } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> UserProfile</span><span style="color:#E1E4E8">({ </span><span style="color:#FFAB70">userId</span><span style="color:#E1E4E8"> }) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">user</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setUser</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">loading</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setLoading</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  useEffect</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    async</span><span style="color:#F97583"> function</span><span style="color:#B392F0"> fetchUser</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#B392F0">      setLoading</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">      try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">        const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> fetch</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`/api/users/${</span><span style="color:#E1E4E8">userId</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">        const</span><span style="color:#79B8FF"> userData</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> response.</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#B392F0">        setUser</span><span style="color:#E1E4E8">(userData);</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">        console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'獲取用戶資料失敗:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">finally</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        setLoading</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    fetchUser</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [userId]); </span><span style="color:#6A737D">// 依賴數組</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (loading) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>載入中...&#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>;</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">user) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>找不到用戶&#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">h1</span><span style="color:#E1E4E8">>{user.name}&#x3C;/</span><span style="color:#85E89D">h1</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>{user.email}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>useEffect 的清理機制</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">useEffect</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> timer</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> setInterval</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'定時器執行'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 清理函數</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    clearInterval</span><span style="color:#E1E4E8">(timer);</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"><span style="color:#E1E4E8">}, []);</span></span></code></pre>
+<h3 id="usecontext---上下文管理">useContext - 上下文管理</h3>
+<p><code>useContext</code> 讓你能夠訂閱 React 上下文的變化。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React, { createContext, useContext, useState } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 創建上下文</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> ThemeContext</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> createContext</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 提供者組件</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> ThemeProvider</span><span style="color:#E1E4E8">({ </span><span style="color:#FFAB70">children</span><span style="color:#E1E4E8"> }) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">theme</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setTheme</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'light'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#79B8FF">ThemeContext.Provider</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{ theme, setTheme }}></span></span>
+<span class="line"><span style="color:#E1E4E8">      {children}</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#79B8FF">ThemeContext.Provider</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 使用上下文的組件</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> ThemedButton</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">theme</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setTheme</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useContext</span><span style="color:#E1E4E8">(ThemeContext);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">button</span></span>
+<span class="line"><span style="color:#B392F0">      style</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{</span></span>
+<span class="line"><span style="color:#E1E4E8">        backgroundColor: theme </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'light'</span><span style="color:#F97583"> ?</span><span style="color:#9ECBFF"> '#fff'</span><span style="color:#F97583"> :</span><span style="color:#9ECBFF"> '#333'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        color: theme </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'light'</span><span style="color:#F97583"> ?</span><span style="color:#9ECBFF"> '#333'</span><span style="color:#F97583"> :</span><span style="color:#9ECBFF"> '#fff'</span></span>
+<span class="line"><span style="color:#E1E4E8">      }}</span></span>
+<span class="line"><span style="color:#B392F0">      onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> setTheme</span><span style="color:#E1E4E8">(theme </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'light'</span><span style="color:#F97583"> ?</span><span style="color:#9ECBFF"> 'dark'</span><span style="color:#F97583"> :</span><span style="color:#9ECBFF"> 'light'</span><span style="color:#E1E4E8">)}</span></span>
+<span class="line"><span style="color:#E1E4E8">    ></span></span>
+<span class="line"><span style="color:#E1E4E8">      切換主題</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="進階-hooks">進階 Hooks</h2>
+<h3 id="usereducer---複雜狀態管理">useReducer - 複雜狀態管理</h3>
+<p>當狀態邏輯較為複雜時，<code>useReducer</code> 比 <code>useState</code> 更適合。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React, { useReducer } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> initialState</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  count: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  step: </span><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> reducer</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">action</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  switch</span><span style="color:#E1E4E8"> (action.type) {</span></span>
+<span class="line"><span style="color:#F97583">    case</span><span style="color:#9ECBFF"> 'increment'</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">state, count: state.count </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> state.step };</span></span>
+<span class="line"><span style="color:#F97583">    case</span><span style="color:#9ECBFF"> 'decrement'</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">state, count: state.count </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> state.step };</span></span>
+<span class="line"><span style="color:#F97583">    case</span><span style="color:#9ECBFF"> 'setStep'</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">state, step: action.payload };</span></span>
+<span class="line"><span style="color:#F97583">    case</span><span style="color:#9ECBFF"> 'reset'</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> initialState;</span></span>
+<span class="line"><span style="color:#F97583">    default</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'未知的 action 類型'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> Counter</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">state</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">dispatch</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useReducer</span><span style="color:#E1E4E8">(reducer, initialState);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>計數: {state.count}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>步長: {state.step}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> dispatch</span><span style="color:#E1E4E8">({ type: </span><span style="color:#9ECBFF">'increment'</span><span style="color:#E1E4E8"> })}></span></span>
+<span class="line"><span style="color:#E1E4E8">        增加</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> dispatch</span><span style="color:#E1E4E8">({ type: </span><span style="color:#9ECBFF">'decrement'</span><span style="color:#E1E4E8"> })}></span></span>
+<span class="line"><span style="color:#E1E4E8">        減少</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">        type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"number"</span></span>
+<span class="line"><span style="color:#B392F0">        value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{state.step}</span></span>
+<span class="line"><span style="color:#B392F0">        onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> dispatch</span><span style="color:#E1E4E8">({ </span></span>
+<span class="line"><span style="color:#E1E4E8">          type: </span><span style="color:#9ECBFF">'setStep'</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#E1E4E8">          payload: </span><span style="color:#B392F0">Number</span><span style="color:#E1E4E8">(e.target.value) </span></span>
+<span class="line"><span style="color:#E1E4E8">        })}</span></span>
+<span class="line"><span style="color:#E1E4E8">      /></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> dispatch</span><span style="color:#E1E4E8">({ type: </span><span style="color:#9ECBFF">'reset'</span><span style="color:#E1E4E8"> })}></span></span>
+<span class="line"><span style="color:#E1E4E8">        重置</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="usememo---性能優化">useMemo - 性能優化</h3>
+<p><code>useMemo</code> 用於緩存計算結果，避免不必要的重複計算。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React, { useState, useMemo } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> ExpensiveComponent</span><span style="color:#E1E4E8">({ </span><span style="color:#FFAB70">items</span><span style="color:#E1E4E8"> }) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">filter</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setFilter</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">''</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 只有當 items 或 filter 改變時才重新計算</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> filteredItems</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useMemo</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'重新計算過濾結果'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> items.</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">item</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#E1E4E8">      item.name.</span><span style="color:#B392F0">toLowerCase</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">includes</span><span style="color:#E1E4E8">(filter.</span><span style="color:#B392F0">toLowerCase</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#E1E4E8">    );</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [items, filter]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">        type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text"</span></span>
+<span class="line"><span style="color:#B392F0">        value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{filter}</span></span>
+<span class="line"><span style="color:#B392F0">        onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> setFilter</span><span style="color:#E1E4E8">(e.target.value)}</span></span>
+<span class="line"><span style="color:#B392F0">        placeholder</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"搜尋項目..."</span></span>
+<span class="line"><span style="color:#E1E4E8">      /></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">ul</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        {filteredItems.</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">item</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">li</span><span style="color:#B392F0"> key</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{item.id}>{item.name}&#x3C;/</span><span style="color:#85E89D">li</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        ))}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">ul</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="usecallback---函數緩存">useCallback - 函數緩存</h3>
+<p><code>useCallback</code> 用於緩存函數，避免子組件不必要的重新渲染。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React, { useState, useCallback, memo } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 子組件使用 memo 進行優化</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> ChildComponent</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> memo</span><span style="color:#E1E4E8">(({ </span><span style="color:#FFAB70">onClick</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8"> }) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`${</span><span style="color:#E1E4E8">name</span><span style="color:#9ECBFF">} 組件重新渲染`</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{onClick}>{name}&#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">>;</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> ParentComponent</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">count1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setCount1</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">count2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setCount2</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 使用 useCallback 緩存函數</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> handleClick1</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setCount1</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prev</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> prev </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, []);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> handleClick2</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setCount2</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prev</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> prev </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, []);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>Count1: {count1}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">>Count2: {count2}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#79B8FF">ChildComponent</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleClick1} </span><span style="color:#B392F0">name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"Button 1"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#79B8FF">ChildComponent</span><span style="color:#B392F0"> onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleClick2} </span><span style="color:#B392F0">name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"Button 2"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="自定義-hooks">自定義 Hooks</h2>
+<p>自定義 Hooks 讓你能夠提取組件邏輯到可重用的函數中。</p>
+<h3 id="uselocalstorage---本地存儲-hook">useLocalStorage - 本地存儲 Hook</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useState, useEffect } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> useLocalStorage</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">key</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">initialValue</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6A737D">  // 從 localStorage 獲取初始值</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">storedValue</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setStoredValue</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> item</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> window.localStorage.</span><span style="color:#B392F0">getItem</span><span style="color:#E1E4E8">(key);</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> item </span><span style="color:#F97583">?</span><span style="color:#79B8FF"> JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">parse</span><span style="color:#E1E4E8">(item) </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> initialValue;</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'讀取 localStorage 失敗:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> initialValue;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 更新 localStorage 的函數</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> setValue</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> valueToStore</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">instanceof</span><span style="color:#B392F0"> Function</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#F97583">        ?</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">(storedValue) </span></span>
+<span class="line"><span style="color:#F97583">        :</span><span style="color:#E1E4E8"> value;</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#B392F0">      setStoredValue</span><span style="color:#E1E4E8">(valueToStore);</span></span>
+<span class="line"><span style="color:#E1E4E8">      window.localStorage.</span><span style="color:#B392F0">setItem</span><span style="color:#E1E4E8">(key, </span><span style="color:#79B8FF">JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">stringify</span><span style="color:#E1E4E8">(valueToStore));</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'寫入 localStorage 失敗:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> [storedValue, setValue];</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 使用自定義 Hook</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> Settings</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">theme</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setTheme</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useLocalStorage</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'theme'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'light'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">language</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setLanguage</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useLocalStorage</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'language'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'zh-TW'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">select</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{theme} </span><span style="color:#B392F0">onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> setTheme</span><span style="color:#E1E4E8">(e.target.value)}></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"light"</span><span style="color:#E1E4E8">>淺色主題&#x3C;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"dark"</span><span style="color:#E1E4E8">>深色主題&#x3C;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">select</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">select</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{language} </span><span style="color:#B392F0">onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> setLanguage</span><span style="color:#E1E4E8">(e.target.value)}></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"zh-TW"</span><span style="color:#E1E4E8">>繁體中文&#x3C;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"en-US"</span><span style="color:#E1E4E8">>English&#x3C;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">select</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="usefetch---數據獲取-hook">useFetch - 數據獲取 Hook</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useState, useEffect } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> useFetch</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">url</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">data</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setData</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">loading</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setLoading</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">error</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setError</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  useEffect</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#B392F0"> fetchData</span><span style="color:#F97583"> =</span><span style="color:#F97583"> async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        setLoading</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">        setError</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#F97583">        const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> fetch</span><span style="color:#E1E4E8">(url);</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">response.ok) {</span></span>
+<span class="line"><span style="color:#F97583">          throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`HTTP error! status: ${</span><span style="color:#E1E4E8">response</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">status</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#F97583">        const</span><span style="color:#79B8FF"> result</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> response.</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#B392F0">        setData</span><span style="color:#E1E4E8">(result);</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (err) {</span></span>
+<span class="line"><span style="color:#B392F0">        setError</span><span style="color:#E1E4E8">(err.message);</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">finally</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        setLoading</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    fetchData</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [url]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> { data, loading, error };</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 使用自定義 Hook</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> UserList</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> { </span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">users</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">loading</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">error</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useFetch</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/users'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (loading) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>載入中...&#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>;</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (error) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>錯誤: {error}&#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">>;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">ul</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      {users?.</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">user</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">li</span><span style="color:#B392F0"> key</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{user.id}>{user.name}&#x3C;/</span><span style="color:#85E89D">li</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      ))}</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">ul</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="hooks-使用規則">Hooks 使用規則</h2>
+<ol>
+<li><strong>只在最頂層調用 Hooks</strong>：不要在循環、條件或嵌套函數中調用 Hooks</li>
+<li><strong>只在 React 函數中調用 Hooks</strong>：在 React 函數組件或自定義 Hooks 中調用</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ 錯誤：在條件語句中使用 Hook</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> BadComponent</span><span style="color:#E1E4E8">({ </span><span style="color:#FFAB70">condition</span><span style="color:#E1E4E8"> }) {</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (condition) {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">state</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setState</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">// 錯誤！</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#6A737D">  // ...</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ 正確：在頂層使用 Hook</span></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> GoodComponent</span><span style="color:#E1E4E8">({ </span><span style="color:#FFAB70">condition</span><span style="color:#E1E4E8"> }) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">state</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setState</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (condition) {</span></span>
+<span class="line"><span style="color:#6A737D">    // 在這裡使用 state</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#6A737D">  // ...</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="最佳實踐">最佳實踐</h2>
+<h3 id="1-合理使用依賴數組">1. 合理使用依賴數組</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ 缺少依賴</span></span>
+<span class="line"><span style="color:#B392F0">useEffect</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  fetchUser</span><span style="color:#E1E4E8">(userId);</span></span>
+<span class="line"><span style="color:#E1E4E8">}, []); </span><span style="color:#6A737D">// userId 變化時不會重新執行</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ 包含所有依賴</span></span>
+<span class="line"><span style="color:#B392F0">useEffect</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  fetchUser</span><span style="color:#E1E4E8">(userId);</span></span>
+<span class="line"><span style="color:#E1E4E8">}, [userId]);</span></span></code></pre>
+<h3 id="2-避免過度優化">2. 避免過度優化</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ 不必要的 useMemo</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> simpleValue</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useMemo</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> props.value </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, [props.value]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ 直接計算</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> simpleValue</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> props.value </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<h3 id="3-合理拆分狀態">3. 合理拆分狀態</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ 將不相關的狀態放在一起</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">state</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setState</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  user: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  posts: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">  theme: </span><span style="color:#9ECBFF">'light'</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ 分別管理不同的狀態</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">user</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setUser</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">posts</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setPosts</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">([]);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">theme</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setTheme</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'light'</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<h2 id="總結">總結</h2>
+<p>React Hooks 為函數組件帶來了強大的能力，讓我們能夠編寫更簡潔、更易維護的代碼。通過掌握基礎 Hooks 和進階 Hooks，以及學會創建自定義 Hooks，你將能夠更有效地開發 React 應用。</p>
+<p>記住，Hooks 的核心思想是讓邏輯重用變得更簡單，讓組件更專注於 UI 的呈現。在實際開發中，要根據具體需求選擇合適的 Hooks，避免過度設計和不必要的優化。</p>
+<p>希望這篇指南能幫助你更好地理解和使用 React Hooks！</p> </div> </div> <!-- Post Footer --> <footer class="post-footer" data-astro-cid-7jjqptxk> <div class="post-share" data-astro-cid-7jjqptxk> <h3 data-astro-cid-7jjqptxk>分享這篇文章</h3> <div class="share-buttons" data-astro-cid-7jjqptxk> <a href="https://twitter.com/intent/tweet?text=React%20Hooks%20%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97%EF%BC%9A%E5%BE%9E%E5%9F%BA%E7%A4%8E%E5%88%B0%E9%80%B2%E9%9A%8E&url=https%3A%2F%2Fyutangshi.github.io%2Fblog%2Freact-hooks-guide%2F" target="_blank" rel="noopener noreferrer" class="share-btn twitter" data-astro-cid-7jjqptxk>
+Twitter
+</a> <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyutangshi.github.io%2Fblog%2Freact-hooks-guide%2F" target="_blank" rel="noopener noreferrer" class="share-btn facebook" data-astro-cid-7jjqptxk>
+Facebook
+</a> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyutangshi.github.io%2Fblog%2Freact-hooks-guide%2F" target="_blank" rel="noopener noreferrer" class="share-btn linkedin" data-astro-cid-7jjqptxk>
+LinkedIn
+</a> <button class="share-btn copy-link" onclick="copyToClipboard()" data-astro-cid-7jjqptxk>
+複製連結
+</button> </div> </div> <!-- Navigation --> <nav class="post-navigation" data-astro-cid-7jjqptxk> <a href="/blog" class="back-to-blog" data-astro-cid-7jjqptxk>← 回到部落格</a> </nav> </footer> </div> </article>   </main> <footer class="footer" data-astro-cid-sz7xmlte> <div class="container" data-astro-cid-sz7xmlte> <div class="footer-content" data-astro-cid-sz7xmlte> <div class="footer-section" data-astro-cid-sz7xmlte> <h3 data-astro-cid-sz7xmlte>Allen 技術微光</h3> <p class="footer-description" data-astro-cid-sz7xmlte> 多年專業經驗的資深工程師，專精於 SRE、雲端架構、全端開發與 AI 技術研究 </p> </div> <div class="footer-section" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>快速連結</h4> <ul class="footer-links" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte> <a href="/" data-astro-cid-sz7xmlte>首頁</a> </li><li data-astro-cid-sz7xmlte> <a href="/blog" data-astro-cid-sz7xmlte>部落格</a> </li><li data-astro-cid-sz7xmlte> <a href="/portfolio" data-astro-cid-sz7xmlte>作品集</a> </li><li data-astro-cid-sz7xmlte> <a href="/about" data-astro-cid-sz7xmlte>關於我</a> </li><li data-astro-cid-sz7xmlte> <a href="/contact" data-astro-cid-sz7xmlte>聯絡我</a> </li><li data-astro-cid-sz7xmlte> <a href="/services" data-astro-cid-sz7xmlte>服務項目</a> </li> </ul> </div> <div class="footer-section" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>聯絡方式</h4> <div class="social-links" data-astro-cid-sz7xmlte> <a href="https://github.com/YutangShi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="https://twitter.com/allenshi" target="_blank" rel="noopener noreferrer" aria-label="Twitter" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="https://linkedin.com/in/allenshi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="mailto:yutangshi@gmail.com" aria-label="Email" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.91L12 10.09l9.455-6.269h.909c.904 0 1.636.732 1.636 1.636z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </div> </div> <div class="footer-bottom" data-astro-cid-sz7xmlte> <p data-astro-cid-sz7xmlte>&copy; 2025 Allen 技術微光. 版權所有。</p> <p data-astro-cid-sz7xmlte>
+使用 <a href="https://astro.build" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte>Astro</a> 建立
+</p> </div> </div> </footer>    </body> </html>   <script type="module">document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".table-of-contents a").forEach(t=>{t.addEventListener("click",n=>{n.preventDefault();const o=t.getAttribute("href").substring(1),e=document.getElementById(o);e&&e.scrollIntoView({behavior:"smooth",block:"start"})})})});</script>

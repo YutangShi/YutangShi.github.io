@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-TW"> <head><meta charset="UTF-8"><meta name="description" content="詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android 的完整設定流程和實作步驟。"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.9.0"><!-- Canonical URL --><link rel="canonical" href="https://yutangshi.github.io/blog/nativescript-firebase-push-notification/"><!-- Primary Meta Tags --><title>NativeScript 與 Firebase Push Notification 整合指南 - Allen 技術微光</title><meta name="title" content="NativeScript 與 Firebase Push Notification 整合指南 - Allen 技術微光"><meta name="description" content="詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android 的完整設定流程和實作步驟。"><meta name="author" content="Allen 技術微光"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://yutangshi.github.io/blog/nativescript-firebase-push-notification/"><meta property="og:title" content="NativeScript 與 Firebase Push Notification 整合指南 - Allen 技術微光"><meta property="og:description" content="詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android 的完整設定流程和實作步驟。"><meta property="og:image" content="https://yutangshi.github.io/images/blog/nativescript-firebase-push-notification.svg"><meta property="og:site_name" content="Allen - Senior SRE &#38; 軟體工程師"><meta property="og:locale" content="zh-TW"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://yutangshi.github.io/blog/nativescript-firebase-push-notification/"><meta property="twitter:title" content="NativeScript 與 Firebase Push Notification 整合指南 - Allen 技術微光"><meta property="twitter:description" content="詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android 的完整設定流程和實作步驟。"><meta property="twitter:image" content="https://yutangshi.github.io/images/blog/nativescript-firebase-push-notification.svg"><meta property="twitter:creator" content="@allenshi"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="Allen - Senior SRE &#38; 軟體工程師" href="/rss.xml"><!-- Sitemap --><link rel="sitemap" href="/sitemap-index.xml"><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_slug_.CFV4D7ZX.css">
+<link rel="stylesheet" href="/_astro/about.DN_3frF7.css"></head> <body>  <header class="header" data-astro-cid-3ef6ksr2> <div class="container" data-astro-cid-3ef6ksr2> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/" class="logo" data-astro-cid-3ef6ksr2> <span class="logo-text" data-astro-cid-3ef6ksr2>Allen 技術微光</span> </a> <div class="nav-links" data-astro-cid-3ef6ksr2> <a href="/" class="nav-link " data-astro-cid-3ef6ksr2> 首頁 </a><a href="/blog" class="nav-link " data-astro-cid-3ef6ksr2> 部落格 </a><a href="/portfolio" class="nav-link " data-astro-cid-3ef6ksr2> 作品集 </a><a href="/about" class="nav-link " data-astro-cid-3ef6ksr2> 關於我 </a><a href="/contact" class="nav-link " data-astro-cid-3ef6ksr2> 聯絡我 </a><a href="/services" class="nav-link " data-astro-cid-3ef6ksr2> 服務項目 </a> </div> <button class="mobile-menu-toggle" aria-label="開啟選單" data-astro-cid-3ef6ksr2> <span data-astro-cid-3ef6ksr2></span> <span data-astro-cid-3ef6ksr2></span> <span data-astro-cid-3ef6ksr2></span> </button> </nav> </div> </header>  <script type="module">document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".mobile-menu-toggle"),t=document.querySelector(".nav-links");e&&t&&e.addEventListener("click",()=>{t.classList.toggle("mobile-open"),e.classList.toggle("active")})});</script>  <main data-astro-cid-ouamjn2i>  <article class="blog-post" data-astro-cid-7jjqptxk> <div class="container" data-astro-cid-7jjqptxk> <!-- Post Header --> <header class="post-header" data-astro-cid-7jjqptxk> <div class="post-meta" data-astro-cid-7jjqptxk> <span class="post-category" data-astro-cid-7jjqptxk>移動開發</span> <span class="post-reading-time" data-astro-cid-7jjqptxk>3 分鐘閱讀</span> </div> <h1 class="post-title" data-astro-cid-7jjqptxk>NativeScript 與 Firebase Push Notification 整合指南</h1> <p class="post-description" data-astro-cid-7jjqptxk>詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android 的完整設定流程和實作步驟。</p> <div class="post-info" data-astro-cid-7jjqptxk> <div class="post-author" data-astro-cid-7jjqptxk> <span data-astro-cid-7jjqptxk>作者：Allen Shi</span> </div> <div class="post-dates" data-astro-cid-7jjqptxk> <time datetime="2021-06-13T00:00:00.000Z" data-astro-cid-7jjqptxk>
+發布於 2021年6月13日 </time> <time datetime="2024-12-05T00:00:00.000Z" data-astro-cid-7jjqptxk>
+更新於 2024年12月5日 </time> </div> </div> <div class="post-tags" data-astro-cid-7jjqptxk> <a href="/blog/tag/NativeScript" class="tag" data-astro-cid-7jjqptxk>#NativeScript</a><a href="/blog/tag/Firebase" class="tag" data-astro-cid-7jjqptxk>#Firebase</a><a href="/blog/tag/Push Notification" class="tag" data-astro-cid-7jjqptxk>#Push Notification</a><a href="/blog/tag/iOS" class="tag" data-astro-cid-7jjqptxk>#iOS</a><a href="/blog/tag/Android" class="tag" data-astro-cid-7jjqptxk>#Android</a><a href="/blog/tag/移動應用開發" class="tag" data-astro-cid-7jjqptxk>#移動應用開發</a> </div> </header> <!-- Hero Image --> <div class="post-hero" data-astro-cid-7jjqptxk> <img src="/images/blog/nativescript-firebase-push-notification.svg" alt="NativeScript 與 Firebase Push Notification 整合指南" data-astro-cid-7jjqptxk> </div> <!-- Post Content --> <div class="post-container" data-astro-cid-7jjqptxk> <aside class="table-of-contents" data-astro-cid-7jjqptxk> <h3 data-astro-cid-7jjqptxk>目錄</h3> <nav data-astro-cid-7jjqptxk> <ul data-astro-cid-7jjqptxk> <li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#前置作業" data-astro-cid-7jjqptxk>前置作業</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#ios-app-推播設定" data-astro-cid-7jjqptxk>iOS APP 推播設定</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#1-從-mac-上產生一個-csr-檔" data-astro-cid-7jjqptxk>1. 從 Mac 上產生一個 CSR 檔</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#2-上傳你的-csr-檔" data-astro-cid-7jjqptxk>2. 上傳你的 CSR 檔</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#3-準備-apns-認證" data-astro-cid-7jjqptxk>3. 準備 APNs 認證</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#4-設定-firebase-的推播設定" data-astro-cid-7jjqptxk>4. 設定 Firebase 的推播設定</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#建立-nativescript-demo-app" data-astro-cid-7jjqptxk>建立 NativeScript Demo App</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#41-安裝-firebase-套件" data-astro-cid-7jjqptxk>4.1 安裝 Firebase 套件</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#42-設定-ios-授權檔案" data-astro-cid-7jjqptxk>4.2 設定 iOS 授權檔案</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#43-放置-firebase-設定檔" data-astro-cid-7jjqptxk>4.3 放置 Firebase 設定檔</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#44-建立推播接收頁面" data-astro-cid-7jjqptxk>4.4 建立推播接收頁面</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#45-串接-firebase-推播功能" data-astro-cid-7jjqptxk>4.5 串接 Firebase 推播功能</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#46-在-xcode-專案中增加推播服務" data-astro-cid-7jjqptxk>4.6 在 Xcode 專案中增加推播服務</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#47-測試-ios-推播" data-astro-cid-7jjqptxk>4.7 測試 iOS 推播</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#測試-firebase-推播功能" data-astro-cid-7jjqptxk>測試 Firebase 推播功能</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#header-設定" data-astro-cid-7jjqptxk>Header 設定</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#請求內容" data-astro-cid-7jjqptxk>請求內容</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#android-推播流程" data-astro-cid-7jjqptxk>Android 推播流程</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#1-在-firebase-上申請-android-推播應用程式" data-astro-cid-7jjqptxk>1. 在 Firebase 上申請 Android 推播應用程式</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#2-下載並放置設定檔" data-astro-cid-7jjqptxk>2. 下載並放置設定檔</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#3-測試-android-推播" data-astro-cid-7jjqptxk>3. 測試 Android 推播</a> </li><li class="toc-level-2" data-astro-cid-7jjqptxk> <a href="#小結" data-astro-cid-7jjqptxk>小結</a> </li><li class="toc-level-3" data-astro-cid-7jjqptxk> <a href="#重點回顧" data-astro-cid-7jjqptxk>重點回顧</a> </li> </ul> </nav> </aside> <div class="post-content prose" data-astro-cid-7jjqptxk> <p>由於推播是增加與用戶的互動的一項重要功能，因此我們今天要來介紹 NativeScript 如何串接 Firebase Push Notification 機制，讓我們的 App 能夠收到推播通知。</p>
+<p>以下會分別由 iOS 與 Android 分別做介紹。</p>
+<h2 id="前置作業">前置作業</h2>
+<p>在開始實作之前，我們需要準備以下項目：</p>
+<ol>
+<li><strong>申請 Firebase 專案</strong></li>
+<li><strong>iOS 申請 Apple Developer Account</strong></li>
+<li><strong>NativeScript Plugin @nativescript/firebase</strong></li>
+</ol>
+<p>確保你已經安裝了 NativeScript 7 或更新版本，並且有基本的 NativeScript 開發環境。</p>
+<h2 id="ios-app-推播設定">iOS APP 推播設定</h2>
+<p>以下步驟會產生 iOS 憑證或 APNs 憑證的檔案，建議先建立空的資料夾統一放置，避免要上傳到 Firebase 或 iOS 平台時找不到了。</p>
+<blockquote>
+<p>💡 <strong>提示</strong>: 目前 Firebase 改用 p8 的 Key 來驗證了，這個方法更簡單且安全。</p>
+</blockquote>
+<h3 id="1-從-mac-上產生一個-csr-檔">1. 從 Mac 上產生一個 CSR 檔</h3>
+<ol>
+<li>按下 <code>cmd</code> + <code>space</code>，輸入 <strong>Keychain Access</strong>（金匙圈存取）</li>
+<li>從選單上再點選 <strong>Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority</strong></li>
+</ol>
+<p>填寫以下資訊：</p>
+<ul>
+<li><strong>Email</strong>: 你的開發者帳號 Email</li>
+<li><strong>Common Name</strong>: 要簽署 CSR 的名稱</li>
+<li>選擇<strong>儲存到磁碟</strong>再按下繼續</li>
+</ul>
+<p>最後會產生一份 <code>CertificateSigningRequest.certSigningRequest</code> CSR 檔案，待會需要上傳到 iOS 平台。</p>
+<h3 id="2-上傳你的-csr-檔">2. 上傳你的 CSR 檔</h3>
+<ol>
+<li>登入到 <a href="https://developer.apple.com/account/">Apple Developer Account</a></li>
+<li>從左側選擇 <strong>Certificates, IDs &#x26; Profiles</strong></li>
+<li>從 <strong>Certificates</strong> 點選新增進入下一步</li>
+</ol>
+<p>這邊依據開發狀況來申請，建議申請兩個：</p>
+<ul>
+<li><strong>開發時使用</strong> (Sandbox)</li>
+<li><strong>正式上線時使用</strong> (Sandbox &#x26; Production)</li>
+</ul>
+<p>步驟流程：</p>
+<ol>
+<li>選擇要申請憑證的 App</li>
+<li>上傳剛剛產生好的 CSR 檔案</li>
+<li>下載申請好的推播憑證</li>
+</ol>
+<h3 id="3-準備-apns-認證">3. 準備 APNs 認證</h3>
+<p>我們已經準備好 iOS 憑證，另外我們需要產生一份 APNs 認證 (Apple Push Notifications)，設定 Firebase 時會需要用到。</p>
+<ol>
+<li>將剛剛下載的 <code>aps_development.cer</code> 點擊兩下來加入到 Keychain Access</li>
+<li>在 KeyChain Access 的 <strong>My Certificates</strong> 會有一份剛剛加入的憑證：<code>Apple Development IOS Push Services:&#x3C;yourapp.bundle.id></code></li>
+<li>點選<strong>輸出</strong> Apple Development IOS Push Services</li>
+<li>可以輸入一組密碼保護這組 APNs，確認後會產生出 p12 檔案</li>
+</ol>
+<h3 id="4-設定-firebase-的推播設定">4. 設定 Firebase 的推播設定</h3>
+<ol>
+<li>建立一個推播專用的專案</li>
+<li>點選<strong>專案設定</strong>，再點選 <strong>iOS icon</strong> 來建立應用程式</li>
+<li>填寫 iOS App 相關資訊後繼續下一步</li>
+<li>將 <code>GoogleService-Info.plist</code> 下載放到安全的地方</li>
+</ol>
+<p><strong>重要設定</strong>：</p>
+<ul>
+<li>點選到<strong>雲端通訊</strong>，注意<strong>伺服器金鑰</strong>，這是發推播到 Firebase 需要的 key</li>
+<li>上傳 APNs 憑證，將剛剛匯出的 p12 檔案上傳到<strong>開發 APN 憑證中</strong></li>
+<li>發佈 App 前要記得將<strong>實作 APN 憑證</strong>也上傳，才能正常收到推播資訊</li>
+</ul>
+<h2 id="建立-nativescript-demo-app">建立 NativeScript Demo App</h2>
+<blockquote>
+<p>📝 <strong>注記</strong>: 目前版本是使用 NativeScript 7</p>
+</blockquote>
+<h3 id="41-安裝-firebase-套件">4.1 安裝 Firebase 套件</h3>
+<p>建立一個新的 NativeScript App 並安裝 <code>@nativescript/firebase</code> 推播套件：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">ns</span><span style="color:#9ECBFF"> plugin</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> @nativescript/firebase</span></span></code></pre>
+<p>安裝的時候可以選擇自己需要哪些 Firebase 套件，選擇 Y 就可以。</p>
+<h3 id="42-設定-ios-授權檔案">4.2 設定 iOS 授權檔案</h3>
+<p>新建立一份 <code>demoapp.entitlements</code> 檔案到 <code>App_Resources -> iOS</code> 下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#E1E4E8">&#x3C;?</span><span style="color:#85E89D">xml</span><span style="color:#B392F0"> version</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"1.0"</span><span style="color:#B392F0"> encoding</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"UTF-8"</span><span style="color:#E1E4E8">?></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;!</span><span style="color:#F97583">DOCTYPE</span><span style="color:#79B8FF"> plist</span><span style="color:#E1E4E8"> PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">plist</span><span style="color:#B392F0"> version</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"1.0"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  &#x3C;</span><span style="color:#85E89D">dict</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">>aps-environment&#x3C;/</span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">string</span><span style="color:#E1E4E8">>development&#x3C;/</span><span style="color:#85E89D">string</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  &#x3C;/</span><span style="color:#85E89D">dict</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">plist</span><span style="color:#E1E4E8">></span></span></code></pre>
+<p>並從 <code>App_Resources -> iOS -> build.xcconfig</code> 設定參數：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>CODE_SIGN_ENTITLEMENTS = demoapp/demoapp.entitlements</span></span></code></pre>
+<h3 id="43-放置-firebase-設定檔">4.3 放置 Firebase 設定檔</h3>
+<p>將 <code>GoogleService-Info.plist</code> 檔案，放置到專案的 <code>App_Resources -> iOS</code> 下。</p>
+<h3 id="44-建立推播接收頁面">4.4 建立推播接收頁面</h3>
+<p>建立一個 <code>main-page.xml</code> 頁面接收推播：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">Page</span><span style="color:#B392F0"> xmlns</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"http://schemas.nativescript.org/tns.xsd"</span><span style="color:#B392F0"> navigatingTo</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"onNavigatingTo"</span><span style="color:#E1E4E8">>  </span></span>
+<span class="line"><span style="color:#E1E4E8">   &#x3C;</span><span style="color:#85E89D">StackLayout</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">>     </span></span>
+<span class="line"><span style="color:#E1E4E8">     &#x3C;</span><span style="color:#85E89D">Label</span><span style="color:#B392F0"> text</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"Demo App"</span><span style="color:#E1E4E8"> />  </span></span>
+<span class="line"><span style="color:#E1E4E8">   &#x3C;/</span><span style="color:#85E89D">StackLayout</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">Page</span><span style="color:#E1E4E8">></span></span></code></pre>
+<h3 id="45-串接-firebase-推播功能">4.5 串接 Firebase 推播功能</h3>
+<p>在 <code>main-page.js</code> 中實作 Firebase 推播：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> firebase</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"@nativescript/firebase"</span><span style="color:#E1E4E8">).firebase;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> onNavigatingTo</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">  firebase.</span><span style="color:#B392F0">init</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    showNotifications: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    showNotificationsWhenInForeground: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    onPushTokenReceivedCallback</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">token</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'[Firebase] onPushTokenReceivedCallback:'</span><span style="color:#E1E4E8">, { token });</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#B392F0">    onMessageReceivedCallback</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">message</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (message.body) {  </span></span>
+<span class="line"><span style="color:#E1E4E8">        dialogs.</span><span style="color:#B392F0">alert</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">          title: </span><span style="color:#9ECBFF">"通知"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          message: message.body,</span></span>
+<span class="line"><span style="color:#E1E4E8">          okButtonText: </span><span style="color:#9ECBFF">"確定"</span></span>
+<span class="line"><span style="color:#E1E4E8">        });</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'[Firebase] onMessageReceivedCallback:'</span><span style="color:#E1E4E8">, { message });</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }).</span><span style="color:#B392F0">then</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {  </span></span>
+<span class="line"><span style="color:#E1E4E8">    console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'[Firebase] Initialized'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }).</span><span style="color:#B392F0">catch</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">error</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {  </span></span>
+<span class="line"><span style="color:#E1E4E8">    console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'[Firebase] Initialize'</span><span style="color:#E1E4E8">, { error });</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">exports</span><span style="color:#E1E4E8">.onNavigatingTo </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> onNavigatingTo;</span></span></code></pre>
+<h3 id="46-在-xcode-專案中增加推播服務">4.6 在 Xcode 專案中增加推播服務</h3>
+<ol>
+<li>在專案中找到 <code>platform -> ios -> yourapp.xcworkspace</code> 並打開</li>
+<li>找到 <strong>Capability</strong> 中查詢 notification</li>
+<li>將 <strong>Push Notification</strong> 服務加入到 App 中</li>
+</ol>
+<h3 id="47-測試-ios-推播">4.7 測試 iOS 推播</h3>
+<p>執行以下命令啟動 App：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">ns</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> ios</span></span></code></pre>
+<p>從 log 有看到 token 的話，就代表有將裝置成功與 Firebase 註冊成功，可以開始接收推播資訊。</p>
+<h2 id="測試-firebase-推播功能">測試 Firebase 推播功能</h2>
+<p>你可以使用 Postman 或其他 API 測試工具來測試推播功能：</p>
+<h3 id="header-設定">Header 設定</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Authorization: key={Firebase_伺服器金鑰}</span></span>
+<span class="line"><span>Content-Type: application/json</span></span></code></pre>
+<h3 id="請求內容">請求內容</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{  </span></span>
+<span class="line"><span style="color:#79B8FF">  "notification"</span><span style="color:#E1E4E8">: {  </span></span>
+<span class="line"><span style="color:#79B8FF">    "title"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"推播通知"</span><span style="color:#E1E4E8">,  </span></span>
+<span class="line"><span style="color:#79B8FF">    "text"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"今天天氣好"</span><span style="color:#E1E4E8">,  </span></span>
+<span class="line"><span style="color:#79B8FF">    "sound"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"default"</span></span>
+<span class="line"><span style="color:#E1E4E8">  },  </span></span>
+<span class="line"><span style="color:#79B8FF">  "priority"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"High"</span><span style="color:#E1E4E8">,  </span></span>
+<span class="line"><span style="color:#79B8FF">  "to"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"{device_token}"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>到這邊就可以順利的發送與接收推播資訊。iOS 申請的過程步驟有點長，若沒有收到的話，可以再稍微檢查是否有步驟遺漏了。</p>
+<h2 id="android-推播流程">Android 推播流程</h2>
+<p>Android 的設定相對簡單許多：</p>
+<h3 id="1-在-firebase-上申請-android-推播應用程式">1. 在 Firebase 上申請 Android 推播應用程式</h3>
+<p>在 Firebase Console 中：</p>
+<ol>
+<li>選擇你的專案</li>
+<li>點選<strong>新增應用程式</strong></li>
+<li>選擇 <strong>Android</strong> 平台</li>
+<li>填寫應用程式資訊</li>
+</ol>
+<h3 id="2-下載並放置設定檔">2. 下載並放置設定檔</h3>
+<p>下載 <code>google-services.json</code> 後放到 <code>App_Resources -> Android</code> 下即可。</p>
+<h3 id="3-測試-android-推播">3. 測試 Android 推播</h3>
+<p>執行以下命令：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">ns</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> android</span></span></code></pre>
+<p>這樣就可以順利串接完 iOS 以及 Android 的推播服務了！</p>
+<h2 id="小結">小結</h2>
+<p>NativeScript 與 Firebase Push Notification 的整合提供了一個強大的解決方案來增強用戶參與度。雖然 iOS 的設定步驟較為複雜，但一旦設定完成，就能享受到穩定可靠的推播服務。</p>
+<h3 id="重點回顧">重點回顧</h3>
+<ol>
+<li><strong>iOS 設定較複雜</strong>：需要處理憑證、APNs 認證等步驟</li>
+<li><strong>Android 設定相對簡單</strong>：主要是放置 <code>google-services.json</code> 檔案</li>
+<li><strong>測試很重要</strong>：確保在開發和生產環境都能正常運作</li>
+<li><strong>安全性考量</strong>：妥善保管各種金鑰和憑證檔案</li>
+</ol>
+<p>希望這個指南能幫助你成功在 NativeScript 應用程式中實作 Firebase Push Notification！如果在實作過程中遇到問題，歡迎在留言區討論。</p>
+<hr>
+<p><em>原文發表於 Medium: <a href="https://medium.com/@allenshi-81981/nativescript-with-firebase-push-notification-a39d3bcee120">NativeScript with Firebase Push Notification</a></em></p> </div> </div> <!-- Post Footer --> <footer class="post-footer" data-astro-cid-7jjqptxk> <div class="post-share" data-astro-cid-7jjqptxk> <h3 data-astro-cid-7jjqptxk>分享這篇文章</h3> <div class="share-buttons" data-astro-cid-7jjqptxk> <a href="https://twitter.com/intent/tweet?text=NativeScript%20%E8%88%87%20Firebase%20Push%20Notification%20%E6%95%B4%E5%90%88%E6%8C%87%E5%8D%97&url=https%3A%2F%2Fyutangshi.github.io%2Fblog%2Fnativescript-firebase-push-notification%2F" target="_blank" rel="noopener noreferrer" class="share-btn twitter" data-astro-cid-7jjqptxk>
+Twitter
+</a> <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyutangshi.github.io%2Fblog%2Fnativescript-firebase-push-notification%2F" target="_blank" rel="noopener noreferrer" class="share-btn facebook" data-astro-cid-7jjqptxk>
+Facebook
+</a> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyutangshi.github.io%2Fblog%2Fnativescript-firebase-push-notification%2F" target="_blank" rel="noopener noreferrer" class="share-btn linkedin" data-astro-cid-7jjqptxk>
+LinkedIn
+</a> <button class="share-btn copy-link" onclick="copyToClipboard()" data-astro-cid-7jjqptxk>
+複製連結
+</button> </div> </div> <!-- Navigation --> <nav class="post-navigation" data-astro-cid-7jjqptxk> <a href="/blog" class="back-to-blog" data-astro-cid-7jjqptxk>← 回到部落格</a> </nav> </footer> </div> </article>   </main> <footer class="footer" data-astro-cid-sz7xmlte> <div class="container" data-astro-cid-sz7xmlte> <div class="footer-content" data-astro-cid-sz7xmlte> <div class="footer-section" data-astro-cid-sz7xmlte> <h3 data-astro-cid-sz7xmlte>Allen 技術微光</h3> <p class="footer-description" data-astro-cid-sz7xmlte> 多年專業經驗的資深工程師，專精於 SRE、雲端架構、全端開發與 AI 技術研究 </p> </div> <div class="footer-section" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>快速連結</h4> <ul class="footer-links" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte> <a href="/" data-astro-cid-sz7xmlte>首頁</a> </li><li data-astro-cid-sz7xmlte> <a href="/blog" data-astro-cid-sz7xmlte>部落格</a> </li><li data-astro-cid-sz7xmlte> <a href="/portfolio" data-astro-cid-sz7xmlte>作品集</a> </li><li data-astro-cid-sz7xmlte> <a href="/about" data-astro-cid-sz7xmlte>關於我</a> </li><li data-astro-cid-sz7xmlte> <a href="/contact" data-astro-cid-sz7xmlte>聯絡我</a> </li><li data-astro-cid-sz7xmlte> <a href="/services" data-astro-cid-sz7xmlte>服務項目</a> </li> </ul> </div> <div class="footer-section" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>聯絡方式</h4> <div class="social-links" data-astro-cid-sz7xmlte> <a href="https://github.com/YutangShi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="https://twitter.com/allenshi" target="_blank" rel="noopener noreferrer" aria-label="Twitter" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="https://linkedin.com/in/allenshi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="mailto:yutangshi@gmail.com" aria-label="Email" data-astro-cid-sz7xmlte> <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-sz7xmlte> <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.91L12 10.09l9.455-6.269h.909c.904 0 1.636.732 1.636 1.636z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </div> </div> <div class="footer-bottom" data-astro-cid-sz7xmlte> <p data-astro-cid-sz7xmlte>&copy; 2025 Allen 技術微光. 版權所有。</p> <p data-astro-cid-sz7xmlte>
+使用 <a href="https://astro.build" target="_blank" rel="noopener noreferrer" data-astro-cid-sz7xmlte>Astro</a> 建立
+</p> </div> </div> </footer>    </body> </html>   <script type="module">document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".table-of-contents a").forEach(t=>{t.addEventListener("click",n=>{n.preventDefault();const o=t.getAttribute("href").substring(1),e=document.getElementById(o);e&&e.scrollIntoView({behavior:"smooth",block:"start"})})})});</script>
