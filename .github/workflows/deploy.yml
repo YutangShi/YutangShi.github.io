@@ -30,7 +30,6 @@ jobs:
         with:
           node-version: 18.20.8
           cache: 'npm'
-          cache-dependency-path: absolute-antimatter/package-lock.json
           
       - name: 安裝依賴
         working-directory: ./absolute-antimatter
