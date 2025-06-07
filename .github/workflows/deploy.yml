@@ -28,7 +28,7 @@ jobs:
       - name: 設置 Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18.20.8
           cache: 'npm'
           cache-dependency-path: absolute-antimatter/package-lock.json
           
