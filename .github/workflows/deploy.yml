@@ -41,7 +41,7 @@ jobs:
         run: npm run build
         
       - name: 上傳頁面
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: absolute-antimatter/dist
 
@@ -54,4 +54,4 @@ jobs:
     steps:
       - name: 部署到 GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2 
+        uses: actions/deploy-pages@v4 
