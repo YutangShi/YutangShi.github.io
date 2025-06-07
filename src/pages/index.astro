@@ -1,11 +1,369 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import { SITE_CONFIG } from '../utils/config';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 獲取最新的部落格文章
+const allBlogPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+const latestPosts = allBlogPosts
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+// 獲取精選作品
+const allPortfolio = await getCollection('portfolio');
+const featuredProjects = allPortfolio
+  .filter(project => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout 
+  title={SITE_CONFIG.title}
+  description={SITE_CONFIG.description}
+>
+  <!-- Latest Blog Posts Section -->
+  {latestPosts.length > 0 && (
+    <section class="latest-posts">
+      <div class="container">
+        <div class="section-header">
+          <h2>技術文章</h2>
+          <p>每一篇文章，都是照亮 AI 與 IT 世界的小小光點</p>
+        </div>
+        <div class="grid grid-3">
+          {latestPosts.map((post) => (
+            <article class="post-card card">
+              <div class="post-image">
+                <img src={post.data.heroImage || "/images/blog/default-post.svg"} alt={post.data.title} />
+              </div>
+              <div class="post-content">
+                <div class="post-meta">
+                  <span class="post-category">{post.data.category}</span>
+                  <time datetime={post.data.publishDate.toISOString()}>
+                    {post.data.publishDate.toLocaleDateString('zh-TW')}
+                  </time>
+                </div>
+                <h3>
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                </h3>
+                <p>{post.data.description}</p>
+                <div class="post-tags">
+                  {post.data.tags.slice(0, 3).map((tag) => (
+                    <span class="tag">#{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="section-footer">
+          <a href="/blog" class="btn">查看所有文章</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Featured Projects Section -->
+  {featuredProjects.length > 0 && (
+    <section class="featured-projects">
+      <div class="container">
+        <div class="section-header">
+          <h2>精選作品</h2>
+          <p>以下是我最近完成的一些專案作品</p>
+        </div>
+        <div class="grid grid-3">
+          {featuredProjects.map((project) => (
+            <article class="project-card card">
+              <div class="project-image">
+                <img src={project.data.heroImage} alt={project.data.title} />
+              </div>
+              <div class="project-content">
+                <h3>{project.data.title}</h3>
+                <p>{project.data.description}</p>
+                <div class="project-tech">
+                  {project.data.technologies.slice(0, 3).map((tech) => (
+                    <span class="tech-tag">{tech}</span>
+                  ))}
+                </div>
+                <div class="project-links">
+                  <a href={`/portfolio/${project.id}`} class="btn btn-secondary">查看詳情</a>
+                  {project.data.projectUrl && (
+                    <a href={project.data.projectUrl} target="_blank" rel="noopener noreferrer" class="btn">
+                      線上預覽
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="section-footer">
+          <a href="/portfolio" class="btn">查看所有作品</a>
+        </div>
+      </div>
+    </section>
+  )}
+</MainLayout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    padding: var(--spacing-3xl) 0;
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
+  }
+  
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-3xl);
+    align-items: center;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .highlight {
+    color: var(--color-primary);
+  }
+  
+  .hero-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-2xl);
+    line-height: 1.6;
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+  
+  .hero-image {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .avatar {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--color-primary);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Section Styles */
+  .featured-projects,
+  .latest-posts {
+    padding: var(--spacing-3xl) 0;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+  }
+  
+  .section-header h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .section-header p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .section-footer {
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+  }
+  
+  /* Project Card */
+  .project-card {
+    overflow: hidden;
+  }
+  
+  .project-image {
+    height: 200px;
+    overflow: hidden;
+    margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg)) var(--spacing-lg);
+  }
+  
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
+  }
+  
+  .project-content h3 {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .project-content p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .project-tech {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .tech-tag {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+  }
+  
+  .project-links {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+  
+  /* Post Card */
+  .post-card {
+    overflow: hidden;
+  }
+  
+  .post-image {
+    height: 180px;
+    overflow: hidden;
+    margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg)) var(--spacing-lg);
+  }
+  
+  .post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .post-card:hover .post-image img {
+    transform: scale(1.05);
+  }
+  
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+  
+  .post-category {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+  }
+  
+  .post-content h3 {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .post-content h3 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  .post-content h3 a:hover {
+    color: var(--color-primary);
+  }
+  
+  .post-content p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .post-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+  
+  .tag {
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+  }
+  
+  /* CTA Section */
+  .cta {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--color-bg-secondary);
+  }
+  
+  .cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .cta-content h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .cta-content p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .cta-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: var(--spacing-2xl);
+    }
+    
+    .hero-title {
+      font-size: 2.5rem;
+    }
+    
+    .avatar {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .hero-actions,
+    .project-links,
+    .cta-actions {
+      justify-content: center;
+    }
+  }
+</style>

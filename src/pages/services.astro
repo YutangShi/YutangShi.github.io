@@ -1,0 +1,605 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+// 模擬數據
+const services = [
+  {
+    id: 'web-development',
+    title: '網站開發',
+    icon: '💻',
+    description: '打造現代化、響應式的網站，提供優秀的使用者體驗',
+    features: [
+      '響應式設計',
+      'SEO 優化',
+      '高效能載入',
+      '跨瀏覽器相容',
+      '內容管理系統',
+      '安全性保護'
+    ],
+    startingPrice: 'NT 30,000 起',
+    deliveryTime: '約 4-6 週'
+  },
+  {
+    id: 'mobile-app',
+    title: '行動應用開發',
+    icon: '📱',
+    description: '開發 iOS 和 Android 原生或跨平台行動應用程式',
+    features: [
+      '原生應用開發',
+      '跨平台解決方案',
+      'API 整合',
+      '推播通知',
+      '應用商店上架',
+      '維護與更新'
+    ],
+    startingPrice: 'NT 60,000 起',
+    deliveryTime: '約 6-10 週'
+  },
+  {
+    id: 'consulting',
+    title: '技術諮詢',
+    icon: '🤝',
+    description: '提供專業的技術諮詢服務，協助您做出最佳的技術決策',
+    features: [
+      '技術架構規劃',
+      '程式碼審查',
+      '效能優化建議',
+      '專案管理諮詢',
+      '技術選型建議'
+    ],
+    startingPrice: 'NT 2,000/小時',
+    deliveryTime: '彈性安排'
+  },
+  {
+    id: 'maintenance',
+    title: '網站維護',
+    icon: '🔧',
+    description: '提供持續的網站維護服務，確保您的網站穩定運行',
+    features: [
+      '定期備份',
+      '安全性更新',
+      '效能監控',
+      '內容更新',
+      '錯誤修復',
+      '技術支援'
+    ],
+    startingPrice: 'NT 5,000/月',
+    deliveryTime: '持續服務'
+  }
+];
+
+const packages = [
+  {
+    name: '基礎方案',
+    price: 'NT$ 30,000',
+    period: '一次性',
+    description: '適合小型企業或個人網站',
+    features: [
+      '5 頁靜態網站',
+      '響應式設計',
+      '基礎 SEO 設定',
+      '聯絡表單',
+      '1 個月免費維護',
+      '基礎技術支援'
+    ],
+    popular: false
+  }
+];
+
+const process = [
+  {
+    step: 1,
+    title: '需求討論',
+    description: '深入了解您的需求和目標，制定最適合的解決方案',
+    icon: '💬'
+  },
+  {
+    step: 2,
+    title: '方案規劃',
+    description: '根據需求制定詳細的專案計劃和時程安排',
+    icon: '📋'
+  },
+  {
+    step: 3,
+    title: '設計開發',
+    description: '進行設計和開發工作，定期與您確認進度',
+    icon: '⚡'
+  },
+  {
+    step: 4,
+    title: '測試上線',
+    description: '完整測試後正式上線，並提供使用教學',
+    icon: '🚀'
+  },
+  {
+    step: 5,
+    title: '維護支援',
+    description: '提供後續維護和技術支援服務',
+    icon: '🛠️'
+  }
+];
+---
+
+<MainLayout 
+  title="服務項目 - Allen Shi"
+  description="查看我提供的網站開發、UI/UX 設計、行動應用開發等專業服務"
+>
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="services-hero">
+      <div class="hero-content">
+        <h1>專業服務</h1>
+        <p class="hero-description">
+          提供全方位的數位解決方案，從網站開發到 UI/UX 設計，
+          協助您的事業在數位時代中脫穎而出
+        </p>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-section">
+      <div class="section-header">
+        <h2>服務項目</h2>
+        <p>我提供的專業服務範圍</p>
+      </div>
+      <div class="services-grid">
+        {services.map((service) => (
+          <div class="service-card card">
+            <div class="service-icon">{service.icon}</div>
+            <h3>{service.title}</h3>
+            <p class="service-description">{service.description}</p>
+            <ul class="service-features">
+              {service.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+            <div class="service-pricing">
+              <div class="price">起價 {service.startingPrice}</div>
+              <div class="delivery">交付時間：{service.deliveryTime}</div>
+            </div>
+            <a href="/contact" class="btn">立即諮詢</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+      <div class="section-header">
+        <h2>合作流程</h2>
+        <p>簡單明確的合作步驟，讓專案順利進行</p>
+      </div>
+      <div class="process-timeline">
+        {process.map((step, index) => (
+          <div class="process-step">
+            <div class="step-icon">
+              <span class="icon">{step.icon}</span>
+              <span class="step-number">{step.step}</span>
+            </div>
+            <div class="step-content">
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+            {index < process.length - 1 && <div class="step-connector"></div>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="section-header">
+        <h2>常見問題</h2>
+        <p>關於服務的常見疑問解答</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item card">
+          <h3>專案需要多長時間完成？</h3>
+          <p>專案時間取決於複雜度和需求範圍。一般網站開發需要 2-8 週，我會在初期討論時提供詳細的時程規劃。</p>
+        </div>
+        <div class="faq-item card">
+          <h3>是否提供後續維護服務？</h3>
+          <p>是的，我提供完整的維護服務，包括安全更新、內容修改、功能擴充等，確保您的網站持續穩定運行。</p>
+        </div>
+        <div class="faq-item card">
+          <h3>可以客製化功能嗎？</h3>
+          <p>當然可以！我專精於客製化開發，會根據您的具體需求設計和開發專屬功能。</p>
+        </div>
+        <div class="faq-item card">
+          <h3>付款方式如何安排？</h3>
+          <p>通常採用分階段付款：專案開始時支付 50%，完成交付時支付剩餘 50%。大型專案可另行討論付款計劃。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>準備開始您的專案了嗎？</h2>
+        <p>讓我們討論您的需求，為您打造完美的數位解決方案</p>
+        <div class="cta-actions">
+          <a href="/contact" class="btn">免費諮詢</a>
+          <a href="/portfolio" class="btn btn-secondary">查看作品</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  /* Hero Section */
+  .services-hero {
+    text-align: center;
+    padding: var(--spacing-3xl) 0;
+    margin-bottom: var(--spacing-3xl);
+  }
+  
+  .hero-content h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .hero-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Services Section */
+  .services-section {
+    margin-bottom: var(--spacing-4xl);
+  }
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-2xl);
+  }
+  
+  .service-card {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    transition: transform 0.3s ease;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .service-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .service-card h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+  }
+  
+  .service-description {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-xl);
+    text-align: left;
+  }
+  
+  .service-features li {
+    position: relative;
+    padding-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+  
+  .service-pricing {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--border-radius);
+  }
+  
+  .price {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .delivery {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+
+  /* Packages Section */
+  .packages-section {
+    margin-bottom: var(--spacing-4xl);
+  }
+  
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-2xl);
+  }
+  
+  .package-card {
+    position: relative;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .package-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .package-card.popular {
+    border: 2px solid var(--color-primary);
+    transform: scale(1.05);
+  }
+  
+  .popular-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+  }
+  
+  .package-header {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .package-header h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-xl);
+  }
+  
+  .package-price {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .package-price .price {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+  
+  .package-price .period {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+  
+  .package-description {
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  
+  .package-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-xl);
+    text-align: left;
+  }
+  
+  .package-features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .check-icon {
+    color: var(--color-primary);
+    font-weight: bold;
+    margin-right: var(--spacing-sm);
+  }
+
+  /* Process Section */
+  .process-section {
+    margin-bottom: var(--spacing-4xl);
+  }
+  
+  .process-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .process-step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+  }
+  
+  .step-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    color: white;
+    font-size: var(--font-size-xl);
+    flex-shrink: 0;
+  }
+  
+  .step-number {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    color: var(--color-primary);
+  }
+  
+  .step-content {
+    flex: 1;
+  }
+  
+  .step-content h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+  }
+  
+  .step-content p {
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  
+  .step-connector {
+    position: absolute;
+    left: 39px;
+    top: 80px;
+    width: 2px;
+    height: var(--spacing-2xl);
+    background-color: var(--color-border);
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    margin-bottom: var(--spacing-4xl);
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+  }
+  
+  .faq-item h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+  }
+  
+  .faq-item p {
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    padding: var(--spacing-3xl);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--border-radius-lg);
+    color: white;
+  }
+  
+  .cta-content h2 {
+    margin-bottom: var(--spacing-md);
+    color: white;
+  }
+  
+  .cta-content p {
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.9;
+  }
+  
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+  
+  .cta-actions .btn {
+    background-color: white;
+    color: var(--color-primary);
+  }
+  
+  .cta-actions .btn:hover {
+    background-color: var(--color-bg-secondary);
+  }
+  
+  .cta-actions .btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .cta-actions .btn-secondary:hover {
+    background-color: white;
+    color: var(--color-primary);
+  }
+
+  /* Section Headers */
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+  }
+  
+  .section-header h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .section-header p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .packages-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .package-card.popular {
+      transform: none;
+    }
+    
+    .process-step {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--spacing-lg);
+    }
+    
+    .step-connector {
+      display: none;
+    }
+    
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style> 

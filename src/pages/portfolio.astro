@@ -1,0 +1,297 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+
+// 獲取所有作品集項目
+const allPortfolio = await getCollection('portfolio');
+const portfolioItems = allPortfolio.sort((a, b) => a.data.order - b.data.order);
+
+// 按類別分組
+const categories = [...new Set(portfolioItems.map(item => item.data.category))];
+---
+
+<MainLayout 
+  title="作品集 - Allen Shi"
+  description="查看我的設計與開發作品集，包含網站開發、UI/UX 設計等專案"
+>
+  <div class="container">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1>作品集</h1>
+      <p>以下是我過去完成的一些專案作品，展示我在前端開發、UI/UX 設計等領域的能力</p>
+    </header>
+
+    <!-- Category Filter -->
+    {categories.length > 1 && (
+      <div class="category-filter">
+        <button class="filter-btn active" data-category="all">全部</button>
+        {categories.map((category) => (
+          <button class="filter-btn" data-category={category}>{category}</button>
+        ))}
+      </div>
+    )}
+
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid">
+      {portfolioItems.map((item) => (
+        <article class="portfolio-item card" data-category={item.data.category}>
+          <div class="portfolio-image">
+            <img src={item.data.heroImage} alt={item.data.title} />
+            <div class="portfolio-overlay">
+              <div class="portfolio-actions">
+                <a href={`/portfolio/${item.id}`} class="btn">查看詳情</a>
+                {item.data.projectUrl && (
+                  <a href={item.data.projectUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                    線上預覽
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-content">
+            <div class="portfolio-meta">
+              <span class="portfolio-category">{item.data.category}</span>
+              {item.data.endDate && (
+                <time datetime={item.data.endDate.toISOString()}>
+                  {item.data.endDate.toLocaleDateString('zh-TW')}
+                </time>
+              )}
+            </div>
+            <h2>
+              <a href={`/portfolio/${item.id}`}>{item.data.title}</a>
+            </h2>
+            <p>{item.data.description}</p>
+            <div class="portfolio-tech">
+              {item.data.technologies.map((tech) => (
+                <span class="tech-tag">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {portfolioItems.length === 0 && (
+      <div class="empty-state">
+        <h2>作品集建置中</h2>
+        <p>我正在整理我的作品集，敬請期待！</p>
+      </div>
+    )}
+  </div>
+</MainLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .page-header h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .page-header p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .category-filter {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-3xl);
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+  
+  .filter-btn:hover,
+  .filter-btn.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-3xl);
+  }
+  
+  .portfolio-item {
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .portfolio-item.hidden {
+    display: none;
+  }
+  
+  .portfolio-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg)) var(--spacing-lg);
+  }
+  
+  .portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+  }
+  
+  .portfolio-item:hover .portfolio-image img {
+    transform: scale(1.05);
+  }
+  
+  .portfolio-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+  
+  .portfolio-content {
+    padding: 0;
+  }
+  
+  .portfolio-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+  
+  .portfolio-category {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+  }
+  
+  .portfolio-content h2 {
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xl);
+  }
+  
+  .portfolio-content h2 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  .portfolio-content h2 a:hover {
+    color: var(--color-primary);
+  }
+  
+  .portfolio-content p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .portfolio-tech {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+  
+  .tech-tag {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-3xl) 0;
+  }
+  
+  .empty-state h2 {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-light);
+  }
+  
+  .empty-state p {
+    color: var(--color-text-light);
+  }
+  
+  @media (max-width: 768px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .category-filter {
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: var(--spacing-sm);
+    }
+    
+    .filter-btn {
+      white-space: nowrap;
+    }
+  }
+</style>
+
+<script>
+  // 類別篩選功能
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+        
+        // 更新按鈕狀態
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // 篩選項目
+        portfolioItems.forEach(item => {
+          const itemCategory = item.getAttribute('data-category');
+          if (category === 'all' || itemCategory === category) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });
+</script> 

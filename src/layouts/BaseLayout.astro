@@ -1,0 +1,381 @@
+---
+import { SITE_CONFIG } from '../utils/config';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+}
+
+const {
+  title = SITE_CONFIG.defaultMeta.title,
+  description = SITE_CONFIG.defaultMeta.description,
+  image = SITE_CONFIG.defaultMeta.image,
+  type = SITE_CONFIG.defaultMeta.type,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.url);
+---
+
+<!DOCTYPE html>
+<html lang={SITE_CONFIG.locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_CONFIG.author} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+    <meta property="og:site_name" content={SITE_CONFIG.title} />
+    <meta property="og:locale" content={SITE_CONFIG.locale} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+    <meta property="twitter:creator" content={SITE_CONFIG.twitter} />
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
+    
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <slot />
+    
+    <style is:global>
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-dark: #1d4ed8;
+        --color-secondary: #64748b;
+        --color-accent: #f59e0b;
+        --color-text: #1f2937;
+        --color-text-light: #6b7280;
+        --color-bg: #ffffff;
+        --color-bg-secondary: #f8fafc;
+        --color-border: #e5e7eb;
+        --color-border-light: #f3f4f6;
+        
+        --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-size-sm: 0.875rem;
+        --font-size-base: 1rem;
+        --font-size-lg: 1.125rem;
+        --font-size-xl: 1.25rem;
+        --font-size-2xl: 1.5rem;
+        --font-size-3xl: 1.875rem;
+        --font-size-4xl: 2.25rem;
+        
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 0.75rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-2xl: 3rem;
+        --spacing-3xl: 4rem;
+        
+        --border-radius: 0.5rem;
+        --border-radius-lg: 0.75rem;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-text: #f9fafb;
+          --color-text-light: #d1d5db;
+          --color-bg: #111827;
+          --color-bg-secondary: #1f2937;
+          --color-border: #374151;
+          --color-border-light: #4b5563;
+        }
+      }
+      
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      html {
+        font-family: var(--font-family);
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        line-height: 1.6;
+        font-size: var(--font-size-base);
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        line-height: 1.2;
+        font-weight: 600;
+        margin-bottom: var(--spacing-md);
+      }
+      
+      h1 { font-size: var(--font-size-4xl); }
+      h2 { font-size: var(--font-size-3xl); }
+      h3 { font-size: var(--font-size-2xl); }
+      h4 { font-size: var(--font-size-xl); }
+      h5 { font-size: var(--font-size-lg); }
+      h6 { font-size: var(--font-size-base); }
+      
+      p {
+        margin-bottom: var(--spacing-md);
+        color: var(--color-text-light);
+      }
+      
+      a {
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      
+      a:hover {
+        color: var(--color-primary-dark);
+        text-decoration: underline;
+      }
+      
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--border-radius);
+      }
+      
+      code {
+        background-color: var(--color-bg-secondary);
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-size: 0.875em;
+        border: 1px solid var(--color-border);
+      }
+      
+      pre {
+        background-color: var(--color-bg-secondary);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius);
+        overflow-x: auto;
+        margin-bottom: var(--spacing-md);
+        border: 1px solid var(--color-border);
+      }
+      
+      pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+      
+      blockquote {
+        border-left: 4px solid var(--color-primary);
+        padding-left: var(--spacing-md);
+        margin: var(--spacing-lg) 0;
+        font-style: italic;
+        color: var(--color-text-light);
+      }
+      
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+      }
+      
+      .prose {
+        max-width: 65ch;
+        margin: 0 auto;
+      }
+      
+      .prose h1,
+      .prose h2,
+      .prose h3,
+      .prose h4,
+      .prose h5,
+      .prose h6 {
+        margin-top: var(--spacing-xl);
+        margin-bottom: var(--spacing-md);
+      }
+      
+      .prose h1:first-child,
+      .prose h2:first-child,
+      .prose h3:first-child {
+        margin-top: 0;
+      }
+      
+      .prose ul,
+      .prose ol {
+        margin-bottom: var(--spacing-md);
+        padding-left: var(--spacing-lg);
+      }
+      
+      .prose li {
+        margin-bottom: var(--spacing-xs);
+      }
+      
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-sm) var(--spacing-lg);
+        background-color: var(--color-primary);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      
+      .btn:hover {
+        background-color: var(--color-primary-dark);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+      
+      .btn-secondary {
+        background-color: transparent;
+        color: var(--color-primary);
+        border: 2px solid var(--color-primary);
+      }
+      
+      .btn-secondary:hover {
+        background-color: var(--color-primary);
+        color: white;
+      }
+      
+      .card {
+        background-color: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.2s ease;
+      }
+      
+      .card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+      }
+      
+      .grid {
+        display: grid;
+        gap: var(--spacing-lg);
+      }
+      
+      .grid-2 {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      
+      .grid-3 {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+      
+      .flex {
+        display: flex;
+      }
+      
+      .flex-col {
+        flex-direction: column;
+      }
+      
+      .items-center {
+        align-items: center;
+      }
+      
+      .justify-center {
+        justify-content: center;
+      }
+      
+      .justify-between {
+        justify-content: space-between;
+      }
+      
+      .gap-sm {
+        gap: var(--spacing-sm);
+      }
+      
+      .gap-md {
+        gap: var(--spacing-md);
+      }
+      
+      .gap-lg {
+        gap: var(--spacing-lg);
+      }
+      
+      .text-center {
+        text-align: center;
+      }
+      
+      .text-sm {
+        font-size: var(--font-size-sm);
+      }
+      
+      .text-lg {
+        font-size: var(--font-size-lg);
+      }
+      
+      .text-xl {
+        font-size: var(--font-size-xl);
+      }
+      
+      .text-muted {
+        color: var(--color-text-light);
+      }
+      
+      .mb-sm { margin-bottom: var(--spacing-sm); }
+      .mb-md { margin-bottom: var(--spacing-md); }
+      .mb-lg { margin-bottom: var(--spacing-lg); }
+      .mb-xl { margin-bottom: var(--spacing-xl); }
+      .mb-2xl { margin-bottom: var(--spacing-2xl); }
+      
+      .mt-sm { margin-top: var(--spacing-sm); }
+      .mt-md { margin-top: var(--spacing-md); }
+      .mt-lg { margin-top: var(--spacing-lg); }
+      .mt-xl { margin-top: var(--spacing-xl); }
+      .mt-2xl { margin-top: var(--spacing-2xl); }
+      
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 var(--spacing-sm);
+        }
+        
+        h1 { font-size: var(--font-size-3xl); }
+        h2 { font-size: var(--font-size-2xl); }
+        h3 { font-size: var(--font-size-xl); }
+        
+        .grid-2,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html> 

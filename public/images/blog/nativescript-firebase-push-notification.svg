@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#2d3748"/>
+  
+  <!-- Firebase logo/symbol -->
+  <polygon points="200,120 240,120 260,160 220,200 180,160" fill="#ffca28"/>
+  <polygon points="220,200 260,160 280,200 240,240 200,200" fill="#ffa000"/>
+  <polygon points="200,200 240,240 220,280 180,240" fill="#ff6f00"/>
+  
+  <!-- NativeScript logo representation -->
+  <circle cx="520" cy="160" r="40" fill="#3655ff"/>
+  <rect x="500" y="140" width="40" height="40" fill="#65adf1" rx="4"/>
+  <text x="520" y="170" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">NS</text>
+  
+  <!-- Push notification icon -->
+  <rect x="350" y="130" width="100" height="60" fill="#e2e8f0" rx="8"/>
+  <circle cx="365" cy="145" r="4" fill="#48bb78"/>
+  <rect x="375" y="142" width="60" height="3" fill="#a0aec0" rx="1"/>
+  <rect x="375" y="150" width="40" height="3" fill="#a0aec0" rx="1"/>
+  <polygon points="430,110 450,130 430,150" fill="#f56565"/>
+  
+  <!-- Title -->
+  <text x="400" y="280" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="28" font-weight="bold">NativeScript 推播通知</text>
+  <text x="400" y="310" text-anchor="middle" fill="#a0aec0" font-family="Arial, sans-serif" font-size="16">Firebase Push Notification 整合指南</text>
+  
+  <!-- Connection lines -->
+  <line x1="240" y1="160" x2="350" y2="150" stroke="#4fd1c7" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="450" y1="150" x2="480" y2="160" stroke="#4fd1c7" stroke-width="2" stroke-dasharray="5,5"/>
+</svg> 

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#1f2937"/>
+  <circle cx="300" cy="315" r="80" fill="#2563eb"/>
+  <circle cx="300" cy="280" r="25" fill="white"/>
+  <ellipse cx="300" cy="340" rx="35" ry="28" fill="white"/>
+  
+  <text x="450" y="280" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="bold">Allen Shi</text>
+  <text x="450" y="340" fill="#9ca3af" font-family="Arial, sans-serif" font-size="32">全端開發者</text>
+  <text x="450" y="400" fill="#6b7280" font-family="Arial, sans-serif" font-size="24">專注於前端開發、UI/UX 設計與數位產品創新</text>
+</svg> 
