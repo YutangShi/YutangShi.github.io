@@ -24,21 +24,6 @@ const contactInfo = [
   }
 ];
 
-const socialLinks = [
-  {
-    name: 'GitHub',
-    icon: '🐙',
-    url: 'https://github.com/YutangShi',
-    color: '#333'
-  },
-  {
-    name: 'Instagram',
-    icon: '📷',
-    url: 'https://instagram.com/allenshi',
-    color: '#E4405F'
-  }
-];
-
 const faqs = [
   {
     question: '回覆時間通常需要多久？',
@@ -51,10 +36,6 @@ const faqs = [
   {
     question: '提供免費諮詢嗎？',
     answer: '是的，我提供 30 分鐘的免費初步諮詢，讓我們了解您的需求並討論可能的解決方案。'
-  },
-  {
-    question: '接受遠端合作嗎？',
-    answer: '絕對可以！我有豐富的遠端工作經驗，可以與世界各地的客戶順利合作。'
   }
 ];
 ---
@@ -93,19 +74,6 @@ const faqs = [
               </div>
             </a>
           ))}
-        </div>
-        
-        <div class="social-section">
-          <h3>社群媒體</h3>
-          <div class="social-links">
-            {socialLinks.map((social) => (
-              <a href={social.url} target="_blank" rel="noopener noreferrer" 
-                 class="social-link" style={`--social-color: ${social.color}`}>
-                <span class="social-icon">{social.icon}</span>
-                <span class="social-name">{social.name}</span>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
     </div>
@@ -251,51 +219,10 @@ const faqs = [
     margin-bottom: 0;
   }
 
-  /* Social Section */
-  .social-section {
-    margin-bottom: var(--spacing-3xl);
-  }
-  
-  .social-section h3 {
-    margin-bottom: var(--spacing-lg);
-    color: var(--color-primary);
-  }
-  
-  .social-links {
-    display: grid;
-    gap: var(--spacing-md);
-  }
-  
-  .social-link {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--color-border);
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.2s ease;
-  }
-  
-  .social-link:hover {
-    border-color: var(--social-color);
-    background-color: var(--social-color);
-    color: white;
-  }
-  
-  .social-icon {
-    font-size: var(--font-size-lg);
-  }
-  
-  .social-name {
-    font-weight: 500;
-  }
-
   /* FAQ Section */
   .faq-section {
-    margin-bottom: var(--spacing-4xl);
+    margin-bottom: var(--spacing-3xl);
+    padding-bottom: var(--spacing-3xl);
   }
   
   .faq-grid {

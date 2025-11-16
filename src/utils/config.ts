@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
   social: {
     github: 'https://github.com/YutangShi',
     twitter: 'https://twitter.com/allenshi',
-    linkedin: 'https://linkedin.com/in/allenshi',
+    linkedin: 'https://www.linkedin.com/in/yutang-shi-4109ab31/',
     email: 'mailto:yutangshi@gmail.com',
     blog: 'https://allen-shi.blogspot.tw/',
     resume: 'https://www.cake.me/s--XY7iN0UK7EZ_FKGXxpNqnA--/allen-shi'

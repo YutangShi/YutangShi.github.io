@@ -26,7 +26,6 @@ const socialImageURL = new URL(image, Astro.url);
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
     
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
@@ -288,6 +287,10 @@ const socialImageURL = new URL(image, Astro.url);
       .grid {
         display: grid;
         gap: var(--spacing-lg);
+      }
+      
+      .grid-1 {
+        grid-template-columns: 1fr;
       }
       
       .grid-2 {

@@ -5,6 +5,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://yutangshi.github.io',
   base: '',
+  build: {
+    format: 'directory'
+  },
   integrations: [],
   markdown: {
     shikiConfig: {

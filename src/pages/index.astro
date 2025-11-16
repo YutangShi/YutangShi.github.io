@@ -10,7 +10,7 @@ const allBlogPosts = await getCollection('blog', ({ data }) => {
 
 const latestPosts = allBlogPosts
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-  .slice(0, 3);
+  .slice(0, 6);
 
 // 獲取精選作品
 const allPortfolio = await getCollection('portfolio');
@@ -32,7 +32,7 @@ const featuredProjects = allPortfolio
           <h2>技術文章</h2>
           <p>每一篇文章，都是照亮 AI 與 IT 世界的小小光點</p>
         </div>
-        <div class="grid grid-3">
+        <div class="grid grid-1">
           {latestPosts.map((post) => (
             <article class="post-card card">
               <div class="post-image">
@@ -46,7 +46,7 @@ const featuredProjects = allPortfolio
                   </time>
                 </div>
                 <h3>
-                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                  <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a>
                 </h3>
                 <p>{post.data.description}</p>
                 <div class="post-tags">
@@ -249,12 +249,17 @@ const featuredProjects = allPortfolio
   /* Post Card */
   .post-card {
     overflow: hidden;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--spacing-lg);
+    align-items: start;
   }
   
   .post-image {
     height: 180px;
     overflow: hidden;
-    margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg)) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin: 0;
   }
   
   .post-image img {

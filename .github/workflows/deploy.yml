@@ -31,21 +31,27 @@ jobs:
           node-version: 18.20.8
           cache: 'npm'
           
-      - name: 列出目錄結構
+      - name: 檢查環境
         run: |
+          echo "Node.js 版本:"
+          node -v
+          echo "npm 版本:"
+          npm -v
+          echo "目前工作目錄:"
           pwd
-          ls -la
           
       - name: 安裝依賴
         run: npm ci
         
       - name: 構建網站
         run: npm run build
+        env:
+          NODE_ENV: production
         
       - name: 上傳頁面
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: dist
 
   deploy:
     environment:
