@@ -1,7 +1,7 @@
 ---
 title: "1on1.today 全球家教共享平台"
 description: "全球性的家教資源共享平台，連接來自120+國家的家教、老師、教練與學習者"
-heroImage: "/images/portfolio/1on1-today.svg"
+heroImage: "/images/portfolio/1on1-today.png"
 technologies: ["Laravel", "Vue.js", "MySQL", "AWS", "Redis", "Stripe"]
 category: "平台開發"
 projectUrl: "https://1on1.today/zh-TW"

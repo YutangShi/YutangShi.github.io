@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="Agent 與 RAG 流程示意圖：需求、拆解、工具、檢索、產出、人工確認">
+  <defs>
+    <linearGradient id="bg3" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f5fffb"/>
+      <stop offset="1" stop-color="#f6f2ff"/>
+    </linearGradient>
+    <filter id="shadow3" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .sub { font: 500 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .box { fill: #ffffff; stroke: #dfe7ff; stroke-width: 2; filter: url(#shadow3); }
+      .label { font: 800 20px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .desc { font: 500 15px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .arrow { stroke: #7e6bff; stroke-width: 6; fill: none; stroke-linecap: round; }
+      .accent { stroke: #36c39b; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" rx="26" fill="url(#bg3)"/>
+  <text x="80" y="88" class="title">Agent + RAG：把「會做事」的 AI 拼起來</text>
+  <text x="80" y="122" class="sub">Agent 負責拆解與決策，Tools 負責執行，RAG 負責「拿得到可追溯的資料」</text>
+
+  <g transform="translate(110,190)">
+    <rect class="box" x="0" y="0" rx="18" width="360" height="120"/>
+    <text class="label" x="24" y="46">使用者需求</text>
+    <text class="desc" x="24" y="78">例：整理客訴、查訂單、回覆草稿</text>
+  </g>
+
+  <path class="arrow" d="M490 250 L560 250"/>
+  <path class="arrow" d="M560 250 L544 240 M560 250 L544 260"/>
+
+  <g transform="translate(590,190)">
+    <rect class="box" x="0" y="0" rx="18" width="360" height="120"/>
+    <text class="label" x="24" y="46">任務拆解</text>
+    <text class="desc" x="24" y="78">把大問題拆成 3 到 7 個小步驟</text>
+  </g>
+
+  <path class="arrow" d="M970 250 L1040 250"/>
+  <path class="arrow" d="M1040 250 L1024 240 M1040 250 L1024 260"/>
+
+  <g transform="translate(1070,190)">
+    <rect class="box" x="0" y="0" rx="18" width="240" height="120" style="stroke:#b7f0df"/>
+    <text class="label" x="24" y="46">人工確認</text>
+    <text class="desc" x="24" y="78">高風險動作要先問</text>
+  </g>
+
+  <g transform="translate(110,420)">
+    <rect class="box" x="0" y="0" rx="18" width="560" height="150" style="stroke:#b7f0df"/>
+    <text class="label" x="24" y="46">Tools（執行）</text>
+    <text class="desc" x="24" y="78">查資料、呼叫 API、寫工單、發通知</text>
+    <text class="desc" x="24" y="104">每個工具都要定義：輸入、輸出、失敗怎麼辦</text>
+  </g>
+
+  <path class="arrow accent" d="M690 495 L760 495"/>
+  <path class="arrow accent" d="M760 495 L744 485 M760 495 L744 505"/>
+
+  <g transform="translate(790,420)">
+    <rect class="box" x="0" y="0" rx="18" width="520" height="150" style="stroke:#cfe8ff"/>
+    <text class="label" x="24" y="46">RAG（找得到資料）</text>
+    <text class="desc" x="24" y="78">從文件/知識庫檢索相關段落，再生成回答</text>
+    <text class="desc" x="24" y="104">重點是可追溯：列出來源與引用片段</text>
+  </g>
+
+  <path class="arrow" d="M1030 590 C1030 660 760 700 520 680 C320 664 210 624 210 570"/>
+  <path class="arrow" d="M210 570 L224 586 M210 570 L232 570"/>
+</svg>
+

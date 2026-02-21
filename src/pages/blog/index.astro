@@ -1,629 +1,436 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
+import { BLOG_CONFIG } from '../../utils/config';
 
-// 獲取所有已發布的部落格文章
-const allBlogPosts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
-
-// 按發布日期排序
+const allBlogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
 const posts = allBlogPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-
-// 獲取所有類別和標籤
-const categories = [...new Set(posts.map(post => post.data.category))];
-const allTags = posts.flatMap(post => post.data.tags);
-const tags = [...new Set(allTags)];
-
-// 精選文章
-const featuredPosts = posts.filter(post => post.data.featured);
+const categories = ['全部', ...BLOG_CONFIG.categories];
+const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
 ---
 
-<MainLayout 
-  title="技術微光 - Allen Shi"
-  description="每一篇文章，都是照亮 AI 與 IT 世界的小小光點"
->
-  <div class="container">
-    <!-- Page Header -->
-    <header class="page-header">
-      <h1>部落格</h1>
-      <p>每一篇文章，都是照亮 AI 與 IT 世界的小小光點</p>
-    </header>
+<MainLayout title="Allen 的自動化特調" description="用最實用的配方，帶你循序學會 AI 自動化、N8N 與 SRE">
+  <section class="container blog-hero fade-in">
+    <p class="hero-kicker">Knowledge Base</p>
+    <h1>Allen 的自動化特調</h1>
+    <p>
+      從新手可上手的 AI 工具，到可上線的自動化流程。
+      每篇都是一杯有配方、有步驟、可實作的技術特調。
+    </p>
+  </section>
 
-    <!-- Featured Posts -->
-    {featuredPosts.length > 0 && (
-      <section class="featured-section">
-        <h2>精選文章</h2>
-        <div class="featured-posts">
-          {featuredPosts.slice(0, 2).map((post) => (
-            <article class="featured-post card">
-              <div class="featured-image">
-                <img src={post.data.heroImage || "/images/blog/default-post.svg"} alt={post.data.title} />
+  <section class="container quick-start fade-in delay-1">
+    <article class="quick-start-card card">
+      <h2>第一次來？先看這裡</h2>
+      <p>先從學習地圖選你的階段，再到分類與文章實作，學習會更有節奏。</p>
+      <div class="quick-tags">
+        <a href="/learning-path" class="quick-btn-link">完整學習地圖</a>
+        <button type="button" class="quick-btn" data-category-target="AI">基礎核心篇</button>
+        <button type="button" class="quick-btn" data-category-target="自動化">中階應用篇</button>
+        <button type="button" class="quick-btn" data-category-target="SRE">高階賦能篇</button>
+        <button type="button" class="quick-btn" data-category-target="N8N">N8N 專題</button>
+        <button type="button" class="quick-btn" data-category-target="Mobile App">Mobile App</button>
+      </div>
+    </article>
+  </section>
+
+  {featuredPosts.length > 0 && (
+    <section class="container featured fade-in delay-2">
+      <h2>精選文章</h2>
+      <div class="featured-grid">
+        {featuredPosts.map((post) => (
+          <article class="feature-item card" data-category={post.data.category} data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`}>
+            <img src={post.data.heroImage || '/images/blog/default-post.svg'} alt={post.data.title} loading="lazy" />
+            <div class="feature-content">
+              <div class="meta">
+                <span>{post.data.category}</span>
+                <time datetime={post.data.publishDate.toISOString()}>
+                  {post.data.publishDate.toLocaleDateString('zh-TW')}
+                </time>
               </div>
-              <div class="featured-content">
-                <div class="post-meta">
-                  <span class="post-category">{post.data.category}</span>
-                  <time datetime={post.data.publishDate.toISOString()}>
-                    {post.data.publishDate.toLocaleDateString('zh-TW')}
-                  </time>
-                </div>
-                <h3>
-                  <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a>
-                </h3>
-                <p>{post.data.description}</p>
-                <div class="post-tags">
-                  {post.data.tags.slice(0, 3).map((tag) => (
-                    <span class="tag">#{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <div class="blog-layout">
-      <!-- Sidebar -->
-      <aside class="blog-sidebar">
-        <!-- Search -->
-        <div class="sidebar-widget">
-          <h3>搜尋文章</h3>
-          <div class="search-box">
-            <input type="text" placeholder="搜尋..." id="search-input" />
-            <button type="button" id="search-btn">🔍</button>
-          </div>
-        </div>
-
-        <!-- Categories -->
-        {categories.length > 0 && (
-          <div class="sidebar-widget">
-            <h3>文章分類</h3>
-            <ul class="category-list">
-              {categories.map((category) => {
-                const count = posts.filter(post => post.data.category === category).length;
-                return (
-                  <li>
-                    <a href={`/blog/category/${category}`}>
-                      {category} <span class="count">({count})</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
-
-        <!-- Popular Tags -->
-        {tags.length > 0 && (
-          <div class="sidebar-widget">
-            <h3>熱門標籤</h3>
-            <div class="tag-cloud">
-              {tags.slice(0, 15).map((tag) => (
-                <a href={`/blog/tag/${tag}`} class="tag-link">#{tag}</a>
-              ))}
+              <h3><a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a></h3>
+              <p>{post.data.description}</p>
             </div>
-          </div>
-        )}
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
 
-        <!-- Recent Posts -->
-        <div class="sidebar-widget">
-          <h3>最新文章</h3>
-          <ul class="recent-posts">
-            {posts.slice(0, 5).map((post) => (
-              <li>
-                <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>
-                  <span class="recent-title">{post.data.title}</span>
-                  <span class="recent-date">
-                    {post.data.publishDate.toLocaleDateString('zh-TW')}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </aside>
-      
-      <!-- Main Content -->
-      <main class="blog-main">
-        <!-- Category Filter -->
-        {categories.length > 1 && (
-          <div class="category-filter">
-            <button class="filter-btn active" data-category="all">全部</button>
-            {categories.map((category) => (
-              <button class="filter-btn" data-category={category}>{category}</button>
-            ))}
-          </div>
-        )}
-
-        <!-- Posts Grid -->
-        <div class="posts-grid">
-          {posts.map((post) => (
-            <article class="post-card card" data-category={post.data.category}>
-              <div class="post-image">
-                <img src={post.data.heroImage || "/images/blog/default-post.svg"} alt={post.data.title} />
-              </div>
-              <div class="post-content">
-                <div class="post-meta">
-                  <span class="post-category">{post.data.category}</span>
-                  <time datetime={post.data.publishDate.toISOString()}>
-                    {post.data.publishDate.toLocaleDateString('zh-TW')}
-                  </time>
-                </div>
-                <h2>
-                  <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a>
-                </h2>
-                <p>{post.data.description}</p>
-                <div class="post-tags">
-                  {post.data.tags.slice(0, 4).map((tag) => (
-                    <span class="tag">#{tag}</span>
-                  ))}
-                </div>
-                <div class="post-footer">
-                  <span class="post-author">by {post.data.author}</span>
-                  <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="read-more">閱讀更多 →</a>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {posts.length === 0 && (
-          <div class="empty-state">
-            <h2>尚無文章</h2>
-            <p>我正在準備精彩的內容，敬請期待！</p>
-          </div>
-        )}
-      </main>
+  <section class="container controls fade-in delay-3">
+    <div class="search-wrap card">
+      <label for="search-input">搜尋文章</label>
+      <input id="search-input" type="search" placeholder="輸入標題、摘要或標籤" />
+      <p id="tag-hint" class="tag-hint" hidden></p>
     </div>
-  </div>
+
+    <div class="category-wrap" aria-label="分類篩選">
+      {categories.map((category, idx) => (
+        <button type="button" class={`filter-btn ${idx === 0 ? 'active' : ''}`} data-category={category}>
+          {category}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="container posts fade-in">
+    <div class="posts-grid" id="posts-grid">
+      {posts.map((post) => (
+        <article class="post-card card" data-category={post.data.category} data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')} ${post.data.category}`}>
+          <div class="meta">
+            <span>{post.data.category}</span>
+            <time datetime={post.data.publishDate.toISOString()}>
+              {post.data.publishDate.toLocaleDateString('zh-TW')}
+            </time>
+          </div>
+          <h2><a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a></h2>
+          <p>{post.data.description}</p>
+          <div class="tags">
+            {post.data.tags.slice(0, 4).map((tag) => (
+              <span>#{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p id="empty-state" class="empty-state" hidden>沒有符合目前條件的文章。</p>
+  </section>
 </MainLayout>
 
 <style>
-  .page-header {
-    text-align: center;
-    margin-bottom: var(--spacing-md);
-    padding: var(--spacing-sm) 0;
+  .blog-hero {
+    padding-top: 2.8rem;
   }
-  
-  .page-header h1 {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-sm);
+
+  .hero-kicker {
+    font-family: var(--font-heading);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.65rem;
   }
-  
-  .page-header p {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-    max-width: 600px;
-    margin: 0 auto;
+
+  .blog-hero p {
+    max-width: 65ch;
   }
-  
-  /* Featured Section */
-  .featured-section {
-    margin-bottom: var(--spacing-md);
+
+  .quick-start {
+    margin-top: 1.4rem;
   }
-  
-  .featured-section h2 {
-    text-align: center;
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-xl);
+
+  .quick-start-card {
+    padding: 1rem;
   }
-  
-  .featured-posts {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: var(--spacing-2xl);
+
+  .quick-start-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.35rem;
   }
-  
-  .featured-post {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: var(--spacing-lg);
+
+  .quick-start-card p {
+    margin-bottom: 0.7rem;
+  }
+
+  .quick-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .quick-btn {
+    min-height: 40px;
+    border: 1px solid var(--color-border);
+    background: #ffffff;
+    color: var(--color-primary-dark);
+    border-radius: 999px;
+    padding: 0 0.8rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+  }
+
+  .quick-btn:hover {
+    border-color: var(--color-primary);
+    background: #f0f9ff;
+  }
+
+  .quick-btn-link {
+    min-height: 40px;
+    border: 1px solid var(--color-border);
+    background: #ffffff;
+    color: var(--color-primary-dark);
+    border-radius: 999px;
+    padding: 0 0.8rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    display: inline-flex;
     align-items: center;
   }
-  
-  .featured-image {
-    height: 150px;
-    overflow: hidden;
-    border-radius: var(--border-radius);
+
+  .quick-btn-link:hover {
+    border-color: var(--color-primary);
+    background: #f0f9ff;
+    text-decoration: none;
   }
-  
-  .featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+  .featured {
+    margin-top: 2rem;
   }
-  
-  /* Blog Layout */
-  .blog-layout {
+
+  .featured-grid {
+    margin-top: 0.8rem;
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--spacing-xl);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
   }
-  
-  /* Category Filter */
-  .category-filter {
+
+  .feature-item {
+    overflow: hidden;
+  }
+
+  .feature-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .feature-content {
+    padding: 0.9rem;
+  }
+
+  .meta {
     display: flex;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    flex-wrap: wrap;
-  }
-  
-  .filter-btn {
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border: 2px solid var(--color-border);
-    background-color: var(--color-bg);
+    justify-content: space-between;
+    gap: 0.7rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.55rem;
     color: var(--color-text-light);
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 500;
   }
-  
+
+  .meta span {
+    font-weight: 600;
+    color: var(--color-primary-dark);
+  }
+
+  .feature-content h3 {
+    font-size: 1.03rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .controls {
+    margin-top: 2.1rem;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .search-wrap {
+    padding: 0.9rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .search-wrap label {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.88rem;
+  }
+
+  .search-wrap input {
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    min-height: 44px;
+    padding: 0 0.8rem;
+    background: var(--color-bg-secondary);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .search-wrap input:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-primary) 46%, transparent);
+    outline-offset: 1px;
+  }
+
+  .tag-hint {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-primary-dark);
+    font-weight: 600;
+  }
+
+  .category-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    min-height: 44px;
+    padding: 0 0.82rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-light);
+    cursor: pointer;
+    font-weight: 500;
+    font: inherit;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+
   .filter-btn:hover,
   .filter-btn.active {
-    border-color: var(--color-primary);
-    background-color: var(--color-primary);
-    color: white;
+    border-color: color-mix(in srgb, var(--color-primary) 50%, var(--color-border));
+    color: var(--color-primary-dark);
+    background: color-mix(in srgb, var(--color-primary) 16%, transparent);
   }
-  
-  /* Posts Grid */
+
+  .posts {
+    margin-top: 1rem;
+  }
+
   .posts-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-2xl);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
   }
-  
+
   .post-card {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: var(--spacing-lg);
-    align-items: start;
-    transition: all 0.3s ease;
+    padding: 0.9rem;
   }
-  
-  .post-card.hidden {
+
+  .post-card h2 {
+    font-size: 1.05rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .post-card p {
+    margin-bottom: 0.55rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tags span {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.18rem 0.52rem;
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+  }
+
+  .post-card.hidden,
+  .feature-item.hidden {
     display: none;
   }
-  
-  .post-image {
-    height: 150px;
-    overflow: hidden;
-    border-radius: var(--border-radius);
-  }
-  
-  .post-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .post-card:hover .post-image img {
-    transform: scale(1.05);
-  }
-  
-  .post-content {
-    padding: 0;
-  }
-  
-  .post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-    font-size: var(--font-size-sm);
-  }
-  
-  .post-category {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-weight: 500;
-  }
-  
-  .post-content h2 {
-    margin-bottom: var(--spacing-sm);
-    font-size: var(--font-size-xl);
-  }
-  
-  .post-content h2 a {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-  
-  .post-content h2 a:hover {
-    color: var(--color-primary);
-  }
-  
-  .post-content p {
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .post-tags {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .tag {
-    color: var(--color-text-light);
-    font-size: var(--font-size-sm);
-  }
-  
-  .post-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--font-size-sm);
-  }
-  
-  .post-author {
-    color: var(--color-text-light);
-  }
-  
-  .read-more {
-    color: var(--color-primary);
-    font-weight: 500;
-  }
-  
-  /* Sidebar */
-  .blog-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-2xl);
-  }
-  
-  .sidebar-widget {
-    background-color: var(--color-bg-secondary);
-    padding: var(--spacing-lg);
-    border-radius: var(--border-radius-lg);
-    border: 1px solid var(--color-border);
-  }
-  
-  .sidebar-widget h3 {
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-  }
-  
-  /* Search */
-  .search-box {
-    display: flex;
-    gap: var(--spacing-xs);
-  }
-  
-  .search-box input {
-    flex: 1;
-    padding: var(--spacing-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    background-color: var(--color-bg);
-    color: var(--color-text);
-  }
-  
-  .search-box button {
-    padding: var(--spacing-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    background-color: var(--color-primary);
-    color: white;
-    cursor: pointer;
-  }
-  
-  /* Category List */
-  .category-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .category-list li {
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .category-list a {
-    display: flex;
-    justify-content: space-between;
-    color: var(--color-text-light);
-    text-decoration: none;
-    padding: var(--spacing-xs) 0;
-    border-bottom: 1px solid var(--color-border-light);
-  }
-  
-  .category-list a:hover {
-    color: var(--color-primary);
-  }
-  
-  .count {
-    color: var(--color-text-light);
-    font-size: var(--font-size-sm);
-  }
-  
-  /* Tag Cloud */
-  .tag-cloud {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-  }
-  
-  .tag-link {
-    background-color: var(--color-bg);
-    color: var(--color-text-light);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-    border: 1px solid var(--color-border);
-    transition: all 0.2s ease;
-  }
-  
-  .tag-link:hover {
-    background-color: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
-  }
-  
-  /* Recent Posts */
-  .recent-posts {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .recent-posts li {
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--color-border-light);
-  }
-  
-  .recent-posts li:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-  
-  .recent-posts a {
-    text-decoration: none;
-    color: var(--color-text);
-  }
-  
-  .recent-title {
-    display: block;
-    font-weight: 500;
-    margin-bottom: var(--spacing-xs);
-    line-height: 1.3;
-  }
-  
-  .recent-date {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-  }
-  
-  .recent-posts a:hover .recent-title {
-    color: var(--color-primary);
-  }
-  
-  /* Empty State */
+
   .empty-state {
+    margin-top: 1.1rem;
     text-align: center;
-    padding: var(--spacing-3xl) 0;
+    font-weight: 600;
   }
-  
-  .empty-state h2 {
-    margin-bottom: var(--spacing-md);
-    color: var(--color-text-light);
-  }
-  
-  .empty-state p {
-    color: var(--color-text-light);
-  }
-  
-  /* Responsive Design */
+
   @media (max-width: 1024px) {
-    .blog-layout {
-      grid-template-columns: 220px 1fr;
-      gap: var(--spacing-lg);
+    .featured-grid,
+    .posts-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  
+
   @media (max-width: 768px) {
-    .blog-layout {
+    .blog-hero {
+      padding-top: 1.8rem;
+    }
+
+    .featured-grid,
+    .posts-grid {
       grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
-    }
-    
-    .blog-sidebar {
-      order: 2;
-    }
-    
-    .blog-main {
-      order: 1;
-    }
-    
-    .featured-posts {
-      grid-template-columns: 1fr;
-    }
-    
-    .featured-post,
-    .post-card {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-md);
-    }
-    
-    .featured-image,
-    .post-image {
-      height: 200px;
-    }
-    
-    .category-filter {
-      overflow-x: auto;
-      padding-bottom: var(--spacing-sm);
-    }
-    
-    .filter-btn {
-      white-space: nowrap;
     }
   }
 </style>
 
 <script>
-  // 類別篩選功能
   document.addEventListener('DOMContentLoaded', () => {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const postCards = document.querySelectorAll('.post-card');
-    
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const category = btn.getAttribute('data-category');
-        
-        // 更新按鈕狀態
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        // 篩選文章
-        postCards.forEach(card => {
-          const cardCategory = card.getAttribute('data-category');
-          if (category === 'all' || cardCategory === category) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+    const input = document.querySelector('#search-input');
+    const filters = Array.from(document.querySelectorAll('.filter-btn'));
+    const quickButtons = Array.from(document.querySelectorAll('.quick-btn'));
+    const postCards = Array.from(document.querySelectorAll('.post-card'));
+    const featureCards = Array.from(document.querySelectorAll('.feature-item'));
+    const emptyState = document.querySelector('#empty-state');
+    const tagHint = document.querySelector('#tag-hint');
+
+    if (!(input instanceof HTMLInputElement) || !emptyState) return;
+
+    let activeCategory = '全部';
+
+    const applyFilters = () => {
+      const keyword = input.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      const shouldShow = (element) => {
+        const category = element.getAttribute('data-category') || '';
+        const searchText = (element.getAttribute('data-search') || '').toLowerCase();
+        const categoryMatch = activeCategory === '全部' || category === activeCategory;
+        const keywordMatch = !keyword || searchText.includes(keyword);
+        return categoryMatch && keywordMatch;
+      };
+
+      postCards.forEach((card) => {
+        const show = shouldShow(card);
+        card.classList.toggle('hidden', !show);
+        if (show) visibleCount += 1;
+      });
+
+      featureCards.forEach((card) => {
+        const show = shouldShow(card);
+        card.classList.toggle('hidden', !show);
+      });
+
+      emptyState.hidden = visibleCount > 0;
+    };
+
+    input.addEventListener('input', applyFilters);
+
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeCategory = button.getAttribute('data-category') || '全部';
+        filters.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        applyFilters();
       });
     });
-    
-    // 簡單的搜尋功能
-    const searchInput = document.getElementById('search-input');
-    const searchBtn = document.getElementById('search-btn');
-    
-    function performSearch() {
-      const searchTerm = searchInput.value.toLowerCase();
-      
-      postCards.forEach(card => {
-        const title = card.querySelector('h2 a').textContent.toLowerCase();
-        const description = card.querySelector('p').textContent.toLowerCase();
-        
-        if (title.includes(searchTerm) || description.includes(searchTerm)) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
+
+    quickButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const targetCategory = button.getAttribute('data-category-target');
+        if (!targetCategory) return;
+        const targetBtn = filters.find((item) => item.getAttribute('data-category') === targetCategory);
+        if (!targetBtn) return;
+        activeCategory = targetCategory;
+        filters.forEach((item) => item.classList.remove('active'));
+        targetBtn.classList.add('active');
+        input.value = '';
+        applyFilters();
       });
-      
-      // 重置類別篩選
-      filterBtns.forEach(b => b.classList.remove('active'));
-      document.querySelector('[data-category="all"]').classList.add('active');
-    }
-    
-    searchBtn.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        performSearch();
+    });
+
+    // Support tag links from article page: /blog?tag=xxx
+    const params = new URLSearchParams(window.location.search);
+    const tag = params.get('tag');
+    if (tag) {
+      input.value = tag;
+      if (tagHint) {
+        tagHint.hidden = false;
+        tagHint.textContent = `目前以標籤篩選：#${tag}`;
       }
-    });
+    }
+
+    applyFilters();
   });
-</script> 
+</script>

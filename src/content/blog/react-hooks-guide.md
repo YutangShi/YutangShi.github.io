@@ -2,13 +2,45 @@
 title: "React Hooks 完整指南：從基礎到進階"
 description: "深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。"
 publishDate: 2024-01-15
-category: "前端開發"
+category: "AI"
 tags: ["React", "JavaScript", "Hooks"]
+seoKeywords: ["React", "JavaScript", "Hooks"]
 heroImage: "/images/blog/react-hooks.svg"
 draft: false
 ---
 
 React Hooks 自 React 16.8 版本引入以來，徹底改變了我們編寫 React 組件的方式。它讓我們能夠在函數組件中使用狀態和其他 React 特性，使代碼更加簡潔和易於理解。
+
+## 這篇適合誰
+
+- 適合：有一點前端基礎，想把 React Hooks 用得更穩的人。  
+- 不適合：完全沒有寫過 JavaScript/React 的讀者，建議先從基礎語法開始。  
+
+## 如果你想用 AI 讀懂這篇（可直接複製）
+
+```text
+角色：你是前端教練。
+目標：用白話幫我理解這篇文章的 React Hooks 概念，並用最小例子示範。
+受眾：沒有工程背景但願意看簡單程式碼的上班族。
+
+輸出格式：
+1) 名詞解釋（每個 2 句內）
+2) 真實場景例子（3 個，越貼近日常越好）
+3) 常見誤解（至少 3 點）
+4) 下一步學習建議（3 條）
+
+限制：
+- 避免過度術語；若出現術語需附一句白話解釋
+- 程式碼範例要短（每段不超過 15 行）
+```
+
+## 先懂的名詞（每個 2 句內）
+
+1. Component：畫面的一塊 UI（例如一張卡片或一個按鈕區）。React 用 Component 來拼整個頁面。  
+2. State：會變動的資料（例如計數器數字）。State 變了，畫面就會跟著更新。  
+3. Side effect：不是純粹「算結果」的動作，例如打 API、訂閱事件、操作 DOM。`useEffect` 就是處理這類事情。  
+4. Dependency：告訴 `useEffect` 什麼時候要重跑。寫錯依賴很常造成重複請求或漏更新。  
+5. Hook：以 `use` 開頭的函式，用來「掛上」React 能力。規則是只能在 Component 或自訂 Hook 最上層呼叫。  
 
 ## 什麼是 React Hooks？
 

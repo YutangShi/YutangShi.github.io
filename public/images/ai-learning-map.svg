@@ -1,0 +1,83 @@
+<svg width="1400" height="980" viewBox="0 0 1400 980" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI學習地圖</title>
+  <desc id="desc">從基礎概念、提示工程，到任務應用、自動化、上線治理的完整學習路徑。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7FCFF"/>
+      <stop offset="100%" stop-color="#EEF6FF"/>
+    </linearGradient>
+    <linearGradient id="step1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7DD3FC"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="step2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <linearGradient id="step3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C4B5FD"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+    <linearGradient id="step4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#86EFAC"/>
+      <stop offset="100%" stop-color="#4ADE80"/>
+    </linearGradient>
+    <linearGradient id="step5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDA4AF"/>
+      <stop offset="100%" stop-color="#FB7185"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto">
+      <path d="M0,0 L12,7 L0,14 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 800 56px 'Noto Sans TC', sans-serif; fill:#0F172A; }
+      .subtitle { font: 500 26px 'Noto Sans TC', sans-serif; fill:#334155; }
+      .stepTitle { font: 800 30px 'Noto Sans TC', sans-serif; fill:#0F172A; }
+      .item { font: 600 22px 'Noto Sans TC', sans-serif; fill:#0F172A; }
+      .small { font: 500 20px 'Noto Sans TC', sans-serif; fill:#334155; }
+      .chip { font: 700 20px 'Noto Sans TC', sans-serif; fill:#0F172A; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="980" rx="36" fill="url(#bg)"/>
+
+  <text x="700" y="92" text-anchor="middle" class="title">Allen 的 AI學習地圖</text>
+  <text x="700" y="130" text-anchor="middle" class="subtitle">基礎概念 → 提示工程 → 任務應用 → 自動化整合 → 可靠上線</text>
+
+  <rect x="110" y="190" width="1180" height="130" rx="26" fill="url(#step1)"/>
+  <text x="160" y="242" class="stepTitle">第一階段：基礎概念（LLM/GenAI）</text>
+  <text x="160" y="282" class="item">• 生成式 AI 是什麼　• Token / Context Window　• 幻覺與限制</text>
+
+  <rect x="110" y="350" width="1180" height="130" rx="26" fill="url(#step2)"/>
+  <text x="160" y="402" class="stepTitle">第二階段：提示工程（Prompt Engineering）</text>
+  <text x="160" y="442" class="item">• 角色/任務/格式/限制　• 範例驅動　• 可驗收輸出</text>
+
+  <rect x="110" y="510" width="560" height="130" rx="26" fill="url(#step3)"/>
+  <text x="150" y="562" class="stepTitle">第三階段：任務應用</text>
+  <text x="150" y="602" class="item">• 辦公加速　• 內容設計　• 學習研究</text>
+
+  <rect x="730" y="510" width="560" height="130" rx="26" fill="url(#step4)"/>
+  <text x="770" y="562" class="stepTitle">第四階段：流程自動化</text>
+  <text x="770" y="602" class="item">• N8N 工作流　• Webhook 串接　• Agent + RAG</text>
+
+  <rect x="110" y="670" width="1180" height="180" rx="26" fill="url(#step5)"/>
+  <text x="160" y="722" class="stepTitle">第五階段：可靠上線（SRE 思維）</text>
+  <text x="160" y="762" class="item">• 評估指標（Evals）　• 安全與風險護欄　• 監控/告警/回滾</text>
+  <text x="160" y="806" class="small">成果目標：從「會用工具」升級成「可持續運作的 AI 系統能力」。</text>
+
+  <line x1="700" y1="320" x2="700" y2="342" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="700" y1="480" x2="700" y2="502" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="390" y1="640" x2="390" y2="662" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="1010" y1="640" x2="1010" y2="662" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="116" y="902" width="210" height="48" rx="24" fill="#E0F2FE"/>
+  <text x="221" y="933" text-anchor="middle" class="chip">AI</text>
+  <rect x="342" y="902" width="210" height="48" rx="24" fill="#DCFCE7"/>
+  <text x="447" y="933" text-anchor="middle" class="chip">自動化</text>
+  <rect x="568" y="902" width="210" height="48" rx="24" fill="#EDE9FE"/>
+  <text x="673" y="933" text-anchor="middle" class="chip">N8N</text>
+  <rect x="794" y="902" width="210" height="48" rx="24" fill="#FFE4E6"/>
+  <text x="899" y="933" text-anchor="middle" class="chip">SRE</text>
+  <rect x="1020" y="902" width="270" height="48" rx="24" fill="#FEF3C7"/>
+  <text x="1155" y="933" text-anchor="middle" class="chip">Allen 的自動化特調</text>
+</svg>

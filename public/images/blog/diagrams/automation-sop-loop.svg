@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="可重複工作流程示意圖：輸入模板、Prompt 模板、輸出模板、驗收標準、回顧調整">
+  <defs>
+    <linearGradient id="bg2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fffaf3"/>
+      <stop offset="1" stop-color="#f3fbff"/>
+    </linearGradient>
+    <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .sub { font: 500 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .box { fill: #ffffff; stroke: #ffe1b0; stroke-width: 2; filter: url(#shadow2); }
+      .label { font: 800 22px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .desc { font: 500 16px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .arrow { stroke: #ffb347; stroke-width: 6; fill: none; stroke-linecap: round; }
+      .loop { stroke: #5aa9ff; stroke-width: 6; fill: none; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" rx="26" fill="url(#bg2)"/>
+  <text x="80" y="88" class="title">把聊天變成 SOP：最小可行流程</text>
+  <text x="80" y="122" class="sub">你只要把「輸入、輸出、驗收」固定下來，就能開始自動化</text>
+
+  <g transform="translate(110,180)">
+    <rect class="box" x="0" y="0" rx="18" width="520" height="120"/>
+    <text class="label" x="28" y="46">1) 輸入模板</text>
+    <text class="desc" x="28" y="76">固定欄位：誰填、填什麼、格式長什麼樣</text>
+    <text class="desc" x="28" y="100">例：客訴類型 / 產品 / 情緒 / 期望結果</text>
+  </g>
+
+  <path class="arrow" d="M650 240 L740 240"/>
+  <path class="arrow" d="M740 240 L724 230 M740 240 L724 250"/>
+
+  <g transform="translate(770,180)">
+    <rect class="box" x="0" y="0" rx="18" width="520" height="120"/>
+    <text class="label" x="28" y="46">2) Prompt 模板</text>
+    <text class="desc" x="28" y="76">固定規格：角色 / 目標 / 輸出格式 / 限制</text>
+    <text class="desc" x="28" y="100">可變參數：用 {欄位} 取代臨時口語</text>
+  </g>
+
+  <g transform="translate(110,360)">
+    <rect class="box" x="0" y="0" rx="18" width="520" height="120" style="stroke:#cfe8ff"/>
+    <text class="label" x="28" y="46">3) 輸出模板</text>
+    <text class="desc" x="28" y="76">讓下游能直接用：表格、條列、JSON、工單欄位</text>
+    <text class="desc" x="28" y="100">例：摘要 / 待辦 / 升級條件 / 風險提醒</text>
+  </g>
+
+  <path class="arrow" d="M650 420 L740 420"/>
+  <path class="arrow" d="M740 420 L724 410 M740 420 L724 430"/>
+
+  <g transform="translate(770,360)">
+    <rect class="box" x="0" y="0" rx="18" width="520" height="120" style="stroke:#cfe8ff"/>
+    <text class="label" x="28" y="46">4) 驗收標準</text>
+    <text class="desc" x="28" y="76">定義「合格」：可量測、可核對、可追溯</text>
+    <text class="desc" x="28" y="100">例：是否含負責人/截止日；是否標記待確認</text>
+  </g>
+
+  <g transform="translate(440,560)">
+    <rect class="box" x="0" y="0" rx="18" width="520" height="120" style="stroke:#b7f0df"/>
+    <text class="label" x="28" y="46">5) 回顧調整</text>
+    <text class="desc" x="28" y="76">每週挑 3 個失敗案例：補欄位、補限制、補例子</text>
+    <text class="desc" x="28" y="100">流程越跑越穩，才適合接到自動化工具</text>
+  </g>
+
+  <path class="loop" d="M980 540 C1150 540 1180 520 1180 440 C1180 340 1130 320 1040 320"/>
+  <path class="loop" d="M1040 320 L1060 310 M1040 320 L1058 332"/>
+</svg>
+

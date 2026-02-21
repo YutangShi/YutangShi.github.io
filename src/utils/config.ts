@@ -1,9 +1,10 @@
 export const SITE_CONFIG = {
-  title: 'Allen - Senior SRE & 軟體工程師',
-  description: '多年專業經驗的資深工程師，專精於 SRE、雲端架構、全端開發與 AI 技術研究',
+  title: 'Allen | AI 自動化 SRE 實戰',
+  description: '專注於 AI 自動化 SRE、可觀測性、雲端平台與高可靠系統的技術部落格',
   author: 'Allen 技術微光',
   email: 'yutangshi@gmail.com',
-  bio: '專精於雲端架構、DevOps、全端開發。曾開發 POS、進銷存、購物網站、企業 APP 等系統，並透過 AWS/Azure 建置與維護 Infra。個性易於相處與合作，做事細心，樂於學習新技術與分享新知。',
+  phone: '',
+  bio: '資深 SRE 與軟體工程師，長期投入雲端平台維運與自動化流程設計，專注於 Incident Response、Runbook Automation、Observability 與 AI Agent 在維運場景的落地應用。',
   avatar: '/avatar.jpg',
   locale: 'zh-TW',
   twitter: '@allenshi',
@@ -19,18 +20,21 @@ export const SITE_CONFIG = {
   navigation: [
     { name: '首頁', href: '/' },
     { name: '部落格', href: '/blog' },
+    { name: 'AI學習地圖', href: '/learning-path' },
     { name: '作品集', href: '/portfolio' },
     { name: '關於我', href: '/about' },
-    { name: '聯絡我', href: '/contact' },
-    { name: '服務項目', href: '/services' }
+    { name: '聯絡我', href: '/contact' }
   ],
   seo: {
     defaultImage: '/og-image.svg',
     twitterHandle: '@allenshi'
   },
+  analytics: {
+    gaMeasurementId: ''
+  },
   defaultMeta: {
-    title: 'Allen Shi - Senior SRE & 軟體工程師',
-    description: '專業經驗的資深工程師，專精於 SRE、雲端架構、全端開發與 AI 技術研究',
+    title: 'Allen | AI 自動化 SRE 實戰',
+    description: 'AI 自動化 SRE、可觀測性與雲端平台工程的實戰筆記',
     image: '/og-image.svg',
     type: 'website'
   }
@@ -38,22 +42,7 @@ export const SITE_CONFIG = {
 
 export const BLOG_CONFIG = {
   postsPerPage: 6,
-  categories: [
-    'SRE',
-    '雲端架構',
-    'DevOps',
-    '移動開發',
-    '後端開發',
-    '前端開發',
-    'AI 技術',
-    '監控運維',
-    'Infra',
-    'AWS/Azure',
-    'Docker/K8s',
-    '程式語言',
-    '專案心得',
-    '學習筆記'
-  ]
+  categories: ["AI", "自動化", "SRE", "N8N", "Mobile App"]
 } as const;
 
 export const PORTFOLIO_CONFIG = {
@@ -65,18 +54,3 @@ export const PORTFOLIO_CONFIG = {
     '企業系統'
   ]
 } as const;
-
-export const SERVICES_CONFIG = {
-  categories: [
-    'SRE 服務',
-    '雲端架構設計',
-    'DevOps 導入',
-    '系統監控優化',
-    '行動應用開發',
-    '全端開發',
-    'AI 應用技術諮詢',
-    'Infra 建置維護',
-    '技術顧問',
-    '系統維運'
-  ]
-} as const; 

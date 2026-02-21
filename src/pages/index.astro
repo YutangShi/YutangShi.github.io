@@ -3,372 +3,378 @@ import { getCollection } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
 import { SITE_CONFIG } from '../utils/config';
 
-// 獲取最新的部落格文章
-const allBlogPosts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
-
+const allBlogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
 const latestPosts = allBlogPosts
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
   .slice(0, 6);
 
-// 獲取精選作品
-const allPortfolio = await getCollection('portfolio');
-const featuredProjects = allPortfolio
-  .filter(project => project.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+const featuredPosts = latestPosts.filter((post) => post.data.featured).slice(0, 2);
+const spotlightPosts = featuredPosts.length > 0 ? featuredPosts : latestPosts.slice(0, 2);
+
+const uniqueTags = [...new Set(allBlogPosts.flatMap((post) => post.data.tags))].slice(0, 8);
 ---
 
-<MainLayout 
-  title={SITE_CONFIG.title}
-  description={SITE_CONFIG.description}
->
-  <!-- Latest Blog Posts Section -->
-  {latestPosts.length > 0 && (
-    <section class="latest-posts">
-      <div class="container">
-        <div class="section-header">
-          <h2>技術文章</h2>
-          <p>每一篇文章，都是照亮 AI 與 IT 世界的小小光點</p>
-        </div>
-        <div class="grid grid-1">
-          {latestPosts.map((post) => (
-            <article class="post-card card">
-              <div class="post-image">
-                <img src={post.data.heroImage || "/images/blog/default-post.svg"} alt={post.data.title} />
-              </div>
-              <div class="post-content">
-                <div class="post-meta">
-                  <span class="post-category">{post.data.category}</span>
-                  <time datetime={post.data.publishDate.toISOString()}>
-                    {post.data.publishDate.toLocaleDateString('zh-TW')}
-                  </time>
-                </div>
-                <h3>
-                  <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a>
-                </h3>
-                <p>{post.data.description}</p>
-                <div class="post-tags">
-                  {post.data.tags.slice(0, 3).map((tag) => (
-                    <span class="tag">#{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        <div class="section-footer">
-          <a href="/blog" class="btn">查看所有文章</a>
-        </div>
+<MainLayout title="Allen 的自動化特調" description="專注於 AI 與自動化實作，讓非工程背景也能一步步上手。">
+  <section class="hero container">
+    <div class="hero-copy fade-in">
+      <p class="hero-kicker">AI x Automation x Practical Workflow</p>
+      <h1>用白話理解 AI 與自動化，從概念到可落地流程。</h1>
+      <p>
+        這個部落格專門把 AI 與自動化拆成可理解的步驟。
+        就算你不是工程背景，也可以先從入門文章開始，逐步建立觀念。
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="/blog">閱讀最新文章</a>
+        <a class="btn btn-secondary" href="/about">認識我</a>
       </div>
-    </section>
-  )}
+      <div class="hero-tags">
+        {uniqueTags.map((tag) => (
+          <span>#{tag}</span>
+        ))}
+      </div>
+    </div>
 
-  <!-- Featured Projects Section -->
-  {featuredProjects.length > 0 && (
-    <section class="featured-projects">
-      <div class="container">
-        <div class="section-header">
-          <h2>精選作品</h2>
-          <p>以下是我最近完成的一些專案作品</p>
-        </div>
-        <div class="grid grid-3">
-          {featuredProjects.map((project) => (
-            <article class="project-card card">
-              <div class="project-image">
-                <img src={project.data.heroImage} alt={project.data.title} />
-              </div>
-              <div class="project-content">
-                <h3>{project.data.title}</h3>
-                <p>{project.data.description}</p>
-                <div class="project-tech">
-                  {project.data.technologies.slice(0, 3).map((tech) => (
-                    <span class="tech-tag">{tech}</span>
-                  ))}
-                </div>
-                <div class="project-links">
-                  <a href={`/portfolio/${project.id}`} class="btn btn-secondary">查看詳情</a>
-                  {project.data.projectUrl && (
-                    <a href={project.data.projectUrl} target="_blank" rel="noopener noreferrer" class="btn">
-                      線上預覽
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        <div class="section-footer">
-          <a href="/portfolio" class="btn">查看所有作品</a>
-        </div>
-      </div>
-    </section>
-  )}
+    <div class="hero-panel card fade-in delay-1">
+      <h2>你會在這裡學到</h2>
+      <p>每個主題都提供「概念 + 實作 + 風險提醒」，閱讀壓力更低。</p>
+      <ul>
+        <li><strong>Prompt 架構</strong><span>怎麼把需求寫清楚，讓 AI 回答更穩</span></li>
+        <li><strong>自動化流程</strong><span>把一次性聊天變成可重複 SOP</span></li>
+        <li><strong>工具整合</strong><span>用 n8n 與 Webhook 串接跨工具工作流</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="container beginner-path fade-in delay-2">
+    <div class="section-heading">
+      <h2 class="section-title">AI 學習地圖</h2>
+      <p class="section-subtitle">把「基礎 → 應用 → 賦能」做成固定路徑，照表學就不容易迷路。</p>
+    </div>
+    <div class="path-grid">
+      <article class="path-item card">
+        <p class="step">STEP 1</p>
+        <h3>AI 基礎核心篇</h3>
+        <p>先學 AI 觀念、提問方法與指令實作。</p>
+      </article>
+      <article class="path-item card">
+        <p class="step">STEP 2</p>
+        <h3>AI 中階應用篇</h3>
+        <p>把 AI 用在圖像設計、辦公加速與學習升級。</p>
+      </article>
+      <article class="path-item card">
+        <p class="step">STEP 3</p>
+        <h3>AI 高階賦能篇</h3>
+        <p>進入自動化、研究決策與 Vibe Coding 實戰。</p>
+      </article>
+    </div>
+    <div class="path-cta">
+      <a href="/learning-path" class="btn">查看完整學習地圖</a>
+    </div>
+  </section>
+
+  <section class="container section fade-in delay-3">
+    <div class="section-heading">
+      <h2 class="section-title">焦點文章</h2>
+      <p class="section-subtitle">從 AI 學習地圖到自動化流程設計，整理最常被問到的實戰主題。</p>
+    </div>
+
+    <div class="spotlight-grid">
+      {spotlightPosts.map((post) => (
+        <article class="spotlight card">
+          <img src={post.data.heroImage || '/images/blog/default-post.svg'} alt={post.data.title} loading="lazy" />
+          <div class="spotlight-content">
+            <div class="meta-row">
+              <span>{post.data.category}</span>
+              <time datetime={post.data.publishDate.toISOString()}>
+                {post.data.publishDate.toLocaleDateString('zh-TW')}
+              </time>
+            </div>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="read-link">閱讀文章</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container section fade-in">
+    <div class="section-heading">
+      <h2 class="section-title">最新文章</h2>
+      <p class="section-subtitle">每篇文章都聚焦可落地的步驟，盡量避免只談概念。</p>
+    </div>
+
+    <div class="post-grid">
+      {latestPosts.map((post) => (
+        <article class="post-item card">
+          <div class="post-meta">
+            <span class="category">{post.data.category}</span>
+            <time datetime={post.data.publishDate.toISOString()}>
+              {post.data.publishDate.toLocaleDateString('zh-TW')}
+            </time>
+          </div>
+          <h3>
+            <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a>
+          </h3>
+          <p>{post.data.description}</p>
+          <div class="post-tags">
+            {post.data.tags.slice(0, 3).map((tag) => (
+              <span>#{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="section-footer">
+      <a href="/blog" class="btn">查看全部文章</a>
+    </div>
+  </section>
 </MainLayout>
 
 <style>
-  /* Hero Section */
   .hero {
-    padding: var(--spacing-3xl) 0;
-    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
-  }
-  
-  .hero-content {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: var(--spacing-3xl);
-    align-items: center;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.2rem;
+    padding-top: 2.6rem;
+    align-items: stretch;
   }
-  
-  .hero-title {
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: var(--spacing-lg);
+
+  .hero-copy {
+    padding: 1rem 0;
   }
-  
-  .highlight {
-    color: var(--color-primary);
+
+  .hero-kicker {
+    font-family: var(--font-heading);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.8rem;
   }
-  
-  .hero-description {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-2xl);
-    line-height: 1.6;
+
+  .hero-copy h1 {
+    margin-bottom: 1rem;
+    max-width: 20ch;
   }
-  
+
+  .hero-copy p {
+    max-width: 60ch;
+  }
+
   .hero-actions {
     display: flex;
-    gap: var(--spacing-md);
     flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.2rem 0 1rem;
   }
-  
-  .hero-image {
+
+  .hero-tags {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  
-  .avatar {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid var(--color-primary);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* Section Styles */
-  .featured-projects,
-  .latest-posts {
-    padding: var(--spacing-3xl) 0;
-  }
-  
-  .section-header {
-    text-align: center;
-    margin-bottom: var(--spacing-3xl);
-  }
-  
-  .section-header h2 {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .section-header p {
-    font-size: var(--font-size-lg);
+
+  .hero-tags span {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
     color: var(--color-text-light);
-    max-width: 600px;
-    margin: 0 auto;
   }
-  
-  .section-footer {
-    text-align: center;
-    margin-top: var(--spacing-2xl);
+
+  .hero-panel {
+    padding: 1.2rem;
   }
-  
-  /* Project Card */
-  .project-card {
-    overflow: hidden;
+
+  .hero-panel h2 {
+    margin-bottom: 0.6rem;
+    font-size: 1.25rem;
   }
-  
-  .project-image {
-    height: 200px;
-    overflow: hidden;
-    margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg)) var(--spacing-lg);
-  }
-  
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .project-card:hover .project-image img {
-    transform: scale(1.05);
-  }
-  
-  .project-content h3 {
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .project-content p {
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .project-tech {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .tech-tag {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-primary);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-  }
-  
-  .project-links {
-    display: flex;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
-  }
-  
-  /* Post Card */
-  .post-card {
-    overflow: hidden;
+
+  .hero-panel ul {
+    list-style: none;
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: var(--spacing-lg);
-    align-items: start;
+    gap: 0.7rem;
+    margin-top: 0.8rem;
   }
-  
-  .post-image {
-    height: 180px;
+
+  .hero-panel li {
+    border: 1px solid var(--color-border-light);
+    border-radius: 0.8rem;
+    padding: 0.7rem;
+    background: var(--color-bg-secondary);
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .hero-panel strong {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+  }
+
+  .hero-panel span {
+    color: var(--color-text-light);
+    font-size: 0.84rem;
+  }
+
+  .section {
+    margin-top: 3.1rem;
+  }
+
+  .section-heading {
+    margin-bottom: 1.1rem;
+  }
+
+  .beginner-path {
+    margin-top: 2.2rem;
+  }
+
+  .path-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .path-item {
+    padding: 1rem;
+  }
+
+  .path-item .step {
+    margin-bottom: 0.45rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    color: var(--color-primary-dark);
+    font-weight: 700;
+  }
+
+  .path-item h3 {
+    margin-bottom: 0.35rem;
+    font-size: 1.05rem;
+  }
+
+  .path-cta {
+    margin-top: 0.9rem;
+  }
+
+  .spotlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .spotlight {
     overflow: hidden;
-    border-radius: var(--border-radius);
-    margin: 0;
   }
-  
-  .post-image img {
+
+  .spotlight img {
+    height: 210px;
     width: 100%;
-    height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
-  
-  .post-card:hover .post-image img {
-    transform: scale(1.05);
+
+  .spotlight-content {
+    padding: 0.95rem;
   }
-  
-  .post-meta {
+
+  .meta-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-    font-size: var(--font-size-sm);
-  }
-  
-  .post-category {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-weight: 500;
-  }
-  
-  .post-content h3 {
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .post-content h3 a {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-  
-  .post-content h3 a:hover {
-    color: var(--color-primary);
-  }
-  
-  .post-content p {
+    gap: 0.8rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.55rem;
     color: var(--color-text-light);
-    margin-bottom: var(--spacing-md);
   }
-  
+
+  .meta-row span {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+  }
+
+  .spotlight h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .read-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .post-item {
+    padding: 1rem;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.65rem;
+    color: var(--color-text-light);
+  }
+
+  .category {
+    font-weight: 600;
+    color: var(--color-primary-dark);
+  }
+
+  .post-item h3 {
+    font-size: 1.03rem;
+    margin-bottom: 0.4rem;
+  }
+
   .post-tags {
     display: flex;
-    gap: var(--spacing-xs);
     flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.45rem;
   }
-  
-  .tag {
+
+  .post-tags span {
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    font-size: 0.72rem;
+    padding: 0.18rem 0.55rem;
     color: var(--color-text-light);
-    font-size: var(--font-size-sm);
   }
-  
-  /* CTA Section */
-  .cta {
-    padding: var(--spacing-3xl) 0;
-    background-color: var(--color-bg-secondary);
+
+  .section-footer {
+    margin-top: 1.3rem;
   }
-  
-  .cta-content {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    .post-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
-  
-  .cta-content h2 {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .cta-content p {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-2xl);
-  }
-  
-  .cta-actions {
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .hero-content {
+
+  @media (max-width: 900px) {
+    .hero {
       grid-template-columns: 1fr;
-      text-align: center;
-      gap: var(--spacing-2xl);
+      padding-top: 1.8rem;
     }
-    
-    .hero-title {
-      font-size: 2.5rem;
+
+    .path-grid,
+    .spotlight-grid {
+      grid-template-columns: 1fr;
     }
-    
-    .avatar {
-      width: 200px;
-      height: 200px;
-    }
-    
-    .hero-actions,
-    .project-links,
-    .cta-actions {
-      justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .post-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

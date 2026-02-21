@@ -7,12 +7,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && npx gh-pages -d dist"
+    "deploy": "astro build && npx gh-pages -d dist",
+    "deploy:cf": "npm run build && wrangler pages deploy dist --project-name allen-ai-sre-blog"
   },
   "dependencies": {
     "astro": "^5.0.3"
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "wrangler": "^4.50.0"
   }
 }

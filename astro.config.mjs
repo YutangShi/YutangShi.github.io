@@ -11,7 +11,7 @@ export default defineConfig({
   integrations: [],
   markdown: {
     shikiConfig: {
-      theme: 'github-dark',
+      theme: 'github-light',
       wrap: true
     }
   },

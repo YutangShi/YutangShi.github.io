@@ -1,0 +1,38 @@
+version: 1
+agents:
+  - id: content-strategist
+    name: Content Strategist
+    objective: Plan high-impact AI/SRE article topics and structure.
+    inputs:
+      - recent_posts
+      - target_audience
+      - focus_keywords
+    outputs:
+      - topic_brief
+      - draft_outline
+
+  - id: sre-editor
+    name: SRE Technical Editor
+    objective: Ensure technical correctness and production readiness.
+    checks:
+      - clear assumptions
+      - rollback strategy
+      - measurable SLI/SLO linkage
+      - incident response practicality
+
+  - id: frontend-polish
+    name: Frontend Polish Agent
+    objective: Keep site pages readable, fast, and accessible.
+    checks:
+      - mobile layout integrity
+      - color contrast
+      - interaction target size
+      - reduced motion support
+
+  - id: release-agent
+    name: Release Agent
+    objective: Prepare deployment-safe output for Cloudflare Pages.
+    checks:
+      - build passes
+      - dist generated
+      - deployment command validity

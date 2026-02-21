@@ -4,8 +4,9 @@ description: "詳細介紹企業級可觀測性平台的設計與實現，包含
 publishDate: 2024-04-15
 updatedDate: 2024-06-01
 heroImage: "/images/blog/observability-platform.svg"
-category: "雲原生"
+category: "SRE"
 tags: ["可觀測性", "監控", "Prometheus", "Grafana", "Loki", "Tempo", "DevOps"]
+seoKeywords: ["可觀測性", "監控", "Prometheus", "Grafana", "Loki", "Tempo", "DevOps"]
 draft: false
 featured: true
 author: "Allen Shi"

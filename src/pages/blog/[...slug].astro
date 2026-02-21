@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content } = await entry.render();
 
 // 獲取相關文章
 const allPosts = await getCollection('blog', ({ data }) => {
@@ -56,11 +56,64 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   description={entry.data.description}
   image={entry.data.heroImage}
   type="article"
+  keywords={entry.data.seoKeywords || entry.data.tags}
 >
   <article class="blog-post">
     <div class="container">
       <!-- Post Header -->
       <header class="post-header">
+        <div class="post-header-top">
+          <div class="share-buttons share-buttons-top">
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(Astro.url.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="share-btn twitter"
+              aria-label="分享到 Twitter"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.9 2H22l-6.8 7.8 8 10.2h-6.3l-4.9-6.2-5.4 6.2H3.5l7.3-8.4L3.1 2h6.5l4.4 5.7L18.9 2z"></path>
+              </svg>
+              <span>X</span>
+            </a>
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="share-btn facebook"
+              aria-label="分享到 Facebook"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M13.5 8.5V6.8c0-.8.5-1.3 1.3-1.3h1.7V2.1h-2.9C10.9 2.1 9.7 3.8 9.7 6v2.5H7.1v3.4h2.6V22h3.8v-10.1h2.8l.4-3.4h-3.2z"></path>
+              </svg>
+              <span>Facebook</span>
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="share-btn linkedin"
+              aria-label="分享到 LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.2 8.4a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4zM4.3 9.9h3.8V22H4.3zM10.2 9.9h3.6v1.7h.1c.5-1 1.8-2 3.8-2 4.1 0 4.8 2.7 4.8 6.2V22h-3.8v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V22h-3.8z"></path>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+            <button
+              class="share-btn copy-link"
+              onclick="copyToClipboard(this)"
+              aria-label="複製文章連結"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 9h10v12H9z"></path>
+                <path d="M5 3h10v2H7v10H5z"></path>
+              </svg>
+              <span>複製連結</span>
+            </button>
+          </div>
+        </div>
+
         <div class="post-meta">
           <span class="post-category">{entry.data.category}</span>
           <span class="post-reading-time">{readingTime} 分鐘閱讀</span>
@@ -88,34 +141,21 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
         {entry.data.tags.length > 0 && (
           <div class="post-tags">
             {entry.data.tags.map((tag) => (
-              <a href={`/blog/tag/${tag}`} class="tag">#{tag}</a>
+              <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="tag">#{tag}</a>
             ))}
           </div>
         )}
       </header>
 
       <!-- Hero Image -->
-      <div class="post-hero">
-        <img src={entry.data.heroImage || "/images/blog/default-post.svg"} alt={entry.data.title} />
-      </div>
+      {entry.data.heroImage && (
+        <div class="post-hero">
+          <img src={entry.data.heroImage} alt={entry.data.title} />
+        </div>
+      )}
 
       <!-- Post Content -->
       <div class="post-container">
-        {headings.length > 0 && (
-          <aside class="table-of-contents">
-            <h3>目錄</h3>
-            <nav>
-              <ul>
-                {headings.map((heading) => (
-                  <li class={`toc-level-${heading.depth}`}>
-                    <a href={`#${heading.slug}`}>{heading.text}</a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </aside>
-        )}
-
         <div class="post-content prose">
           <Content />
         </div>
@@ -123,42 +163,6 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
 
       <!-- Post Footer -->
       <footer class="post-footer">
-        <div class="post-share">
-          <h3>分享這篇文章</h3>
-          <div class="share-buttons">
-            <a 
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(Astro.url.href)}`}
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="share-btn twitter"
-            >
-              Twitter
-            </a>
-            <a 
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.href)}`}
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="share-btn facebook"
-            >
-              Facebook
-            </a>
-            <a 
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="share-btn linkedin"
-            >
-              LinkedIn
-            </a>
-            <button 
-              class="share-btn copy-link"
-              onclick="copyToClipboard()"
-            >
-              複製連結
-            </button>
-          </div>
-        </div>
-
         <!-- Navigation -->
         <nav class="post-navigation">
           <a href="/blog" class="back-to-blog">← 回到部落格</a>
@@ -198,7 +202,7 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   )}
 </MainLayout>
 
-<style>
+<style is:global>
   .blog-post {
     padding: var(--spacing-2xl) 0;
   }
@@ -210,6 +214,12 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .post-header-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--spacing-lg);
   }
   
   .post-meta {
@@ -305,63 +315,9 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   }
   
   /* Table of Contents */
-  .table-of-contents {
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-3xl);
-    max-width: 300px;
-    position: sticky;
-    top: var(--spacing-xl);
-    height: fit-content;
-  }
-  
-  .table-of-contents h3 {
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-lg);
-  }
-  
-  .table-of-contents ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .table-of-contents li {
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .table-of-contents a {
-    color: var(--color-text-light);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-    line-height: 1.4;
-    display: block;
-    padding: 0.25rem 0;
-    transition: color 0.2s ease;
-  }
-  
-  .table-of-contents a:hover {
-    color: var(--color-primary);
-  }
-  
-  .toc-level-2 {
-    padding-left: var(--spacing-md);
-  }
-  
-  .toc-level-3 {
-    padding-left: var(--spacing-xl);
-  }
-  
-  .toc-level-4 {
-    padding-left: calc(var(--spacing-xl) + var(--spacing-md));
-  }
-  
   /* Post Container */
   .post-container {
-    display: flex;
-    gap: var(--spacing-xl);
+    display: block;
     margin-bottom: var(--spacing-3xl);
   }
   
@@ -401,6 +357,15 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   .post-content ol {
     margin-bottom: 1.5em;
     padding-left: 2em;
+  }
+
+  /* Pure reading mode: hide markdown task checkboxes */
+  .post-content input[type='checkbox'] {
+    display: none;
+  }
+
+  .post-content li.task-list-item {
+    list-style: disc;
   }
   
   .post-content li {
@@ -454,15 +419,6 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
     margin-top: var(--spacing-3xl);
   }
   
-  .post-share {
-    margin-bottom: var(--spacing-2xl);
-  }
-  
-  .post-share h3 {
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-lg);
-  }
-  
   .share-buttons {
     display: flex;
     gap: var(--spacing-sm);
@@ -470,7 +426,7 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   }
   
   .share-btn {
-    padding: var(--spacing-sm) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     text-decoration: none;
@@ -479,6 +435,17 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
     cursor: pointer;
     background-color: var(--color-bg);
     color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--font-size-sm);
+    line-height: 1;
+  }
+
+  .share-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
   }
   
   .share-btn:hover {
@@ -608,15 +575,6 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   }
   
   /* Responsive Design */
-  @media (max-width: 1024px) {
-    .table-of-contents {
-      float: none;
-      margin-left: 0;
-      margin-right: 0;
-      max-width: none;
-    }
-  }
-  
   @media (max-width: 768px) {
     .post-title {
       font-size: var(--font-size-3xl);
@@ -633,55 +591,31 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
     }
     
     .share-buttons {
-      justify-content: center;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .share-btn span {
+      display: none;
     }
     
     .related-grid {
       grid-template-columns: 1fr;
     }
     
-    .post-container {
-      flex-direction: column;
-    }
-    
-    .table-of-contents {
-      max-width: 100%;
-      position: relative;
-      top: 0;
-      margin-bottom: var(--spacing-xl);
-    }
   }
 </style>
 
 <script>
-  function copyToClipboard() {
+  function copyToClipboard(button) {
     navigator.clipboard.writeText(window.location.href).then(() => {
-      const btn = document.querySelector('.copy-link');
-      const originalText = btn.textContent;
-      btn.textContent = '已複製！';
+      const label = button.querySelector('span');
+      const originalText = label ? label.textContent : '';
+      if (label) label.textContent = '已複製！';
       setTimeout(() => {
-        btn.textContent = originalText;
+        if (label) label.textContent = originalText;
       }, 2000);
     });
   }
   
-  // 平滑滾動到錨點
-  document.addEventListener('DOMContentLoaded', () => {
-    const tocLinks = document.querySelectorAll('.table-of-contents a');
-    
-    tocLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-  });
 </script> 

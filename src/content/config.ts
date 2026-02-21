@@ -9,8 +9,9 @@ const blog = defineCollection({
     publishDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
-    category: z.string(),
+    category: z.enum(["AI", "自動化", "SRE", "N8N", "Mobile App"]),
     tags: z.array(z.string()).default([]),
+    seoKeywords: z.array(z.string()).optional(),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
     author: z.string().default('您的姓名'),
@@ -38,26 +39,7 @@ const portfolio = defineCollection({
   }),
 });
 
-// 服務項目集合
-const services = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    icon: z.string(),
-    features: z.array(z.string()),
-    pricing: z.object({
-      basic: z.string().optional(),
-      standard: z.string().optional(),
-      premium: z.string().optional(),
-    }).optional(),
-    order: z.number().default(0),
-    featured: z.boolean().default(false),
-  }),
-});
-
 export const collections = {
   blog,
   portfolio,
-  services,
 }; 

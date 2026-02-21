@@ -1,0 +1,35 @@
+version = "1"
+project = "allen-ai-sre-blog"
+locale = "zh-TW"
+
+[context]
+product = "technical blog"
+focus = ["ai-automation", "sre", "observability", "platform-engineering"]
+stack = ["astro", "markdown", "cloudflare-pages"]
+
+[quality]
+require_build = true
+build_command = "npm run build"
+require_accessibility_checks = true
+require_mobile_review = true
+
+[content]
+min_sections = 5
+required_sections = [
+  "Problem",
+  "Architecture",
+  "Implementation",
+  "Failure Modes",
+  "Metrics"
+]
+
+[guardrails]
+no_secret_in_output = true
+no_destructive_git = true
+preserve_existing_routes = true
+
+[deploy]
+provider = "cloudflare-pages"
+output_dir = "dist"
+deploy_command = "npm run deploy:cf"
+required_env = ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]

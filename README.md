@@ -1,115 +1,81 @@
-# 技術微光 - Allen Shi 的個人網站
+# Allen 技術微光部落格
 
-這是我的個人網站，包含個人簡介、作品集和技術文章分享。
-
-## 網站特色
-
-- 個人簡介與專業經驗
-- 技術微光：技術文章與見解分享
-- 作品集展示
-- 專業服務介紹
-- 聯絡資訊
-
-## 技術棧
-
-- [Astro](https://astro.build/) - 網站框架
-- 純 CSS 樣式與排版
-- 響應式設計
+以 Astro 建置的個人技術部落格，主題聚焦在 AI 自動化、SRE、雲端平台與可觀測性。
 
 ## 本地開發
 
 ```bash
-# 安裝依賴
 npm install
-
-# 啟動開發伺服器
 npm run dev
+```
 
-# 建構生產環境版本
+## 建置與預覽
+
+```bash
 npm run build
-
-# 預覽生產版本
 npm run preview
 ```
 
-## 部署指南
+## 部署到 Cloudflare Pages
 
-### 自動部署到 GitHub Pages
+### 方式 1: Cloudflare 控制台（推薦）
 
-這個專案設置了 GitHub Actions 工作流程，每當您推送到 `main` 分支時，網站會自動構建並部署到 GitHub Pages。
+1. 將此 repo 連接到 Cloudflare Pages。
+2. Build command 設為 `npm run build`。
+3. Build output directory 設為 `dist`。
+4. Node.js 版本建議 20+。
 
-#### 設置步驟
-
-1. 在 GitHub 創建一個新的儲存庫
-2. 推送代碼到該儲存庫
-3. 在儲存庫設置中啟用 GitHub Pages，選擇 "GitHub Actions" 作為來源
-4. 完成！您的網站將自動部署到 `https://[您的GitHub用戶名].github.io`
-
-### 手動部署
-
-如果您想手動部署，可以使用以下步驟：
+### 方式 2: Wrangler CLI
 
 ```bash
-# 構建網站
-npm run build
+# 第一次建立專案（只需一次）
+wrangler pages project create allen-ai-sre-blog --production-branch main
 
-# 部署到您的網站主機
-# 將 dist 目錄中的檔案上傳到您的網站空間
+# 設定 API Token（CI 或非互動環境必須）
+export CLOUDFLARE_API_TOKEN=your_token
+export CLOUDFLARE_ACCOUNT_ID=your_account_id
+
+# 建置並部署
+npm run deploy:cf
 ```
 
-## 網站維護
+> `wrangler.toml` 已設定 `pages_build_output_dir = "./dist"`。
 
-- 要添加新文章，在 `src/content/blog/` 目錄下創建新的 Markdown 文件
-- 要修改網站配置，編輯 `src/utils/config.ts` 文件
-- 要更新作品集，在 `src/content/portfolio/` 目錄下添加或修改項目
+## AI 協作設定
 
-## 許可協議
+- 代理規範：`AGENTS.md`
+- Codait 設定：`codait/`
+- OpenSpec 規格：`openspec/`
 
-© 2024 Allen Shi. 保留所有權利。
+### 使用順序（建議）
 
-```sh
-npm create astro@latest -- --template basics
-```
+1. 先讀 `AGENTS.md`，確認本專案 AI 協作與交付規範。
+2. 在 `codait/config.toml` 套用品質與守則。
+3. 依任務選 `codait/agents.yaml` 的角色。
+4. 套用 `codait/prompts/` 與 `codait/workflows/`。
+5. 若有行為改動，新增或更新 `openspec/specs/*.md`。
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## GA 與文章 SEO
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Google Analytics（GA4）
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+在部署環境設定以下任一方式即可啟用：
 
-## 🚀 Project Structure
+- `PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`（推薦）
+- 或在 `src/utils/config.ts` 的 `analytics.gaMeasurementId` 填入 ID
 
-Inside of your Astro project, you'll see the following folders and files:
+### 每篇文章 SEO 關鍵字
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- 文章 frontmatter 支援 `seoKeywords`（可選）
+- 若未提供 `seoKeywords`，系統會自動使用 `tags` 作為 keywords meta
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### 可重複使用的 SEO/GA Prompt
 
-## 🧞 Commands
+- `codait/prompts/article-seo-keyword-generator.md`
+- `codait/prompts/ga-seo-optimization-runbook.md`
 
-All commands are run from the root of the project, from a terminal:
+## 內容維護
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- 新增文章：`src/content/blog/*.md`
+- 更新站點資訊：`src/utils/config.ts`
+- 調整首頁/列表樣式：`src/pages/index.astro`、`src/pages/blog/index.astro`

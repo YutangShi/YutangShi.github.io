@@ -4,8 +4,9 @@ description: "詳細介紹如何使用Certbot在Ubuntu環境下為Nginx伺服器
 publishDate: 2020-05-03
 updatedDate: 2024-12-05
 heroImage: "/images/blog/ssl-certbot.svg"
-category: "網路技術"
+category: "自動化"
 tags: ["SSL", "HTTPS", "nginx", "certbot", "Let's Encrypt", "Ubuntu", "網路安全"]
+seoKeywords: ["SSL", "HTTPS", "nginx", "certbot", "Let's Encrypt", "Ubuntu", "網路安全"]
 draft: false
 featured: false
 author: "Allen Shi"
@@ -13,6 +14,43 @@ readingTime: 5
 ---
 
 目前SSL已經普遍使用 Let's Encrypt CA (Certificate Authority) 來簽署，但每隔90天就要重新更換，因此就有了certbot服務的產生，來幫我們自動重簽憑證。本文將介紹如何在Ubuntu環境下使用certbot為Nginx設置SSL憑證。
+
+## 你看完會得到什麼
+
+- 你會知道 Certbot 在做什麼，以及為什麼可以自動續期。  
+- 你會掌握最短路徑：申請憑證、配置 Nginx、驗證續期。  
+- 你會避開 3 個常見翻車點（網域、權限、防火牆）。  
+
+## 先懂的名詞（每個 2 句內）
+
+1. SSL/TLS：瀏覽器和伺服器之間加密通訊的機制。沒有它就容易被攔截或竄改。  
+2. 憑證（Certificate）：證明「這個網域是你」的文件。瀏覽器會用它來判斷是否可信。  
+3. Let's Encrypt：免費提供憑證的 CA。憑證有期限，所以需要續期。  
+4. Certbot：幫你申請與續期憑證的工具。它也能協助修改 Nginx 設定。  
+5. 自動續期：定期檢查憑證快到期時自動更新。你要驗證的是「續期是否真的會跑」。  
+
+## 真實場景例子（3 個）
+
+1. 你剛架好一個網站：想快速把 HTTP 變 HTTPS。  
+2. 你有多個子網域：同時簽多張或一張多網域憑證。  
+3. 你怕到期忘記續：需要可觀測的續期機制（計時器、日誌）。  
+
+## 常見誤解（至少 3 點）
+
+1. 「Certbot 跑一次就永遠沒事。」  
+你需要確認續期計時器真的存在，並且續期後 Nginx 會正確載入新憑證。  
+
+2. 「瀏覽器顯示不安全，一定是憑證沒裝好。」  
+也可能是 DNS 指向錯、80/443 被防火牆擋、或 Nginx 沒重載。  
+
+3. 「我用 `certonly` 也會自動幫我改 Nginx。」  
+`certonly` 只拿憑證不改設定；要自己把路徑填進 Nginx。  
+
+## 下一步（3 條）
+
+1. 跑一次 `sudo certbot renew --dry-run`，確認續期路徑沒問題。  
+2. 把續期結果寫入監控或告警（例如每天檢查到期天數）。  
+3. 進一步強化安全：檢查 TLS 設定與 HSTS 是否符合你的需求。  
 
 ## 環境準備
 

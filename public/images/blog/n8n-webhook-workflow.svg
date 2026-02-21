@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="n8n Webhook 自動化流程示意圖">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f6fbff"/>
+      <stop offset="1" stop-color="#fff8ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .sub { font: 500 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .node { fill: #ffffff; stroke: #dbe8ff; stroke-width: 2; filter: url(#shadow); }
+      .nodeTitle { font: 700 20px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .nodeDesc { font: 500 15px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #456; }
+      .arrow { stroke: #5a95ff; stroke-width: 6; fill: none; stroke-linecap: round; }
+      .badge { fill: #e9f2ff; stroke: #b8d3ff; stroke-width: 1.5; }
+      .badgeText { font: 700 14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #1d5bb8; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" rx="26" fill="url(#bg)"/>
+  <text x="80" y="88" class="title">N8N Webhook 自動化流程</text>
+  <text x="80" y="122" class="sub">表單送出後自動摘要、寫入資料，再通知團隊</text>
+
+  <g transform="translate(95,220)">
+    <rect class="node" x="0" y="0" rx="18" width="280" height="170"/>
+    <rect class="badge" x="24" y="22" rx="12" width="100" height="34"/>
+    <text class="badgeText" x="48" y="44">Trigger</text>
+    <text class="nodeTitle" x="24" y="88">Webhook</text>
+    <text class="nodeDesc" x="24" y="116">接收表單或 API 事件</text>
+    <text class="nodeDesc" x="24" y="138">取得原始輸入資料</text>
+  </g>
+
+  <path class="arrow" d="M390 305 L450 305"/>
+  <path class="arrow" d="M450 305 L434 295 M450 305 L434 315"/>
+
+  <g transform="translate(470,220)">
+    <rect class="node" x="0" y="0" rx="18" width="280" height="170"/>
+    <rect class="badge" x="24" y="22" rx="12" width="120" height="34"/>
+    <text class="badgeText" x="48" y="44">Transform</text>
+    <text class="nodeTitle" x="24" y="88">Data Mapping</text>
+    <text class="nodeDesc" x="24" y="116">欄位清洗與格式統一</text>
+    <text class="nodeDesc" x="24" y="138">補上流程必要參數</text>
+  </g>
+
+  <path class="arrow" d="M765 305 L825 305"/>
+  <path class="arrow" d="M825 305 L809 295 M825 305 L809 315"/>
+
+  <g transform="translate(845,220)">
+    <rect class="node" x="0" y="0" rx="18" width="280" height="170"/>
+    <rect class="badge" x="24" y="22" rx="12" width="88" height="34"/>
+    <text class="badgeText" x="50" y="44">AI</text>
+    <text class="nodeTitle" x="24" y="88">AI Summary</text>
+    <text class="nodeDesc" x="24" y="116">摘要重點與待辦事項</text>
+    <text class="nodeDesc" x="24" y="138">不確定資訊標記待確認</text>
+  </g>
+
+  <path class="arrow" d="M1140 305 L1200 305"/>
+  <path class="arrow" d="M1200 305 L1184 295 M1200 305 L1184 315"/>
+
+  <g transform="translate(980,460)">
+    <rect class="node" x="0" y="0" rx="18" width="320" height="170" style="stroke:#bfe7d5"/>
+    <rect class="badge" x="24" y="22" rx="12" width="104" height="34" style="fill:#eafcf4;stroke:#bfe7d5"/>
+    <text class="badgeText" x="48" y="44" style="fill:#16865f">Output</text>
+    <text class="nodeTitle" x="24" y="88">Slack / Email</text>
+    <text class="nodeDesc" x="24" y="116">推送處理結果與錯誤通知</text>
+    <text class="nodeDesc" x="24" y="138">讓人可立即接手處理</text>
+  </g>
+
+  <g transform="translate(95,460)">
+    <rect class="node" x="0" y="0" rx="18" width="820" height="170" style="stroke:#ffdcb0"/>
+    <rect class="badge" x="24" y="22" rx="12" width="128" height="34" style="fill:#fff4e7;stroke:#ffdcb0"/>
+    <text class="badgeText" x="48" y="44" style="fill:#b86a1d">Reliability</text>
+    <text class="nodeTitle" x="24" y="88">Error Handling + Retry</text>
+    <text class="nodeDesc" x="24" y="116">每個節點記錄 log；失敗自動重試；超過次數則告警</text>
+    <text class="nodeDesc" x="24" y="138">上線前先做測試資料驗證，確認欄位與權限都正確</text>
+  </g>
+
+  <path class="arrow" d="M1240 390 C1290 420 1290 470 1240 500"/>
+  <path class="arrow" d="M1240 500 L1258 496 M1240 500 L1250 516"/>
+</svg>
+

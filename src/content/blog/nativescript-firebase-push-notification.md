@@ -4,8 +4,9 @@ description: "詳細介紹如何在 NativeScript 應用程式中整合 Firebase 
 publishDate: 2021-06-13
 updatedDate: 2024-12-05
 heroImage: "/images/blog/nativescript-firebase-push-notification.svg"
-category: "移動開發"
+category: "Mobile App"
 tags: ["NativeScript", "Firebase", "Push Notification", "iOS", "Android", "移動應用開發"]
+seoKeywords: ["NativeScript", "Firebase", "Push Notification", "iOS", "Android", "移動應用開發"]
 draft: false
 featured: true
 author: "Allen Shi"
@@ -15,6 +16,43 @@ readingTime: 8
 由於推播是增加與用戶的互動的一項重要功能，因此我們今天要來介紹 NativeScript 如何串接 Firebase Push Notification 機制，讓我們的 App 能夠收到推播通知。
 
 以下會分別由 iOS 與 Android 分別做介紹。
+
+## 你看完會得到什麼
+
+- 你會理解推播流程在做什麼（裝置 Token、Firebase、APNs/FCM）。  
+- 你會知道 iOS 為什麼步驟多，以及哪些是最常漏掉的設定。  
+- 你會拿到一個「遇到收不到推播時」的排查方向。  
+
+## 先懂的名詞（每個 2 句內）
+
+1. Push Notification：伺服器主動把訊息推到手機上。不是使用者打開 App 才看到的那種。  
+2. Device Token：裝置的收件地址。沒有 token 就無法把推播送到那台手機。  
+3. FCM：Firebase Cloud Messaging，Android 推播主要通道。也常用來統一管理跨平台推播。  
+4. APNs：Apple Push Notification service，iOS 的推播通道。iOS 需要額外的憑證或金鑰設定。  
+5. Sandbox/Production：開發與正式環境的推播通道不同。常見問題是用錯環境導致收不到。  
+
+## 真實場景例子（3 個）
+
+1. App 要做訂單狀態通知：出貨、到貨、取消都要即時提醒。  
+2. 行銷活動推播：需要可控制頻率與退訂，避免被用戶關閉通知。  
+3. 緊急告警：例如帳號異常登入，需要高可靠送達與監控。  
+
+## 常見誤解（至少 3 點）
+
+1. 「有了 Firebase 就一定收得到 iOS 推播。」  
+iOS 還要 APNs 的設定正確，且 App 的權限、簽章、環境要對。  
+
+2. 「token 看得到就代表推播一定會到。」  
+token 只是前提；還需要正確的伺服器金鑰、payload 格式與平台設定。  
+
+3. 「iOS/Android 設定可以照抄。」  
+兩個平台的推播通道不同，尤其是 iOS 的憑證與權限步驟不能省略。  
+
+## 下一步（3 條）
+
+1. 先把「拿到 token」當成第一個里程碑，再做發送與接收。  
+2. 建立基本監控：發送成功率、錯誤碼、token 失效率。  
+3. 若你也在做 AI 自動化：可以用結構化 Prompt 產出排查清單，並要求 AI 依照你的日誌推理而不是猜。  
 
 ## 前置作業
 

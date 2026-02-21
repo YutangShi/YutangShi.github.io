@@ -1,7 +1,7 @@
 ---
 title: "Circle We Life 健康生活平台"
 description: "一個專注於健康、生活品質和心靈成長的整合性平台，提供健康產品、課程和社區支持。"
-heroImage: "/images/portfolio/circle-we-life.svg"
+heroImage: "/images/portfolio/circle-we-life.png"
 technologies: ["PHP", "MySQL", "JavaScript", "Responsive Design", "SEO"]
 category: "網站開發"
 projectUrl: "https://circlewelife.com"

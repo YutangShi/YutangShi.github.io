@@ -1,0 +1,20 @@
+version: 1
+project:
+  id: allen-ai-sre-blog
+  name: Allen AI Automation SRE Blog
+  owner: Allen
+  stack:
+    - Astro
+    - Markdown
+    - Cloudflare Pages
+  domains:
+    - ai-automation
+    - sre
+    - observability
+    - platform-engineering
+spec_policy:
+  required_for:
+    - user-facing-behavior-change
+    - deployment-change
+    - governance-change
+  file_naming: "NNNN-short-title.md"

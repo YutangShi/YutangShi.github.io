@@ -2,334 +2,280 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { SITE_CONFIG } from '../utils/config';
 
-// 模擬數據
-const contactInfo = [
+const phone = SITE_CONFIG.phone?.trim();
+const phoneDigits = phone ? phone.replace(/[\s()-]/g, '') : '';
+
+const contactChannels = [
   {
-    icon: '📧',
-    title: '電子郵件',
-    value: 'yutagshi@gmail.com',
-    link: 'mailto:utagshi@gmail.com'
+    title: 'Email 聯絡',
+    value: SITE_CONFIG.email,
+    description: '最穩定的聯絡方式，適合提供需求細節。',
+    href: SITE_CONFIG.social.email,
+    action: '寄信給我'
   },
   {
-    icon: '💬',
-    title: 'LineID',
+    title: 'Line 即時訊息',
     value: 'yutang-shi',
-    link: 'https://line.me/ti/p/~yutang-shi'
+    description: '適合快速討論需求與安排時段。',
+    href: 'https://line.me/ti/p/~yutang-shi',
+    action: 'Line 聯絡'
   },
   {
-    icon: '💼',
     title: 'LinkedIn',
-    value: 'www.linkedin.com/in/yutang-shi-4109ab31/',
-    link: 'https://www.linkedin.com/in/yutang-shi-4109ab31/'
+    value: 'Yutang Shi',
+    description: '商業合作與職涯相關交流。',
+    href: SITE_CONFIG.social.linkedin,
+    action: '開啟 LinkedIn'
   }
 ];
 
 const faqs = [
   {
-    question: '回覆時間通常需要多久？',
-    answer: '我通常會在 24 小時內回覆您的訊息。如果是緊急事項，請直接撥打電話聯繫。'
+    question: '通常多久會回覆？',
+    answer: '我通常會在 24 小時內回覆 Email 或 Line 訊息。'
   },
   {
-    question: '可以安排視訊會議嗎？',
-    answer: '當然可以！我很樂意透過 Google Meet、Zoom 或其他平台與您進行視訊討論。'
+    question: '可以預約電話或線上會議嗎？',
+    answer: '可以，先寄信或 Line 告訴我你的需求，我會提供可預約時段。'
   },
   {
-    question: '提供免費諮詢嗎？',
-    answer: '是的，我提供 30 分鐘的免費初步諮詢，讓我們了解您的需求並討論可能的解決方案。'
+    question: '不懂 AI 自動化也可以詢問嗎？',
+    answer: '可以。我會先用白話理解你的情境，再提供適合的建議。'
   }
 ];
 ---
 
-<MainLayout 
-  title="聯絡我 - Allen Shi"
-  description="與 Allen Shi 聯繫，討論您的專案需求或合作機會"
->
-  <div class="container">
-    <!-- Hero Section -->
-    <section class="contact-hero">
-      <div class="hero-content">
-        <h1>聯絡我</h1>
-        <p class="hero-description">
-          有任何專案想法或合作機會嗎？我很樂意與您討論！
-          請透過以下方式直接聯繫我。
-        </p>
+<MainLayout title="聯絡我 - Allen Shi" description="透過電話、Email 或 Line 聯絡 Allen，討論 AI 自動化與 SRE 相關需求">
+  <div class="container contact-page">
+    <section class="contact-hero fade-in">
+      <p class="hero-kicker">Contact</p>
+      <h1>聯絡我</h1>
+      <p>
+        如果你想了解 AI 自動化或 SRE，歡迎直接聯絡我。
+        我會用容易理解的方式，陪你把需求釐清。
+      </p>
+
+      <div class="hero-actions">
+        {phone && (
+          <a href={`tel:${phoneDigits}`} class="btn">立即撥打電話</a>
+        )}
+        <a href={SITE_CONFIG.social.email} class="btn">立即寄信</a>
       </div>
     </section>
 
-    <div class="contact-layout single-column">
-      <!-- Contact Info -->
-      <section class="contact-info-section">
-        <div class="info-header">
-          <h2>聯絡資訊</h2>
-          <p>您可以透過以下方式直接聯繫我</p>
-        </div>
-        
-        <div class="contact-info-grid">
-          {contactInfo.map((info) => (
-            <a href={info.link} class="contact-info-item">
-              <div class="info-icon">{info.icon}</div>
-              <div class="info-content">
-                <h3>{info.title}</h3>
-                <p>{info.value}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    </div>
+    <section class="quick-grid fade-in delay-1">
+      {phone ? (
+        <a href={`tel:${phoneDigits}`} class="quick-card card">
+          <h2>電話</h2>
+          <p class="value">{phone}</p>
+          <p>一鍵撥號，適合快速確認需求。</p>
+        </a>
+      ) : (
+        <article class="quick-card card muted">
+          <h2>電話</h2>
+          <p class="value">尚未設定</p>
+          <p>可在 `src/utils/config.ts` 填入 `phone` 啟用一鍵撥號。</p>
+        </article>
+      )}
 
-    <!-- FAQ Section -->
-    <section class="faq-section">
-      <div class="section-header">
-        <h2>常見問題</h2>
-        <p>關於聯絡和合作的常見疑問</p>
+      <a href={SITE_CONFIG.social.email} class="quick-card card">
+        <h2>Email</h2>
+        <p class="value">{SITE_CONFIG.email}</p>
+        <p>適合完整描述需求、預算與時程。</p>
+      </a>
+
+      <a href="https://line.me/ti/p/~yutang-shi" class="quick-card card" target="_blank" rel="noopener noreferrer">
+        <h2>Line</h2>
+        <p class="value">yutang-shi</p>
+        <p>適合即時簡短溝通與快速回覆。</p>
+      </a>
+    </section>
+
+    <section class="channels fade-in delay-2">
+      <div class="section-head">
+        <h2>聯絡方式</h2>
+        <p>選擇你最方便的管道。</p>
       </div>
-      <div class="faq-grid">
-        {faqs.map((faq) => (
-          <div class="faq-item card">
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </div>
+      <div class="channel-grid">
+        {contactChannels.map((channel) => (
+          <article class="channel-item card">
+            <h3>{channel.title}</h3>
+            <p class="channel-value">{channel.value}</p>
+            <p>{channel.description}</p>
+            <a href={channel.href} class="btn btn-secondary" target={channel.href.startsWith('http') ? '_blank' : undefined} rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              {channel.action}
+            </a>
+          </article>
         ))}
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2>準備開始您的專案了嗎？</h2>
-        <p>不要猶豫，立即聯繫我討論您的想法！</p>
-        <div class="cta-actions">
-          <a href="mailto:allen@example.com" class="btn">立即發送郵件</a>
-          <a href="/services" class="btn btn-secondary">查看服務項目</a>
-        </div>
+    <section class="faq-section fade-in delay-3">
+      <div class="section-head">
+        <h2>常見問題</h2>
+      </div>
+      <div class="faq-grid">
+        {faqs.map((faq) => (
+          <article class="faq-item card">
+            <h3>{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </article>
+        ))}
       </div>
     </section>
+  </div>
+
+  <div class="mobile-action-bar">
+    {phone && (
+      <a href={`tel:${phoneDigits}`} class="mobile-action">撥號</a>
+    )}
+    <a href={SITE_CONFIG.social.email} class="mobile-action">寄信</a>
+    <a href="https://line.me/ti/p/~yutang-shi" class="mobile-action" target="_blank" rel="noopener noreferrer">Line</a>
   </div>
 </MainLayout>
 
 <style>
-  /* Hero Section */
-  .contact-hero {
-    text-align: center;
-    padding: var(--spacing-3xl) 0;
-    margin-bottom: var(--spacing-2xl);
-  }
-  
-  .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .hero-content h1 {
-    font-size: var(--font-size-4xl);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .hero-description {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-  }
-  
-  /* Contact Layout */
-  .contact-layout {
-    display: flex;
-    gap: var(--spacing-2xl);
-    margin-bottom: var(--spacing-3xl);
-  }
-  
-  .single-column {
-    flex-direction: column;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .contact-info-section, 
-  .contact-form-section {
-    flex: 1;
-  }
-  
-  /* Section Headers */
-  .info-header,
-  .form-header,
-  .section-header {
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .info-header h2,
-  .form-header h2,
-  .section-header h2 {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .info-header p,
-  .form-header p,
-  .section-header p {
-    color: var(--color-text-light);
-  }
-  
-  /* Contact Info Styles */
-  .contact-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .contact-info-item {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-lg);
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: var(--color-text);
-  }
-  
-  .contact-info-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-primary);
-  }
-  
-  .info-icon {
-    font-size: 1.5rem;
-    margin-right: var(--spacing-md);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(var(--color-primary-rgb), 0.1);
-    border-radius: 50%;
-  }
-  
-  .info-content h3 {
-    font-size: var(--font-size-base);
-    margin-bottom: 0.25rem;
-    font-weight: 600;
-  }
-  
-  .info-content p {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-    margin-bottom: 0;
+  .contact-page {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
   }
 
-  /* FAQ Section */
-  .faq-section {
-    margin-bottom: var(--spacing-3xl);
-    padding-bottom: var(--spacing-3xl);
+  .contact-hero p {
+    max-width: 64ch;
   }
-  
+
+  .hero-kicker {
+    font-family: var(--font-heading);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.6rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .quick-card {
+    padding: 1rem;
+    color: inherit;
+  }
+
+  .quick-card:hover {
+    text-decoration: none;
+  }
+
+  .quick-card.muted {
+    background: #f8fafc;
+  }
+
+  .quick-card h2 {
+    font-size: 1.08rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .quick-card .value {
+    font-family: var(--font-heading);
+    color: var(--color-primary-dark);
+    margin-bottom: 0.35rem;
+  }
+
+  .channels,
+  .faq-section {
+    margin-top: 2rem;
+  }
+
+  .section-head {
+    margin-bottom: 0.8rem;
+  }
+
+  .channel-grid,
   .faq-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl);
-  }
-  
-  .faq-item h3 {
-    margin-bottom: var(--spacing-md);
-    color: var(--color-primary);
-  }
-  
-  .faq-item p {
-    color: var(--color-text-light);
-    line-height: 1.6;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
   }
 
-  /* CTA Section */
-  .cta-section {
-    text-align: center;
-    padding: var(--spacing-3xl);
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    border-radius: var(--border-radius-lg);
-    color: white;
+  .channel-item,
+  .faq-item {
+    padding: 1rem;
   }
-  
-  .cta-content h2 {
-    margin-bottom: var(--spacing-md);
-    color: white;
+
+  .channel-value {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
   }
-  
-  .cta-content p {
-    margin-bottom: var(--spacing-xl);
-    opacity: 0.9;
+
+  .channel-item .btn {
+    margin-top: 0.5rem;
+    width: 100%;
   }
-  
-  .cta-actions {
-    display: flex;
+
+  .mobile-action-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: none;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid var(--color-border);
+    backdrop-filter: blur(8px);
+  }
+
+  .mobile-action {
+    flex: 1;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-  }
-  
-  .cta-actions .btn {
-    background-color: white;
-    color: var(--color-primary);
-  }
-  
-  .cta-actions .btn:hover {
-    background-color: var(--color-bg-secondary);
-  }
-  
-  .cta-actions .btn-secondary {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-  }
-  
-  .cta-actions .btn-secondary:hover {
-    background-color: white;
-    color: var(--color-primary);
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: #ffffff;
+    color: var(--color-primary-dark);
+    font-weight: 700;
   }
 
-  /* Responsive Design */
+  .mobile-action:hover {
+    text-decoration: none;
+    border-color: var(--color-primary);
+  }
+
   @media (max-width: 1024px) {
-    .contact-layout {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-3xl);
+    .quick-grid,
+    .channel-grid,
+    .faq-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  
+
   @media (max-width: 768px) {
-    .form-row {
-      grid-template-columns: 1fr;
+    .contact-page {
+      padding-top: 1.2rem;
+      padding-bottom: 6rem;
     }
-    
-    .contact-form {
-      padding: var(--spacing-lg);
-    }
-    
+
+    .quick-grid,
+    .channel-grid,
     .faq-grid {
       grid-template-columns: 1fr;
     }
-    
-    .cta-actions {
-      flex-direction: column;
-      align-items: center;
+
+    .mobile-action-bar {
+      display: flex;
     }
   }
 </style>
-
-<script>
-  // 表單提交處理
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.contact-form');
-    
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // 這裡可以添加表單驗證和提交邏輯
-        alert('感謝您的訊息！我會盡快回覆您。');
-        
-        // 重置表單
-        form.reset();
-      });
-    }
-  });
-</script> 

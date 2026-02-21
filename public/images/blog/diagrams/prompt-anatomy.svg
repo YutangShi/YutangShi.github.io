@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="Prompt 結構示意圖：角色、目標、背景資料、輸出格式、限制與驗收標準">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#f0fffb"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .sub { font: 500 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .box { fill: #ffffff; stroke: #d7e6ff; stroke-width: 2; filter: url(#shadow); }
+      .label { font: 700 22px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .desc { font: 500 16px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .chip { fill: #e8f3ff; stroke: #b6d6ff; stroke-width: 1.5; }
+      .chipText { font: 700 14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #1657b8; }
+      .arrow { stroke: #7fb4ff; stroke-width: 5; fill: none; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" rx="26" fill="url(#bg)"/>
+
+  <text x="80" y="88" class="title">一個可重複使用的 Prompt 長這樣</text>
+  <text x="80" y="122" class="sub">把需求寫成規格書，AI 的輸出就更穩定、更可用</text>
+
+  <g transform="translate(90,160)">
+    <rect class="box" x="0" y="0" rx="18" width="1220" height="90"/>
+    <rect class="chip" x="28" y="22" rx="14" width="120" height="36"/>
+    <text class="chipText" x="52" y="46">必填</text>
+    <text class="label" x="170" y="44">角色</text>
+    <text class="desc" x="170" y="70">讓 AI 知道它要用誰的視角與語氣回答</text>
+  </g>
+
+  <path class="arrow" d="M700 255 L700 298"/>
+  <path class="arrow" d="M700 298 L690 282 M700 298 L710 282"/>
+
+  <g transform="translate(90,310)">
+    <rect class="box" x="0" y="0" rx="18" width="1220" height="90"/>
+    <rect class="chip" x="28" y="22" rx="14" width="120" height="36"/>
+    <text class="chipText" x="52" y="46">必填</text>
+    <text class="label" x="170" y="44">目標</text>
+    <text class="desc" x="170" y="70">一句話講清楚要完成什麼成果</text>
+  </g>
+
+  <path class="arrow" d="M700 405 L700 448"/>
+  <path class="arrow" d="M700 448 L690 432 M700 448 L710 432"/>
+
+  <g transform="translate(90,460)">
+    <rect class="box" x="0" y="0" rx="18" width="1220" height="110"/>
+    <rect class="chip" x="28" y="22" rx="14" width="120" height="36" fill="#eefdf8" stroke="#b7f0df"/>
+    <text class="chipText" x="52" y="46" fill="#0d7c5e">建議</text>
+    <text class="label" x="170" y="44">背景 / 輸入資料</text>
+    <text class="desc" x="170" y="70">貼上要整理的內容、情境、限制條件或資料來源</text>
+    <text class="desc" x="170" y="95">資料越完整，AI 越不用猜，越不容易說錯</text>
+  </g>
+
+  <path class="arrow" d="M700 585 L700 628"/>
+  <path class="arrow" d="M700 628 L690 612 M700 628 L710 612"/>
+
+  <g transform="translate(90,640)">
+    <rect class="box" x="0" y="0" rx="18" width="1220" height="90"/>
+    <rect class="chip" x="28" y="22" rx="14" width="120" height="36"/>
+    <text class="chipText" x="52" y="46">必填</text>
+    <text class="label" x="170" y="44">輸出格式 + 限制 + 驗收</text>
+    <text class="desc" x="170" y="70">指定條列/表格/步驟，並要求「不確定要標記、不可捏造」</text>
+  </g>
+</svg>
+

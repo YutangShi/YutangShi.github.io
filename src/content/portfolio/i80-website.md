@@ -1,7 +1,7 @@
 ---
 title: "i80.com.tw 購物網站平台"
 description: "現代化電商購物平台，提供優質的使用者體驗與高效的交易流程"
-heroImage: "/images/portfolio/i80-website.svg"
+heroImage: "/images/portfolio/i80-website.png"
 technologies: ["React", "Node.js", "MongoDB", "Redis", "AWS", "Stripe"]
 category: "電子商務"
 projectUrl: "https://www.i80.com.tw/"

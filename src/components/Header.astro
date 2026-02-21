@@ -4,169 +4,170 @@ import { SITE_CONFIG } from '../utils/config';
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="header">
+<header class="header-shell">
   <div class="container">
-    <nav class="nav">
-      <a href="/" class="logo">
-        <span class="logo-text">{SITE_CONFIG.author}</span>
+    <nav class="site-nav" aria-label="主選單">
+      <a href="/" class="brand" aria-label="回到首頁">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">{SITE_CONFIG.author}</span>
       </a>
-      
-      <div class="nav-links">
+
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="切換選單">
+        <span></span>
+        <span></span>
+      </button>
+
+      <div id="primary-nav" class="nav-links">
         {SITE_CONFIG.navigation.map((item) => (
-          <a 
-            href={item.href} 
-            class={`nav-link ${currentPath === item.href ? 'active' : ''}`}
-          >
+          <a href={item.href} class={`nav-link ${currentPath === item.href ? 'active' : ''}`}>
             {item.name}
           </a>
         ))}
       </div>
-      
-      <button class="mobile-menu-toggle" aria-label="開啟選單">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </nav>
   </div>
 </header>
 
 <style>
-  .header {
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+  .header-shell {
     position: sticky;
     top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 40;
+    padding-top: 0.9rem;
   }
-  
-  @media (prefers-color-scheme: dark) {
-    .header {
-      background-color: rgba(17, 24, 39, 0.9);
-    }
-  }
-  
-  .nav {
+
+  .site-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-md) 0;
+    gap: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
+    border-radius: 999px;
+    padding: 0.55rem 0.8rem;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
   }
-  
-  .logo {
-    text-decoration: none;
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     color: var(--color-text);
-    font-weight: 700;
-    font-size: var(--font-size-xl);
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
   }
-  
-  .logo:hover {
+
+  .brand:hover {
     text-decoration: none;
-    color: var(--color-primary);
   }
-  
+
+  .brand-dot {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 999px;
+    background: linear-gradient(160deg, var(--color-primary), var(--color-accent));
+    box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+  }
+
+  .brand-name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+  }
+
+  .menu-btn {
+    display: none;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    border-radius: 999px;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.23rem;
+  }
+
+  .menu-btn span {
+    width: 1rem;
+    height: 2px;
+    border-radius: 10px;
+    background: var(--color-text);
+    transition: transform 0.2s ease;
+  }
+
   .nav-links {
     display: flex;
-    gap: var(--spacing-xl);
+    gap: 0.35rem;
     align-items: center;
   }
-  
+
   .nav-link {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0 0.8rem;
+    font-size: 0.92rem;
     color: var(--color-text-light);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-    position: relative;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
-  
-  .nav-link:hover,
+
+  .nav-link:hover {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-primary) 11%, transparent);
+    text-decoration: none;
+  }
+
   .nav-link.active {
-    color: var(--color-primary);
-    text-decoration: none;
+    color: var(--color-primary-dark);
+    background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+    font-weight: 600;
   }
-  
-  .nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--color-primary);
-    border-radius: 1px;
-  }
-  
-  .mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--spacing-xs);
-  }
-  
-  .mobile-menu-toggle span {
-    width: 24px;
-    height: 2px;
-    background-color: var(--color-text);
-    transition: all 0.3s ease;
-  }
-  
-  @media (max-width: 768px) {
-    .nav-links {
-      display: none;
+
+  @media (max-width: 900px) {
+    .site-nav {
+      border-radius: 1rem;
+      align-items: stretch;
+      flex-wrap: wrap;
     }
-    
-    .mobile-menu-toggle {
+
+    .menu-btn {
+      display: inline-flex;
+      margin-left: auto;
+    }
+
+    .nav-links {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      padding-top: 0.4rem;
+    }
+
+    .nav-links.open {
       display: flex;
+    }
+
+    .nav-link {
+      min-height: 44px;
+      justify-content: center;
     }
   }
 </style>
 
 <script>
-  // 行動版選單功能
   document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (toggle && navLinks) {
-      toggle.addEventListener('click', () => {
-        navLinks.classList.toggle('mobile-open');
-        toggle.classList.toggle('active');
-      });
-    }
+    const button = document.querySelector('.menu-btn');
+    const nav = document.querySelector('.nav-links');
+    if (!button || !nav) return;
+
+    button.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      button.setAttribute('aria-expanded', String(open));
+    });
   });
 </script>
-
-<style is:global>
-  @media (max-width: 768px) {
-    .nav-links.mobile-open {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: var(--color-bg);
-      border-bottom: 1px solid var(--color-border);
-      padding: var(--spacing-lg);
-      gap: var(--spacing-md);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
-  }
-</style> 

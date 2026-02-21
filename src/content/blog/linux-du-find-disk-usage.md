@@ -4,8 +4,9 @@ description: "詳細介紹如何使用Linux du命令來檢查系統檔案或目�
 publishDate: 2020-06-24
 updatedDate: 2024-12-05
 heroImage: "/images/blog/linux-du.svg"
-category: "Linux"
+category: "SRE"
 tags: ["Linux", "du", "io performance", "系統管理", "效能優化"]
+seoKeywords: ["Linux", "du", "io performance", "系統管理", "效能優化"]
 draft: false
 featured: true
 author: "Allen Shi"

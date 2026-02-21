@@ -4,8 +4,9 @@ description: "深入了解SSL憑證的基本概念、運作原理和結構，包
 publishDate: 2020-05-03
 updatedDate: 2024-12-05
 heroImage: "/images/blog/ssl-certification.svg"
-category: "網路技術"
+category: "SRE"
 tags: ["SSL", "HTTPS", "網路安全", "憑證", "加密", "certification"]
+seoKeywords: ["SSL", "HTTPS", "網路安全", "憑證", "加密", "certification"]
 draft: false
 featured: false
 author: "Allen Shi"
