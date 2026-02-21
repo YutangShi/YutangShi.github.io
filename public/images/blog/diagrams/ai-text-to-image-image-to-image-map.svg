@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="AI 文字生圖與圖生圖流程圖">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f5fbff"/>
+      <stop offset="1" stop-color="#fff8ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .sub { font: 500 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .box { fill: #fff; stroke: #d9e7ff; stroke-width: 2; filter: url(#shadow); }
+      .h { font: 800 22px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .p { font: 500 16px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #456; }
+      .arrow { stroke: #5f93ff; stroke-width: 6; fill: none; stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect width="1400" height="760" rx="24" fill="url(#bg)"/>
+  <text x="80" y="88" class="title">AI 圖像工作流：先文字生圖，再圖生圖精修</text>
+  <text x="80" y="122" class="sub">Text-to-Image 用來探索方向，Image-to-Image 用來控風格與細節一致性</text>
+
+  <g transform="translate(100,200)">
+    <rect class="box" rx="18" width="380" height="190"/>
+    <text class="h" x="24" y="52">步驟 1：文字生圖</text>
+    <text class="p" x="24" y="86">輸入場景、主體、風格、光線</text>
+    <text class="p" x="24" y="114">快速產生多版本方向</text>
+    <text class="p" x="24" y="142">先選構圖，再選質感</text>
+  </g>
+
+  <path class="arrow" d="M500 295 L580 295"/>
+  <path class="arrow" d="M580 295 L564 285 M580 295 L564 305"/>
+
+  <g transform="translate(600,200)">
+    <rect class="box" rx="18" width="380" height="190"/>
+    <text class="h" x="24" y="52">步驟 2：挑基底圖</text>
+    <text class="p" x="24" y="86">選 1 張最接近需求的圖</text>
+    <text class="p" x="24" y="114">固定品牌色與主視覺元素</text>
+    <text class="p" x="24" y="142">保留後續可編修空間</text>
+  </g>
+
+  <path class="arrow" d="M1000 295 L1080 295"/>
+  <path class="arrow" d="M1080 295 L1064 285 M1080 295 L1064 305"/>
+
+  <g transform="translate(1100,200)">
+    <rect class="box" rx="18" width="220" height="190" style="stroke:#bde8d4"/>
+    <text class="h" x="20" y="52">步驟 3：圖生圖</text>
+    <text class="p" x="20" y="86">改背景</text>
+    <text class="p" x="20" y="112">改材質</text>
+    <text class="p" x="20" y="138">改文字區塊</text>
+  </g>
+
+  <g transform="translate(200,470)">
+    <rect class="box" rx="18" width="1000" height="180" style="stroke:#ffdcb0"/>
+    <text class="h" x="28" y="52">品質檢查（上線前）</text>
+    <text class="p" x="28" y="88">1) 品牌一致：色彩、語氣、構圖是否一致</text>
+    <text class="p" x="28" y="116">2) 可用性：是否符合尺寸、平台比例、可讀性</text>
+    <text class="p" x="28" y="144">3) 風險：人物、商標、版權與敏感內容是否需要人工複核</text>
+  </g>
+</svg>
+

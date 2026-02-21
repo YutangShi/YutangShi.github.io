@@ -6,7 +6,6 @@ import { BLOG_CONFIG } from '../../utils/config';
 const allBlogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
 const posts = allBlogPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 const categories = ['全部', ...BLOG_CONFIG.categories];
-const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
 ---
 
 <MainLayout title="一杯咖啡的自動化" description="用最實用的配方，帶你循序學會 AI 自動化、N8N 與 SRE">
@@ -33,29 +32,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
       </div>
     </article>
   </section>
-
-  {featuredPosts.length > 0 && (
-    <section class="container featured fade-in delay-2">
-      <h2>精選文章</h2>
-      <div class="featured-grid">
-        {featuredPosts.map((post) => (
-          <article class="feature-item card" data-category={post.data.category} data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`}>
-            <img src={post.data.heroImage || '/images/blog/default-post.svg'} alt={post.data.title} loading="lazy" />
-            <div class="feature-content">
-              <div class="meta">
-                <span>{post.data.category}</span>
-                <time datetime={post.data.publishDate.toISOString()}>
-                  {post.data.publishDate.toLocaleDateString('zh-TW')}
-                </time>
-              </div>
-              <h3><a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a></h3>
-              <p>{post.data.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
 
   <section class="container controls fade-in delay-3">
     <div class="search-wrap card">
@@ -176,33 +152,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
     text-decoration: none;
   }
 
-  .featured {
-    margin-top: 2rem;
-  }
-
-  .featured-grid {
-    margin-top: 0.8rem;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.9rem;
-  }
-
-  .feature-item {
-    overflow: hidden;
-  }
-
-  .feature-item img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .feature-content {
-    padding: 0.9rem;
-  }
-
   .meta {
     display: flex;
     justify-content: space-between;
@@ -215,11 +164,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
   .meta span {
     font-weight: 600;
     color: var(--color-primary-dark);
-  }
-
-  .feature-content h3 {
-    font-size: 1.03rem;
-    margin-bottom: 0.45rem;
   }
 
   .controls {
@@ -325,8 +269,7 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
     color: var(--color-text-light);
   }
 
-  .post-card.hidden,
-  .feature-item.hidden {
+  .post-card.hidden {
     display: none;
   }
 
@@ -337,7 +280,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
   }
 
   @media (max-width: 1024px) {
-    .featured-grid,
     .posts-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -348,7 +290,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
       padding-top: 1.8rem;
     }
 
-    .featured-grid,
     .posts-grid {
       grid-template-columns: 1fr;
     }
@@ -361,7 +302,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
     const filters = Array.from(document.querySelectorAll('.filter-btn'));
     const quickButtons = Array.from(document.querySelectorAll('.quick-btn'));
     const postCards = Array.from(document.querySelectorAll('.post-card'));
-    const featureCards = Array.from(document.querySelectorAll('.feature-item'));
     const emptyState = document.querySelector('#empty-state');
     const tagHint = document.querySelector('#tag-hint');
 
@@ -385,11 +325,6 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
         const show = shouldShow(card);
         card.classList.toggle('hidden', !show);
         if (show) visibleCount += 1;
-      });
-
-      featureCards.forEach((card) => {
-        const show = shouldShow(card);
-        card.classList.toggle('hidden', !show);
       });
 
       emptyState.hidden = visibleCount > 0;

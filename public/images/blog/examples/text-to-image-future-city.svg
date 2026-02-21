@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="文字生圖範例：未來城市夜景">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 40px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #e2e8f0; }
+      .sub { font: 500 22px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #cbd5e1; }
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="90" y="120" width="120" height="380" fill="#334155"/>
+  <rect x="240" y="90" width="180" height="430" fill="#1e293b"/>
+  <rect x="460" y="140" width="140" height="360" fill="#334155"/>
+  <rect x="640" y="80" width="190" height="450" fill="#0f172a"/>
+  <rect x="860" y="130" width="130" height="380" fill="#334155"/>
+  <rect x="1020" y="100" width="170" height="430" fill="#1e293b"/>
+  <rect x="0" y="530" width="1280" height="190" fill="#0b1120"/>
+  <rect x="130" y="560" width="1020" height="8" fill="#22d3ee" opacity="0.7"/>
+  <rect x="130" y="600" width="1020" height="8" fill="#a855f7" opacity="0.7"/>
+  <text x="120" y="70" class="title">範例結果 B：未來城市夜景</text>
+  <text x="120" y="680" class="sub">對應 Prompt：Futuristic cyberpunk city street at night ...</text>
+</svg>
+
