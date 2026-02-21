@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-label="AI 生產上線飛輪：評估、安全、可觀測性">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4fbff"/>
+      <stop offset="1" stop-color="#fff7ee"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .sub { font: 500 18px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #3a4b66; }
+      .ring { fill: #fff; stroke: #d7e7ff; stroke-width: 2; filter: url(#shadow); }
+      .node { fill: #ffffff; stroke: #d8e4f7; stroke-width: 2; filter: url(#shadow); }
+      .head { font: 800 22px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #0b1a33; }
+      .desc { font: 500 15px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #456; }
+      .arrow { stroke: #5f93ff; stroke-width: 6; fill: none; stroke-linecap: round; }
+      .chip { font: 700 14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; fill: #1c5db9; }
+    </style>
+  </defs>
+  <rect width="1400" height="760" rx="26" fill="url(#bg)"/>
+  <text x="80" y="88" class="title">AI 生產上線不是一次性專案，而是一個持續優化飛輪</text>
+  <text x="80" y="122" class="sub">先定義可量測目標，再做風險防護，最後用監控與回饋持續修正</text>
+
+  <circle class="ring" cx="700" cy="410" r="170"/>
+
+  <g transform="translate(180,330)">
+    <rect class="node" x="0" y="0" rx="18" width="300" height="170"/>
+    <text class="head" x="24" y="48">1) 評估 Evals</text>
+    <text class="desc" x="24" y="80">定義成功指標</text>
+    <text class="desc" x="24" y="104">建立基準資料集</text>
+    <text class="desc" x="24" y="128">每次改版都回歸測試</text>
+  </g>
+
+  <g transform="translate(550,170)">
+    <rect class="node" x="0" y="0" rx="18" width="300" height="170"/>
+    <text class="head" x="24" y="48">2) 安全 Guardrails</text>
+    <text class="desc" x="24" y="80">防 prompt injection</text>
+    <text class="desc" x="24" y="104">權限最小化與審批</text>
+    <text class="desc" x="24" y="128">高風險動作人工確認</text>
+  </g>
+
+  <g transform="translate(920,330)">
+    <rect class="node" x="0" y="0" rx="18" width="300" height="170"/>
+    <text class="head" x="24" y="48">3) 可觀測性</text>
+    <text class="desc" x="24" y="80">Trace / Token / Cost</text>
+    <text class="desc" x="24" y="104">錯誤與降級告警</text>
+    <text class="desc" x="24" y="128">線上資料回流到 eval</text>
+  </g>
+
+  <path class="arrow" d="M490 390 C540 320 560 290 620 250"/>
+  <path class="arrow" d="M620 250 L605 260 M620 250 L615 235"/>
+  <path class="arrow" d="M850 250 C910 290 930 320 980 390"/>
+  <path class="arrow" d="M980 390 L966 378 M980 390 L963 392"/>
+  <path class="arrow" d="M950 525 C860 590 540 590 450 525"/>
+  <path class="arrow" d="M450 525 L467 526 M450 525 L458 540"/>
+
+  <text x="634" y="412" class="head">可上線版本</text>
+  <text x="624" y="438" class="chip">可量測</text>
+  <text x="690" y="438" class="chip">可控風險</text>
+  <text x="785" y="438" class="chip">可回滾</text>
+</svg>
+

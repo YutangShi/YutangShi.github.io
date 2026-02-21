@@ -16,6 +16,11 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const sidebarArticleIds = [
+  'ai-production-eval-safety-observability.md',
+  'ai-llm-basics-learning-map.md',
+];
+const hasSidebarLayout = sidebarArticleIds.includes(entry.id);
 
 // 獲取相關文章
 const allPosts = await getCollection('blog', ({ data }) => {
@@ -138,7 +143,7 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
           </div>
         </div>
         
-        {entry.data.tags.length > 0 && (
+        {!hasSidebarLayout && entry.data.tags.length > 0 && (
           <div class="post-tags">
             {entry.data.tags.map((tag) => (
               <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="tag">#{tag}</a>
@@ -155,7 +160,22 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
       )}
 
       <!-- Post Content -->
-      <div class="post-container">
+      <div class:list={['post-container', hasSidebarLayout && 'with-sidebar']}>
+        {hasSidebarLayout && (
+          <aside class="post-sidebar card">
+            <h3>文章標籤</h3>
+            <div class="post-sidebar-tags">
+              {entry.data.tags.map((tag) => (
+                <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="tag">#{tag}</a>
+              ))}
+            </div>
+            <div class="post-sidebar-meta">
+              <p><strong>分類</strong>：{entry.data.category}</p>
+              <p><strong>閱讀時間</strong>：{readingTime} 分鐘</p>
+              <p><strong>發布</strong>：{publishDate}</p>
+            </div>
+          </aside>
+        )}
         <div class="post-content prose">
           <Content />
         </div>
@@ -319,6 +339,46 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
   .post-container {
     display: block;
     margin-bottom: var(--spacing-3xl);
+  }
+
+  .post-container.with-sidebar {
+    display: grid;
+    grid-template-columns: minmax(200px, 250px) minmax(0, 1fr);
+    gap: var(--spacing-xl);
+    align-items: start;
+    max-width: 1100px;
+  }
+
+  .post-sidebar {
+    position: sticky;
+    top: 7rem;
+    padding: var(--spacing-md);
+  }
+
+  .post-sidebar h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+  }
+
+  .post-sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .post-sidebar .tag {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .post-sidebar-meta {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-sm);
+    color: var(--color-text-light);
+    font-size: 0.86rem;
+    display: grid;
+    gap: 0.35rem;
   }
   
   /* Post Content */
@@ -601,6 +661,15 @@ const updatedDate = entry.data.updatedDate?.toLocaleDateString('zh-TW', {
     
     .related-grid {
       grid-template-columns: 1fr;
+    }
+
+    .post-container.with-sidebar {
+      display: block;
+    }
+
+    .post-sidebar {
+      position: static;
+      margin-bottom: var(--spacing-lg);
     }
     
   }
