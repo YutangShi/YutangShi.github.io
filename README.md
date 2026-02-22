@@ -64,6 +64,12 @@ npm run deploy:cf
 - `PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`（推薦）
 - 或在 `src/utils/config.ts` 的 `analytics.gaMeasurementId` 填入 ID
 
+### Google Tag Manager（GTM）
+
+- `PUBLIC_GTM_CONTAINER_ID=GTM-XXXXXXX`（推薦）
+- 或在 `src/utils/config.ts` 的 `analytics.gtmContainerId` 填入容器 ID
+- 若啟用 GTM，專案會自動停用直接 `gtag.js` 注入，避免 GA 重複計數
+
 ### 每篇文章 SEO 關鍵字
 
 - 文章 frontmatter 支援 `seoKeywords`（可選）

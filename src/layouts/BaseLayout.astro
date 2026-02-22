@@ -21,6 +21,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.url);
 const normalizedKeywords = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || SITE_CONFIG.analytics.gaMeasurementId;
+const gtmContainerId = import.meta.env.PUBLIC_GTM_CONTAINER_ID || SITE_CONFIG.analytics.gtmContainerId;
 ---
 
 <!DOCTYPE html>
@@ -64,7 +65,19 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || SITE_CONFIG.
       rel="stylesheet"
     />
 
-    {gaMeasurementId && (
+    {gtmContainerId && (
+      <script is:inline>
+        {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${gtmContainerId}');
+        `}
+      </script>
+    )}
+
+    {gaMeasurementId && !gtmContainerId && (
       <>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
         <script is:inline>
@@ -79,6 +92,17 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || SITE_CONFIG.
     )}
   </head>
   <body>
+    {gtmContainerId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${gtmContainerId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+          title="Google Tag Manager"
+        ></iframe>
+      </noscript>
+    )}
     <div class="site-background" aria-hidden="true"></div>
     <slot />
 

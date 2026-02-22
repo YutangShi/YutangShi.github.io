@@ -30,7 +30,8 @@ export const SITE_CONFIG = {
     twitterHandle: '@allenshi'
   },
   analytics: {
-    gaMeasurementId: 'G-03GPEXTHRD'
+    gaMeasurementId: 'G-03GPEXTHRD',
+    gtmContainerId: 'GTM-WBN6TTLG'
   },
   defaultMeta: {
     title: 'Allen | AI 自動化 SRE 實戰',
