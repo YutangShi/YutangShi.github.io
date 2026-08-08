@@ -28,12 +28,13 @@ if (!buildDrafts && aboutIndex.data.draft) {
           {
             image && (
               <ImageMod
-                class="mx-auto mb-6 rounded"
+                class="mx-auto mb-6 size-36 rounded-full object-cover"
                 src={image}
-                width={1200}
-                height={600}
+                width={288}
+                height={288}
                 alt={title}
                 format="webp"
+                fit="cover"
               />
             )
           }

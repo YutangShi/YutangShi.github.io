@@ -9,35 +9,24 @@
       "url": "/about"
     },
     {
-      "name": "更多",
-      "url": "",
-      "hasChildren": true,
-      "children": [
-        {
-          "name": "聯絡我",
-          "url": "/contact"
-        },
-        {
-          "name": "部落格",
-          "url": "/blog"
-        },
-        {
-          "name": "作品集",
-          "url": "/portfolio"
-        },
-        {
-          "name": "分類",
-          "url": "/categories"
-        },
-        {
-          "name": "標籤",
-          "url": "/tags"
-        },
-        {
-          "name": "聯絡我",
-          "url": "/contact"
-        }
-      ]
+      "name": "聯絡我",
+      "url": "/contact"
+    },
+    {
+      "name": "部落格",
+      "url": "/blog"
+    },
+    {
+      "name": "作品集",
+      "url": "/portfolio"
+    },
+    {
+      "name": "分類",
+      "url": "/categories"
+    },
+    {
+      "name": "標籤",
+      "url": "/tags"
     }
   ],
   "footer": [
