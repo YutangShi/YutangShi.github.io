@@ -9,7 +9,7 @@
     "logo_darkmode": "",
     "logo_width": "150",
     "logo_height": "30",
-    "logo_text": "Allen AI Automation"
+    "logo_text": "Allen AI 自動化"
   },
 
   "settings": {
@@ -30,7 +30,7 @@
 
   "params": {
     "contact_form_action": "mailto:yutangshi@gmail.com",
-    "copyright": "© Allen Shi. Built with [Astroplate](https://github.com/zeon-studio/astroplate)."
+    "copyright": "© Allen Shi. 使用 [Astroplate](https://github.com/zeon-studio/astroplate) 建置。"
   },
 
   "navigation_button": {

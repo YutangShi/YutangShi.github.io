@@ -251,7 +251,7 @@ const SearchResult = ({
           )}
         </div>
       ) : (
-        <div className="py-8 text-center">Type something to search...</div>
+        <div className="py-8 text-center">請輸入關鍵字搜尋...</div>
       )}
     </div>
   );
