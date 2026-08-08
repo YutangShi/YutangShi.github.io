@@ -1,371 +1,65 @@
 ---
-import { getCollection } from 'astro:content';
-import MainLayout from '../../layouts/MainLayout.astro';
-import { BLOG_CONFIG } from '../../utils/config';
+import BlogCard from "@/components/BlogCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import { getListPage, getSinglePage } from "@/lib/contentParser.astro";
+import { getAllTaxonomy, getTaxonomy } from "@/lib/taxonomyParser.astro";
+import { sortByDate } from "@/lib/utils/sortFunctions";
+import PageHeader from "@/partials/PageHeader.astro";
+import PostSidebar from "@/partials/PostSidebar.astro";
 
-const allBlogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
-const posts = allBlogPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-const categories = ['全部', ...BLOG_CONFIG.categories];
+const BLOG_FOLDER = "blog";
+
+const postIndex = await getListPage(BLOG_FOLDER, "-index");
+const buildDrafts = process.argv.includes("--buildDrafts");
+if (!buildDrafts && postIndex.data.draft) {
+  return Astro.redirect("/404");
+}
+const posts = await getSinglePage(BLOG_FOLDER);
+const allCategories = await getAllTaxonomy(BLOG_FOLDER, "categories");
+const categories = await getTaxonomy(BLOG_FOLDER, "categories");
+const tags = await getTaxonomy(BLOG_FOLDER, "tags");
+const sortedPosts = sortByDate(posts);
+const totalPages: number = Math.ceil(posts.length / config.settings.pagination);
+const currentPosts = sortedPosts.slice(0, config.settings.pagination);
 ---
 
-<MainLayout title="一杯咖啡的自動化" description="用最實用的配方，帶你循序學會 AI 自動化、N8N 與 SRE">
-  <section class="container blog-hero fade-in">
-    <p class="hero-kicker">Knowledge Base</p>
-    <h1>一杯咖啡的自動化</h1>
-    <p>
-      從新手可上手的 AI 工具，到可上線的自動化流程。
-      每篇都是一杯有配方、有步驟、可實作的技術特調。
-    </p>
-  </section>
+<Base
+  title={postIndex.data.title}
+  meta_title={postIndex.data.meta_title}
+  image={postIndex.data.image}
+  description={postIndex.data.description}
+>
+  <PageHeader title={postIndex?.data.title} />
+  <section class="section">
+    <div class="container">
+      <div class="row gx-5">
+        <!-- blog posts -->
+        <div class="lg:col-8">
+          <div class="row">
+            {
+              currentPosts.map((post) => (
+                <div class="mb-14 md:col-6">
+                  <BlogCard data={post} />
+                </div>
+              ))
+            }
+          </div>
+          <Pagination
+            section={BLOG_FOLDER}
+            currentPage={1}
+            totalPages={totalPages}
+          />
+        </div>
 
-  <section class="container quick-start fade-in delay-1">
-    <article class="quick-start-card card">
-      <h2>第一次來？先看這裡</h2>
-      <p>先從學習地圖選你的階段，再到分類與文章實作，學習會更有節奏。</p>
-      <div class="quick-tags">
-        <a href="/learning-path" class="quick-btn-link">完整學習地圖</a>
-        <button type="button" class="quick-btn" data-category-target="AI">基礎核心篇</button>
-        <button type="button" class="quick-btn" data-category-target="自動化">中階應用篇</button>
-        <button type="button" class="quick-btn" data-category-target="SRE">高階賦能篇</button>
-        <button type="button" class="quick-btn" data-category-target="N8N">N8N 專題</button>
-        <button type="button" class="quick-btn" data-category-target="Mobile App">Mobile App</button>
+        <!-- sidebar -->
+        <PostSidebar
+          categories={categories}
+          tags={tags}
+          allCategories={allCategories}
+        />
       </div>
-    </article>
-  </section>
-
-  <section class="container controls fade-in delay-3">
-    <div class="search-wrap card">
-      <label for="search-input">搜尋文章</label>
-      <input id="search-input" type="search" placeholder="輸入標題、摘要或標籤" />
-      <p id="tag-hint" class="tag-hint" hidden></p>
-    </div>
-
-    <div class="category-wrap" aria-label="分類篩選">
-      {categories.map((category, idx) => (
-        <button type="button" class={`filter-btn ${idx === 0 ? 'active' : ''}`} data-category={category}>
-          {category}
-        </button>
-      ))}
     </div>
   </section>
-
-  <section class="container posts fade-in">
-    <div class="posts-grid" id="posts-grid">
-      {posts.map((post) => (
-        <article class="post-card card" data-category={post.data.category} data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')} ${post.data.category}`}>
-          <div class="meta">
-            <span>{post.data.category}</span>
-            <time datetime={post.data.publishDate.toISOString()}>
-              {post.data.publishDate.toLocaleDateString('zh-TW')}
-            </time>
-          </div>
-          <h2><a href={`/blog/${post.id.replace(/\.md$/, '')}`}>{post.data.title}</a></h2>
-          <p>{post.data.description}</p>
-          <div class="tags">
-            {post.data.tags.slice(0, 4).map((tag) => (
-              <span>#{tag}</span>
-            ))}
-          </div>
-        </article>
-      ))}
-    </div>
-
-    <p id="empty-state" class="empty-state" hidden>沒有符合目前條件的文章。</p>
-  </section>
-</MainLayout>
-
-<style>
-  .blog-hero {
-    padding-top: 2.8rem;
-  }
-
-  .hero-kicker {
-    font-family: var(--font-heading);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.78rem;
-    color: var(--color-primary-dark);
-    margin-bottom: 0.65rem;
-  }
-
-  .blog-hero p {
-    max-width: 65ch;
-  }
-
-  .quick-start {
-    margin-top: 1.4rem;
-  }
-
-  .quick-start-card {
-    padding: 1rem;
-  }
-
-  .quick-start-card h2 {
-    font-size: 1.2rem;
-    margin-bottom: 0.35rem;
-  }
-
-  .quick-start-card p {
-    margin-bottom: 0.7rem;
-  }
-
-  .quick-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .quick-btn {
-    min-height: 40px;
-    border: 1px solid var(--color-border);
-    background: #ffffff;
-    color: var(--color-primary-dark);
-    border-radius: 999px;
-    padding: 0 0.8rem;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 600;
-  }
-
-  .quick-btn:hover {
-    border-color: var(--color-primary);
-    background: #f0f9ff;
-  }
-
-  .quick-btn-link {
-    min-height: 40px;
-    border: 1px solid var(--color-border);
-    background: #ffffff;
-    color: var(--color-primary-dark);
-    border-radius: 999px;
-    padding: 0 0.8rem;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .quick-btn-link:hover {
-    border-color: var(--color-primary);
-    background: #f0f9ff;
-    text-decoration: none;
-  }
-
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.7rem;
-    font-size: 0.78rem;
-    margin-bottom: 0.55rem;
-    color: var(--color-text-light);
-  }
-
-  .meta span {
-    font-weight: 600;
-    color: var(--color-primary-dark);
-  }
-
-  .controls {
-    margin-top: 2.1rem;
-    display: grid;
-    gap: 0.8rem;
-  }
-
-  .search-wrap {
-    padding: 0.9rem;
-    display: grid;
-    gap: 0.45rem;
-  }
-
-  .search-wrap label {
-    font-weight: 600;
-    color: var(--color-text);
-    font-size: 0.88rem;
-  }
-
-  .search-wrap input {
-    border: 1px solid var(--color-border);
-    border-radius: 0.75rem;
-    min-height: 44px;
-    padding: 0 0.8rem;
-    background: var(--color-bg-secondary);
-    color: var(--color-text);
-    font: inherit;
-  }
-
-  .search-wrap input:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--color-primary) 46%, transparent);
-    outline-offset: 1px;
-  }
-
-  .tag-hint {
-    margin: 0;
-    font-size: 0.82rem;
-    color: var(--color-primary-dark);
-    font-weight: 600;
-  }
-
-  .category-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .filter-btn {
-    min-height: 44px;
-    padding: 0 0.82rem;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-secondary);
-    color: var(--color-text-light);
-    cursor: pointer;
-    font-weight: 500;
-    font: inherit;
-    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
-  }
-
-  .filter-btn:hover,
-  .filter-btn.active {
-    border-color: color-mix(in srgb, var(--color-primary) 50%, var(--color-border));
-    color: var(--color-primary-dark);
-    background: color-mix(in srgb, var(--color-primary) 16%, transparent);
-  }
-
-  .posts {
-    margin-top: 1rem;
-  }
-
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.9rem;
-  }
-
-  .post-card {
-    padding: 0.9rem;
-  }
-
-  .post-card h2 {
-    font-size: 1.05rem;
-    margin-bottom: 0.45rem;
-  }
-
-  .post-card p {
-    margin-bottom: 0.55rem;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .tags span {
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    padding: 0.18rem 0.52rem;
-    font-size: 0.72rem;
-    color: var(--color-text-light);
-  }
-
-  .post-card.hidden {
-    display: none;
-  }
-
-  .empty-state {
-    margin-top: 1.1rem;
-    text-align: center;
-    font-weight: 600;
-  }
-
-  @media (max-width: 1024px) {
-    .posts-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 768px) {
-    .blog-hero {
-      padding-top: 1.8rem;
-    }
-
-    .posts-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const input = document.querySelector('#search-input');
-    const filters = Array.from(document.querySelectorAll('.filter-btn'));
-    const quickButtons = Array.from(document.querySelectorAll('.quick-btn'));
-    const postCards = Array.from(document.querySelectorAll('.post-card'));
-    const emptyState = document.querySelector('#empty-state');
-    const tagHint = document.querySelector('#tag-hint');
-
-    if (!(input instanceof HTMLInputElement) || !emptyState) return;
-
-    let activeCategory = '全部';
-
-    const applyFilters = () => {
-      const keyword = input.value.trim().toLowerCase();
-      let visibleCount = 0;
-
-      const shouldShow = (element) => {
-        const category = element.getAttribute('data-category') || '';
-        const searchText = (element.getAttribute('data-search') || '').toLowerCase();
-        const categoryMatch = activeCategory === '全部' || category === activeCategory;
-        const keywordMatch = !keyword || searchText.includes(keyword);
-        return categoryMatch && keywordMatch;
-      };
-
-      postCards.forEach((card) => {
-        const show = shouldShow(card);
-        card.classList.toggle('hidden', !show);
-        if (show) visibleCount += 1;
-      });
-
-      emptyState.hidden = visibleCount > 0;
-    };
-
-    input.addEventListener('input', applyFilters);
-
-    filters.forEach((button) => {
-      button.addEventListener('click', () => {
-        activeCategory = button.getAttribute('data-category') || '全部';
-        filters.forEach((item) => item.classList.remove('active'));
-        button.classList.add('active');
-        applyFilters();
-      });
-    });
-
-    quickButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const targetCategory = button.getAttribute('data-category-target');
-        if (!targetCategory) return;
-        const targetBtn = filters.find((item) => item.getAttribute('data-category') === targetCategory);
-        if (!targetBtn) return;
-        activeCategory = targetCategory;
-        filters.forEach((item) => item.classList.remove('active'));
-        targetBtn.classList.add('active');
-        input.value = '';
-        applyFilters();
-      });
-    });
-
-    // Support tag links from article page: /blog?tag=xxx
-    const params = new URLSearchParams(window.location.search);
-    const tag = params.get('tag');
-    if (tag) {
-      input.value = tag;
-      if (tagHint) {
-        tagHint.hidden = false;
-        tagHint.textContent = `目前以標籤篩選：#${tag}`;
-      }
-    }
-
-    applyFilters();
-  });
-</script>
+</Base>

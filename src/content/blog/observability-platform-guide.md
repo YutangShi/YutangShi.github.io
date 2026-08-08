@@ -1,18 +1,22 @@
 ---
-title: "構建現代化可觀測性平台：從監控到洞察"
-description: "詳細介紹企業級可觀測性平台的設計與實現，包含監控、日誌和分佈式追蹤的整合方案"
-publishDate: 2024-04-15
-updatedDate: 2024-06-01
-heroImage: "/images/blog/observability-platform.svg"
-category: "SRE"
-tags: ["可觀測性", "監控", "Prometheus", "Grafana", "Loki", "Tempo", "DevOps"]
-seoKeywords: ["可觀測性", "監控", "Prometheus", "Grafana", "Loki", "Tempo", "DevOps"]
+title: 構建現代化可觀測性平台：從監控到洞察
+meta_title: 構建現代化可觀測性平台：從監控到洞察
+description: 詳細介紹企業級可觀測性平台的設計與實現，包含監控、日誌和分佈式追蹤的整合方案
+date: 2024-04-15T00:00:00.000Z
+image: /images/blog/observability-platform.svg
+author: Allen Shi
+categories:
+  - SRE
+tags:
+  - 可觀測性
+  - 監控
+  - Prometheus
+  - Grafana
+  - Loki
+  - Tempo
+  - DevOps
 draft: false
-featured: true
-author: "Allen Shi"
-readingTime: 10
 ---
-
 # 構建現代化可觀測性平台：從監控到洞察
 
 在雲原生時代，系統的複雜性呈指數級增長，傳統的監控手段已經無法滿足需求。可觀測性(Observability)作為監控的進階實踐，為我們提供了更深入理解系統行為的能力。本文將分享如何構建一個完整的可觀測性平台，幫助團隊從被動應對故障轉變為主動預防問題。

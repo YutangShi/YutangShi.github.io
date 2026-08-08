@@ -1,14 +1,18 @@
 ---
-title: "React Hooks 完整指南：從基礎到進階"
-description: "深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。"
-publishDate: 2024-01-15
-category: "AI"
-tags: ["React", "JavaScript", "Hooks"]
-seoKeywords: ["React", "JavaScript", "Hooks"]
-heroImage: "/images/blog/react-hooks.svg"
+title: React Hooks 完整指南：從基礎到進階
+meta_title: React Hooks 完整指南：從基礎到進階
+description: 深入了解 React Hooks 的使用方法，包含 useState、useEffect、useContext 等常用 Hooks 的實戰應用。
+date: 2024-01-15T00:00:00.000Z
+image: /images/blog/react-hooks.svg
+author: Allen Shi
+categories:
+  - AI
+tags:
+  - React
+  - JavaScript
+  - Hooks
 draft: false
 ---
-
 React Hooks 自 React 16.8 版本引入以來，徹底改變了我們編寫 React 組件的方式。它讓我們能夠在函數組件中使用狀態和其他 React 特性，使代碼更加簡潔和易於理解。
 
 ## 這篇適合誰

@@ -1,18 +1,19 @@
 ---
-title: "Linux du 找尋誰吃滿了硬碟"
-description: "詳細介紹如何使用Linux du命令來檢查系統檔案或目錄的使用大小，幫助找出佔用過多空間的資料。"
-publishDate: 2020-06-24
-updatedDate: 2024-12-05
-heroImage: "/images/blog/linux-du.svg"
-category: "SRE"
-tags: ["Linux", "du", "io performance", "系統管理", "效能優化"]
-seoKeywords: ["Linux", "du", "io performance", "系統管理", "效能優化"]
+title: Linux du 找尋誰吃滿了硬碟
+meta_title: Linux du 找尋誰吃滿了硬碟
+description: 詳細介紹如何使用Linux du命令來檢查系統檔案或目錄的使用大小，幫助找出佔用過多空間的資料。
+date: 2020-06-24T00:00:00.000Z
+author: Allen Shi
+categories:
+  - SRE
+tags:
+  - Linux
+  - du
+  - io performance
+  - 系統管理
+  - 效能優化
 draft: false
-featured: true
-author: "Allen Shi"
-readingTime: 3
 ---
-
 du 指令是用來檢查 Linux 系統的檔案或目錄的使用大小，當 disk 堆滿的時候可以找出哪裡的資料佔據過多，來做故障排除。
 
 ## 命令參數

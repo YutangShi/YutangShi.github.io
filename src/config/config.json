@@ -1,0 +1,66 @@
+{
+  "site": {
+    "title": "Allen | AI 自動化 SRE 實戰",
+    "base_url": "https://yutangshi.github.io",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "",
+    "logo_darkmode": "",
+    "logo_width": "150",
+    "logo_height": "30",
+    "logo_text": "Allen AI Automation"
+  },
+
+  "settings": {
+    "search": true,
+    "sticky_header": true,
+    "theme_switcher": true,
+    "default_theme": "system",
+    "pagination": 2,
+    "summary_length": 200,
+    "blog_folder": "blog"
+  },
+
+  "announcement": {
+    "enable": false,
+    "content": "",
+    "expire_days": 7
+  },
+
+  "params": {
+    "contact_form_action": "mailto:yutangshi@gmail.com",
+    "copyright": "© Allen Shi. Built with [Astroplate](https://github.com/zeon-studio/astroplate)."
+  },
+
+  "navigation_button": {
+    "enable": true,
+    "label": "GitHub",
+    "link": "https://github.com/YutangShi"
+  },
+
+  "google_tag_manager": {
+    "enable": true,
+    "gtm_id": "GTM-WBN6TTLG"
+  },
+
+  "disqus": {
+    "enable": false,
+    "shortname": "",
+    "settings": {}
+  },
+
+  "metadata": {
+    "meta_author": "Allen Shi",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "專注於 AI 自動化 SRE、可觀測性、雲端平台與高可靠系統的技術部落格"
+  },
+
+  "llms": {
+    "generate_llms_txt": true,
+    "generate_llms_full_txt": true,
+    "generate_individual_md": true,
+    "include": [],
+    "exclude": []
+  }
+}

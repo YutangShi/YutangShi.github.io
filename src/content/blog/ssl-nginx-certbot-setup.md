@@ -1,18 +1,21 @@
 ---
-title: "SSL nginx certbot 憑證簽署與自動續期"
-description: "詳細介紹如何使用Certbot在Ubuntu環境下為Nginx伺服器配置Let's Encrypt SSL憑證，並設置自動續期。"
-publishDate: 2020-05-03
-updatedDate: 2024-12-05
-heroImage: "/images/blog/ssl-certbot.svg"
-category: "自動化"
-tags: ["SSL", "HTTPS", "nginx", "certbot", "Let's Encrypt", "Ubuntu", "網路安全"]
-seoKeywords: ["SSL", "HTTPS", "nginx", "certbot", "Let's Encrypt", "Ubuntu", "網路安全"]
+title: SSL nginx certbot 憑證簽署與自動續期
+meta_title: SSL nginx certbot 憑證簽署與自動續期
+description: 詳細介紹如何使用Certbot在Ubuntu環境下為Nginx伺服器配置Let's Encrypt SSL憑證，並設置自動續期。
+date: 2020-05-03T00:00:00.000Z
+author: Allen Shi
+categories:
+  - 自動化
+tags:
+  - SSL
+  - HTTPS
+  - nginx
+  - certbot
+  - Let's Encrypt
+  - Ubuntu
+  - 網路安全
 draft: false
-featured: false
-author: "Allen Shi"
-readingTime: 5
 ---
-
 目前SSL已經普遍使用 Let's Encrypt CA (Certificate Authority) 來簽署，但每隔90天就要重新更換，因此就有了certbot服務的產生，來幫我們自動重簽憑證。本文將介紹如何在Ubuntu環境下使用certbot為Nginx設置SSL憑證。
 
 ## 你看完會得到什麼
