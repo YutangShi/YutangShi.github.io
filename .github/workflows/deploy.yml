@@ -25,26 +25,32 @@ jobs:
       - name: Checkout 代碼
         uses: actions/checkout@v4
         
-      - name: 設置 Node.js
-        uses: actions/setup-node@v3
+      - name: 設置 pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 18.20.8
-          cache: 'npm'
+          version: 11.17.0
+
+      - name: 設置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
           
       - name: 檢查環境
         run: |
           echo "Node.js 版本:"
           node -v
-          echo "npm 版本:"
-          npm -v
+          echo "pnpm 版本:"
+          pnpm -v
           echo "目前工作目錄:"
           pwd
           
       - name: 安裝依賴
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         
       - name: 構建網站
-        run: npm run build
+        run: pnpm run build
         env:
           NODE_ENV: production
         
@@ -62,4 +68,4 @@ jobs:
     steps:
       - name: 部署到 GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
