@@ -1,18 +1,20 @@
 ---
-title: "SSL 憑證運作原理"
-description: "深入了解SSL憑證的基本概念、運作原理和結構，包括根憑證、中繼憑證及其在安全通訊中的角色。"
-publishDate: 2020-05-03
-updatedDate: 2024-12-05
-heroImage: "/images/blog/ssl-certification.svg"
-category: "SRE"
-tags: ["SSL", "HTTPS", "網路安全", "憑證", "加密", "certification"]
-seoKeywords: ["SSL", "HTTPS", "網路安全", "憑證", "加密", "certification"]
+title: SSL 憑證運作原理
+meta_title: SSL 憑證運作原理
+description: 深入了解SSL憑證的基本概念、運作原理和結構，包括根憑證、中繼憑證及其在安全通訊中的角色。
+date: 2020-05-03T00:00:00.000Z
+author: Allen Shi
+categories:
+  - SRE
+tags:
+  - SSL
+  - HTTPS
+  - 網路安全
+  - 憑證
+  - 加密
+  - certification
 draft: false
-featured: false
-author: "Allen Shi"
-readingTime: 4
 ---
-
 上次我們提到 SSL (Secure Sockets Layer) 可以運用 CertBot 來自動續簽，這單元我們要來理解憑證 (Certification) 是什麼，以及它在安全通訊中扮演的角色。
 
 ## SSL 憑證基本結構

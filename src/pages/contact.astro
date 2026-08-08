@@ -1,205 +1,43 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import { SITE_CONFIG } from '../utils/config';
+import Base from "@/layouts/Base.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import PageHeader from "@/partials/PageHeader.astro";
 
-const contactChannels = [
-  {
-    title: 'Email',
-    value: SITE_CONFIG.email,
-    description: '適合完整描述需求、預算與時程。',
-    href: SITE_CONFIG.social.email,
-    action: '寄信給我'
-  },
-  {
-    title: 'Line',
-    value: 'yutang-shi',
-    description: '適合即時溝通、快速確認方向。',
-    href: 'https://line.me/ti/p/~yutang-shi',
-    action: 'Line 聯絡'
-  }
-];
+const contactIndex = await getListPage("contact", "-index");
+const { title, description, meta_title, image } = contactIndex.data;
 
-const faqs = [
-  {
-    question: '通常多久會回覆？',
-    answer: '我通常會在 24 小時內回覆 Email 或 Line 訊息。'
-  },
-  {
-    question: '可以預約線上會議嗎？',
-    answer: '可以，先寄信或 Line 告訴我你的需求，我會提供可預約時段。'
-  },
-  {
-    question: '不懂 AI 自動化也可以詢問嗎？',
-    answer: '可以。我會先用白話理解你的情境，再提供適合的建議。'
-  }
-];
+const buildDrafts = process.argv.includes("--buildDrafts");
+if (!buildDrafts && contactIndex.data.draft) {
+  return Astro.redirect("/404");
+}
 ---
 
-<MainLayout title="聯絡我 - Allen Shi" description="透過 Email 或 Line 聯絡 Allen，討論 AI 自動化需求">
-  <div class="container contact-page">
-    <section class="contact-hero fade-in">
-      <p class="hero-kicker">Contact</p>
-      <h1>聯絡我</h1>
-      <p>
-        如果你想了解 AI 自動化，直接透過下方主要聯絡方式即可。
-        我會用容易理解的方式，陪你把需求釐清並安排下一步。
-      </p>
-
-      <div class="hero-actions">
-        <a href={SITE_CONFIG.social.email} class="btn">立即寄信</a>
-        <a href="https://line.me/ti/p/~yutang-shi" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Line 聯絡</a>
+<Base
+  title={title}
+  meta_title={meta_title}
+  description={description}
+  image={image}
+>
+  <PageHeader title={title} />
+  <section class="section-sm">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto md:col-10 lg:col-6">
+          <div class="rounded border border-border p-6 dark:border-darkmode-border">
+            <p class="mb-6 text-lg">歡迎透過以下方式聯絡我：</p>
+            <dl class="space-y-5">
+              <div>
+                <dt class="font-semibold">Email</dt>
+                <dd><a href="mailto:yutangshi@gmail.com">yutangshi@gmail.com</a></dd>
+              </div>
+              <div>
+                <dt class="font-semibold">Line ID</dt>
+                <dd>yutang-shi</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <section class="channels fade-in delay-1">
-      <div class="section-head">
-        <h2>主要聯絡方式</h2>
-        <p>二選一即可，不需要重複填資料。</p>
-      </div>
-      <div class="channel-grid">
-        {contactChannels.map((channel) => (
-          <article class="channel-item card">
-            <h3>{channel.title}</h3>
-            <p class="channel-value">{channel.value}</p>
-            <p>{channel.description}</p>
-            <a href={channel.href} class="btn btn-secondary" target={channel.href.startsWith('http') ? '_blank' : undefined} rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-              {channel.action}
-            </a>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="faq-section fade-in delay-2">
-      <div class="section-head">
-        <h2>常見問題</h2>
-      </div>
-      <div class="faq-grid">
-        {faqs.map((faq) => (
-          <article class="faq-item card">
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  </div>
-
-  <div class="mobile-action-bar">
-    <a href={SITE_CONFIG.social.email} class="mobile-action">寄信</a>
-    <a href="https://line.me/ti/p/~yutang-shi" class="mobile-action" target="_blank" rel="noopener noreferrer">Line</a>
-  </div>
-</MainLayout>
-
-<style>
-  .contact-page {
-    padding-top: 2rem;
-    padding-bottom: 5rem;
-  }
-
-  .contact-hero p {
-    max-width: 64ch;
-  }
-
-  .hero-kicker {
-    font-family: var(--font-heading);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.78rem;
-    color: var(--color-primary-dark);
-    margin-bottom: 0.6rem;
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-  }
-
-  .channels,
-  .faq-section {
-    margin-top: 2rem;
-  }
-
-  .section-head {
-    margin-bottom: 0.8rem;
-  }
-
-  .channel-grid,
-  .faq-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.9rem;
-  }
-
-  .channel-item,
-  .faq-item {
-    padding: 1rem;
-  }
-
-  .channel-value {
-    color: var(--color-primary-dark);
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-
-  .channel-item .btn {
-    margin-top: 0.5rem;
-    width: 100%;
-  }
-
-  .mobile-action-bar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 60;
-    display: none;
-    gap: 0.5rem;
-    padding: 0.6rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-top: 1px solid var(--color-border);
-    backdrop-filter: blur(8px);
-  }
-
-  .mobile-action {
-    flex: 1;
-    min-height: 46px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-    background: #ffffff;
-    color: var(--color-primary-dark);
-    font-weight: 700;
-  }
-
-  .mobile-action:hover {
-    text-decoration: none;
-    border-color: var(--color-primary);
-  }
-
-  @media (max-width: 1024px) {
-    .channel-grid,
-    .faq-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 768px) {
-    .contact-page {
-      padding-top: 1.2rem;
-      padding-bottom: 6rem;
-    }
-
-    .channel-grid,
-    .faq-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .mobile-action-bar {
-      display: flex;
-    }
-  }
-</style>
+    </div>
+  </section>
+</Base>

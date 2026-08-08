@@ -1,388 +1,48 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import { SITE_CONFIG } from '../utils/config';
+import ImageMod from "@/components/ImageMod.astro";
+import Base from "@/layouts/Base.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import { render } from "astro:content";
 
-// 專業技能
-const skills = [
-  {
-    category: '程式語言 & 框架',
-    items: ['PHP (CodeIgniter, Laravel)', 'Java (J2EE, Mybatis)', 'JavaScript', 'Vue.js', 'NativeScript', 'Sencha6', 'Python']
-  },
-  {
-    category: 'SRE & Infra',
-    items: ['HashCorp (Nomad, Consul, Vault)', 'Puppet', 'Terraform', 'Prometheus', 'Alertmanager', 'Grafana', 'AWS EKS', 'Docker Compose']
-  },
-  {
-    category: '雲端平台',
-    items: ['AWS (EKS, RDS, Transit Gateway)', 'Azure (Application Gateway, AD)', 'LA(N)MP Stack', 'F5', 'Palo Alto']
-  },
-  {
-    category: '資料庫',
-    items: ['MySQL (Master/Slave)', 'PostgreSQL', 'AuroraDB', 'Redis', 'Database Optimization']
-  },
-  {
-    category: 'AI 技術',
-    items: ['TTS Whisper', 'LLM Ollama', 'Azure TTS', 'MusicGen', 'ComfyUI', 'Voice AI Integration']
-  },
-  {
-    category: 'DevOps & 工具',
-    items: ['Gitlab CI/CD', 'Jenkins', 'Docker', 'Kubernetes', 'Helm', 'ArgoCD', 'PMM', 'NextDNS']
-  }
-];
+const aboutIndex = await getListPage("about", "-index");
+const { Content } = await render(aboutIndex);
+const { title, description, meta_title, image } = aboutIndex.data;
 
-const education = [];
-
-const certifications = [
-  'AWS Solutions Architect',
-  'Ansible & Terraform IaC 導入',
-  'Kubernetes 建制跟管理 ',
-  'SRE 雲地維運經驗',
-  'DevOps 架構規劃'
-];
+const buildDrafts = process.argv.includes("--buildDrafts");
+if (!buildDrafts && aboutIndex.data.draft) {
+  return Astro.redirect("/404");
+}
 ---
 
-<MainLayout 
-  title="關於我 - Allen Shi"
-  description="了解更多關於 Allen Shi 的背景、技能和經驗"
+<Base
+  title={title}
+  meta_title={meta_title}
+  description={description}
+  image={image}
 >
-  <div class="container about-page">
-    <!-- Hero Section -->
-    <section class="about-hero">
-      <div class="hero-content">
-        <div class="hero-image">
-                      <img src="/avatar.jpg" alt={SITE_CONFIG.author} />
-        </div>
-        <div class="hero-text">
-          <h1>關於我</h1>
-          <h2>你好，我是 <span class="highlight">{SITE_CONFIG.author}</span></h2>
-          <p class="lead">
-            我是一位資深的 Site Reliability Engineer 和軟體工程師，擁有豐富的技術經驗。
-            專精於雲端架構設計、DevOps 實踐、系統監控優化，以及最新的 AI 技術研究與應用。
-            個性易於相處與合作，做事細心，樂於學習新技術與分享新知。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section class="skills-section">
-      <div class="section-header">
-        <h2>技能專長</h2>
-        <p>以下是我在各個領域的專業技能</p>
-      </div>
-      <div class="skills-grid">
-        {skills.map((skillGroup) => (
-          <div class="skill-group card">
-            <h3>{skillGroup.category}</h3>
-            <div class="skill-tags">
-              {skillGroup.items.map((skill) => (
-                <span class="skill-tag">{skill}</span>
-              ))}
-            </div>
+  <section class="section-sm">
+    <div class="container">
+      <div class="row justify-center">
+        <div class="md:col-10 lg:col-8">
+          {
+            image && (
+              <ImageMod
+                class="mx-auto mb-6 rounded"
+                src={image}
+                width={1200}
+                height={600}
+                alt={title}
+                format="webp"
+              />
+            )
+          }
+          <h2 set:html={markdownify(title)} class="h3 mb-6" />
+          <div class="content">
+            <Content />
           </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Experience Section -->
-    {/* <section class="experience-section">
-      <div class="section-header">
-        <h2>工作經歷</h2>
-        <p>我的職業發展歷程</p>
-      </div>
-      <div class="timeline">
-        {experiences.map((exp, index) => (
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content card">
-              <div class="exp-header">
-                <h3>{exp.title}</h3>
-                <div class="exp-meta">
-                  <span class="company">{exp.company}</span>
-                  <span class="period">{exp.period}</span>
-                </div>
-              </div>
-              <p class="exp-description">{exp.description}</p>
-              <div class="achievements">
-                <h4>主要成就：</h4>
-                <ul>
-                  {exp.achievements.map((achievement) => (
-                    <li>{achievement}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section> */}
-
-    <!-- Education Section Removed -->
-
-    <!-- Certifications Section -->
-    <section class="certifications-section">
-      <div class="section-header">
-        <h2>專業認證</h2>
-      </div>
-      <div class="certifications-grid">
-        {certifications.map((cert) => (
-          <div class="certification-item">
-            <span class="cert-icon">🏆</span>
-            <span class="cert-name">{cert}</span>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2>讓我們開始合作</h2>
-        <p>如果您對我的背景和技能感興趣，歡迎與我聯繫討論合作機會</p>
-        <div class="cta-actions">
-          <a href="/contact" class="btn">聯絡我</a>
-          <a href="/portfolio" class="btn btn-secondary">查看作品</a>
         </div>
       </div>
-    </section>
-  </div>
-</MainLayout>
-
-<style>
-  .about-page {
-    padding-left: clamp(0.75rem, 2.4vw, 1.5rem);
-    padding-right: clamp(0.75rem, 2.4vw, 1.5rem);
-  }
-
-  /* About Hero */
-  .about-hero {
-    padding: var(--spacing-3xl) 0;
-    margin-bottom: var(--spacing-3xl);
-  }
-  
-  .hero-content {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: var(--spacing-3xl);
-    align-items: center;
-  }
-  
-  .hero-image {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .hero-image img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid var(--color-primary);
-  }
-  
-  .hero-text h1 {
-    font-size: var(--font-size-4xl);
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-text-light);
-  }
-  
-  .hero-text h2 {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-lg);
-  }
-  
-  .highlight {
-    color: var(--color-primary);
-  }
-  
-  .lead {
-    font-size: var(--font-size-lg);
-    line-height: 1.6;
-    color: var(--color-text-light);
-  }
-
-  /* Skills Section */
-  .skills-section {
-    margin-bottom: var(--spacing-4xl);
-  }
-  
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--spacing-md);
-  }
-
-  .skill-group.card {
-    padding: var(--spacing-md);
-    border-radius: 0.75rem;
-  }
-  
-  .skill-group h3 {
-    margin-bottom: var(--spacing-md);
-    color: var(--color-primary);
-    font-size: 1.05rem;
-  }
-  
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-  }
-  
-  .skill-tag {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-text);
-    padding: 0.35rem 0.7rem;
-    border-radius: var(--border-radius);
-    font-size: 0.83rem;
-    font-weight: 500;
-    border: 1px solid var(--color-border);
-  }
-
-  /* Experience Section - Removed */
-
-  /* Education Section Removed */
-
-  /* Certifications Section */
-  .certifications-section {
-    margin-top: 6rem;
-    margin-bottom: var(--spacing-4xl);
-  }
-  
-  .certifications-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: var(--spacing-md);
-  }
-  
-  .certification-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: 0.65rem 0.85rem;
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--color-border);
-    min-height: 52px;
-  }
-  
-  .cert-icon {
-    font-size: 1rem;
-  }
-  
-  .cert-name {
-    font-weight: 500;
-    font-size: 0.9rem;
-    line-height: 1.35;
-  }
-
-  /* CTA Section */
-  .cta-section {
-    text-align: center;
-    padding: var(--spacing-3xl);
-    margin-top: 8rem;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    border-radius: var(--border-radius-lg);
-    color: white;
-  }
-  
-  .cta-content h2 {
-    margin-bottom: var(--spacing-md);
-    color: white;
-  }
-  
-  .cta-content p {
-    margin-bottom: var(--spacing-xl);
-    opacity: 0.9;
-  }
-  
-  .cta-actions {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-  }
-  
-  .cta-actions .btn {
-    background-color: white;
-    color: var(--color-primary);
-  }
-  
-  .cta-actions .btn:hover {
-    background-color: var(--color-bg-secondary);
-  }
-  
-  .cta-actions .btn-secondary {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-  }
-  
-  .cta-actions .btn-secondary:hover {
-    background-color: white;
-    color: var(--color-primary);
-  }
-
-  /* Section Headers */
-  .section-header {
-    text-align: center;
-    margin-bottom: var(--spacing-3xl);
-  }
-  
-  .section-header h2 {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .section-header p {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .about-page {
-      padding-left: 0.875rem;
-      padding-right: 0.875rem;
-    }
-
-    .hero-content {
-      grid-template-columns: 1fr;
-      text-align: center;
-      gap: var(--spacing-xl);
-    }
-    
-    .hero-image {
-      order: -1;
-    }
-    
-    .skills-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .timeline {
-      padding-left: var(--spacing-lg);
-    }
-    
-    .timeline-content {
-      margin-left: var(--spacing-sm);
-    }
-    
-    .exp-meta {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--spacing-xs);
-    }
-    
-    /* Education responsive styles removed */
-    
-    .certifications-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .cta-actions {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-</style> 
+    </div>
+  </section>
+</Base>

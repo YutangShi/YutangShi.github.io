@@ -1,18 +1,23 @@
 ---
-title: "NativeScript 與 Firebase Push Notification 整合指南"
-description: "詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android 的完整設定流程和實作步驟。"
-publishDate: 2021-06-13
-updatedDate: 2024-12-05
-heroImage: "/images/blog/nativescript-firebase-push-notification.svg"
-category: "Mobile App"
-tags: ["NativeScript", "Firebase", "Push Notification", "iOS", "Android", "移動應用開發"]
-seoKeywords: ["NativeScript", "Firebase", "Push Notification", "iOS", "Android", "移動應用開發"]
+title: NativeScript 與 Firebase Push Notification 整合指南
+meta_title: NativeScript 與 Firebase Push Notification 整合指南
+description: >-
+  詳細介紹如何在 NativeScript 應用程式中整合 Firebase Push Notification，包含 iOS 和 Android
+  的完整設定流程和實作步驟。
+date: 2021-06-13T00:00:00.000Z
+image: /images/blog/nativescript-firebase-push-notification.svg
+author: Allen Shi
+categories:
+  - Mobile App
+tags:
+  - NativeScript
+  - Firebase
+  - Push Notification
+  - iOS
+  - Android
+  - 移動應用開發
 draft: false
-featured: true
-author: "Allen Shi"
-readingTime: 8
 ---
-
 由於推播是增加與用戶的互動的一項重要功能，因此我們今天要來介紹 NativeScript 如何串接 Firebase Push Notification 機制，讓我們的 App 能夠收到推播通知。
 
 以下會分別由 iOS 與 Android 分別做介紹。

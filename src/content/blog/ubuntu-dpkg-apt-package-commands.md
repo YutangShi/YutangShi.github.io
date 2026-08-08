@@ -1,18 +1,20 @@
 ---
-title: "Ubuntu dpkg apt 套件指令"
-description: "詳細介紹Ubuntu系統中使用apt和dpkg進行套件管理的常用指令，包括搜尋、安裝、移除和更新套件。"
-publishDate: 2020-05-31
-updatedDate: 2024-12-05
-heroImage: "/images/blog/ubuntu-apt.svg"
-category: "自動化"
-tags: ["Ubuntu", "Linux", "dpkg", "apt", "套件管理", "系統管理"]
-seoKeywords: ["Ubuntu", "Linux", "dpkg", "apt", "套件管理", "系統管理"]
+title: Ubuntu dpkg apt 套件指令
+meta_title: Ubuntu dpkg apt 套件指令
+description: 詳細介紹Ubuntu系統中使用apt和dpkg進行套件管理的常用指令，包括搜尋、安裝、移除和更新套件。
+date: 2020-05-31T00:00:00.000Z
+author: Allen Shi
+categories:
+  - 自動化
+tags:
+  - Ubuntu
+  - Linux
+  - dpkg
+  - apt
+  - 套件管理
+  - 系統管理
 draft: false
-featured: false
-author: "Allen Shi"
-readingTime: 3
 ---
-
 Ubuntu 是基於 Debian 套件管理系統，當我們要安裝套件時，我們可以使用 apt 或 dpkg 來進行套件的查詢、移除、相依性等操作。這篇文章整理了常用的套件管理指令，幫助您更有效地管理系統套件。
 
 ## 你看完會得到什麼
