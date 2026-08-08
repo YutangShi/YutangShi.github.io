@@ -169,3 +169,185 @@
   @apply prose-tr:border-border dark:prose-tr:border-darkmode-border;
   @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px] dark:prose-td:text-darkmode-text;
 }
+
+/* portfolio */
+.portfolio-intro {
+  @apply mb-10 max-w-2xl text-lg leading-relaxed text-text dark:text-darkmode-text;
+}
+
+.portfolio-grid {
+  @apply grid gap-6 md:grid-cols-2;
+}
+
+.portfolio-card {
+  @apply flex h-full flex-col overflow-hidden rounded-lg border border-border bg-light no-underline transition duration-200 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:border-darkmode-border dark:bg-darkmode-light;
+}
+
+.portfolio-card-image {
+  @apply aspect-[16/8] overflow-hidden bg-body dark:bg-darkmode-body;
+}
+
+.portfolio-card-image img {
+  @apply h-full w-full object-cover transition duration-300;
+}
+
+.portfolio-card:hover .portfolio-card-image img {
+  @apply scale-[1.025];
+}
+
+.portfolio-card-content {
+  @apply flex grow flex-col p-6;
+}
+
+.portfolio-card-category {
+  @apply mb-3 block text-sm font-semibold text-primary dark:text-darkmode-primary;
+}
+
+.portfolio-card h2 {
+  @apply mb-3 font-primary text-2xl font-semibold text-text-dark dark:text-darkmode-text-light;
+}
+
+.portfolio-card p {
+  @apply mb-5 text-text dark:text-darkmode-text;
+}
+
+.portfolio-card-tech {
+  @apply mb-6 flex flex-wrap gap-2 !list-none !pl-0;
+}
+
+.portfolio-card-tech li {
+  @apply !m-0 rounded bg-body px-2.5 py-1 text-sm text-text dark:bg-darkmode-body dark:text-darkmode-text;
+}
+
+.portfolio-card-link {
+  @apply mt-auto font-semibold text-primary dark:text-darkmode-primary;
+}
+
+.portfolio-back {
+  @apply mb-8 inline-flex min-h-11 items-center font-semibold text-text no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-darkmode-text dark:hover:text-darkmode-primary;
+}
+
+.portfolio-case-hero {
+  @apply grid gap-8 lg:grid-cols-2 lg:items-center;
+}
+
+.portfolio-case-hero > img {
+  @apply w-full rounded-lg border border-border dark:border-darkmode-border;
+}
+
+.portfolio-case-summary > p {
+  @apply mb-7 text-lg leading-relaxed text-text dark:text-darkmode-text;
+}
+
+.portfolio-case-meta h2,
+.portfolio-case-section > h2 {
+  @apply mb-4 font-primary text-2xl font-semibold text-text-dark dark:text-darkmode-text-light;
+}
+
+.portfolio-case-section {
+  @apply mt-16;
+}
+
+.portfolio-detail-grid {
+  @apply grid gap-5 md:grid-cols-3;
+}
+
+.portfolio-detail-card {
+  @apply rounded-lg border border-border p-6 dark:border-darkmode-border;
+}
+
+.portfolio-detail-card h3,
+.portfolio-challenges h3 {
+  @apply mb-3 font-primary text-xl font-semibold text-text-dark dark:text-darkmode-text-light;
+}
+
+.portfolio-detail-card ul,
+.portfolio-outcomes ul {
+  @apply m-0 space-y-2 pl-5 text-text dark:text-darkmode-text;
+}
+
+.portfolio-challenges {
+  @apply grid gap-5 md:grid-cols-3;
+}
+
+.portfolio-challenges section {
+  @apply rounded-lg border border-border p-6 dark:border-darkmode-border;
+}
+
+.portfolio-challenges p {
+  @apply mb-3 text-text dark:text-darkmode-text;
+}
+
+.portfolio-challenges p:last-child {
+  @apply mb-0;
+}
+
+.portfolio-outcomes {
+  @apply rounded-lg bg-light p-6 dark:bg-darkmode-light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card,
+  .portfolio-card-image img {
+    @apply transition-none;
+  }
+}
+
+/* homepage article index */
+.home-articles {
+  @apply py-16 xl:py-20;
+}
+
+.home-articles-heading {
+  @apply mb-12 max-w-3xl;
+}
+
+.home-articles-kicker {
+  @apply mb-3 text-sm font-semibold text-primary dark:text-darkmode-primary;
+}
+
+.home-articles-heading h1 {
+  @apply mb-5 font-primary text-h2-sm font-semibold text-text-dark md:text-h2 dark:text-darkmode-text-light;
+}
+
+.home-articles-heading > p:last-child {
+  @apply max-w-2xl text-lg leading-relaxed text-text dark:text-darkmode-text;
+}
+
+.home-post-grid {
+  @apply grid gap-6 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.home-post-card {
+  @apply h-full rounded-lg border border-border bg-light p-6 transition duration-200 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg dark:border-darkmode-border dark:bg-darkmode-light;
+}
+
+.home-post-card > div {
+  @apply flex h-full flex-col bg-transparent;
+}
+
+.home-post-card h4 {
+  @apply text-xl leading-snug;
+}
+
+.home-post-card h4 a {
+  @apply text-text-dark no-underline hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-darkmode-text-light dark:hover:text-darkmode-primary;
+}
+
+.home-post-card ul {
+  @apply text-sm text-text dark:text-darkmode-text;
+}
+
+.home-post-card p {
+  @apply text-text dark:text-darkmode-text;
+}
+
+.home-post-card .btn {
+  @apply mt-auto self-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-post-card {
+    @apply transition-none;
+  }
+}

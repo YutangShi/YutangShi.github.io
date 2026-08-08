@@ -1,0 +1,67 @@
+---
+import Base from "@/layouts/Base.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+import { getPortfolioProject, portfolioProjects } from "@/data/portfolio";
+
+export function getStaticPaths() {
+  return portfolioProjects.map((project) => ({ params: { project: project.slug } }));
+}
+
+const project = getPortfolioProject(Astro.params.project ?? "");
+if (!project) {
+  return Astro.redirect("/404/");
+}
+---
+
+<Base title={project.title} meta_title={project.title} description={project.summary} image={project.image}>
+  <PageHeader title={project.title} />
+  <section class="section-sm">
+    <div class="container">
+      <a class="portfolio-back" href="/portfolio/">← 返回作品集</a>
+      <div class="portfolio-case-hero">
+        <div class="portfolio-case-summary">
+          <span class="portfolio-card-category">{project.category}</span>
+          <p>{project.overview}</p>
+          <div class="portfolio-case-meta">
+            <h2>使用技術</h2>
+            <ul class="portfolio-card-tech" aria-label={`${project.title} 使用技術`}>
+              {project.technologies.map((technology) => <li>{technology}</li>)}
+            </ul>
+          </div>
+          <a class="btn btn-primary" href={project.website} target="_blank" rel="noreferrer">前往專案網站</a>
+        </div>
+        <img src={project.image} alt={`${project.title} 專案畫面`} />
+      </div>
+
+      <div class="portfolio-case-section">
+        <h2>專案重點</h2>
+        <div class="portfolio-detail-grid">
+          {project.highlights.map((highlight) => (
+            <section class="portfolio-detail-card">
+              <h3>{highlight.title}</h3>
+              <ul>{highlight.items.map((item) => <li>{item}</li>)}</ul>
+            </section>
+          ))}
+        </div>
+      </div>
+
+      <div class="portfolio-case-section">
+        <h2>開發挑戰與解法</h2>
+        <div class="portfolio-challenges">
+          {project.challenges.map((challenge) => (
+            <section>
+              <h3>{challenge.title}</h3>
+              <p><strong>挑戰：</strong>{challenge.problem}</p>
+              <p><strong>解法：</strong>{challenge.solution}</p>
+            </section>
+          ))}
+        </div>
+      </div>
+
+      <div class="portfolio-case-section portfolio-outcomes">
+        <h2>專案成果</h2>
+        <ul>{project.outcomes.map((outcome) => <li>{outcome}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+</Base>
