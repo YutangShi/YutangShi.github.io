@@ -19,14 +19,6 @@
     {
       "name": "作品集",
       "url": "/portfolio"
-    },
-    {
-      "name": "分類",
-      "url": "/categories"
-    },
-    {
-      "name": "標籤",
-      "url": "/tags"
     }
   ],
   "footer": [
