@@ -136,18 +136,18 @@ docker run --rm --name llama-server --gpus all \
 ### ⚙️ 核心調優參數分組解析
 
 1.  **模型與路徑載入**：
-    *   `-v /opt/models:/models`：將宿主機的模型目錄掛載至容器內部。
-    *   `-m /models/...gguf`：指定要加載的 Gemma 4 模型。
+    *  -v /opt/models:/models：將宿主機的模型目錄掛載至容器內部。
+    *  -m /models/...gguf：指定要加載的 Gemma 4 模型。
 2.  **顯存與上下文深度優化 (VRAM & Context)**：
-    *   `--ctx-size 65536`：設定 64K 的最大 Context 空間（注意：此為配置目標，需經 4090 實測確認）[14, 15]。
-    *   `--n-gpu-layers 99`：強制將全部 99 層模型網路卸載至 GPU，以實現 100% 的 GPU 純硬體加速 [14, 15]。
-    *   `--cache-type-k q8_0` 與 `--cache-type-v q8_0`：**關鍵顯存壓縮參數**。將注意力機制（Attention）中的 Key 與 Value 緩存以 8-bit（Q8）高精度進行量化壓縮，能在保持極高回答品質的同時，大幅斬半長文本下的 KV Cache 顯存開銷 [14, 20]。
-    *   `-fa on`（Flash Attention）：啟用 Flash Attention 計算優化，極大程度改善長 Context 推理時的暫存壓力 [14, 20]。
+    *  --ctx-size 65536：設定 64K 的最大 Context 空間（注意：此為配置目標，需經 4090 實測確認）。
+    *  --n-gpu-layers 99：強制將全部 99 層模型網路卸載至 GPU，以實現 100% 的 GPU 純硬體加速 。
+    *  --cache-type-k q8_0 與 --cache-type-v q8_0：**關鍵顯存壓縮參數**。將注意力機制（Attention）中的 Key 與 Value 緩存以 8-bit（Q8）高精度進行量化壓縮，能在保持極高回答品質的同時，大幅斬半長文本下的 KV Cache 顯存開銷。
+    *  -fa on（Flash Attention）：啟用 Flash Attention 計算優化，極大程度改善長 Context 推理時的暫存壓力。
 3.  **吞吐量與並行策略 (Throughput & Batching)**：
-    *   `--parallel 1`：限制單一平行推理序列，避免並行請求瞬間擠爆 4090 顯存。
-    *   `-b 2048`：邏輯 Batch Size。定義了一次 Prompt 處理（Prefill 預填）可累積處理的最大 Token 上限 [15, 16]。
-    *   `-ub 1024`：物理 Micro-Batch Size。指每次實際交給 GPU Kernel 進行矩陣並行運算的 Token 數量 [15, 17]。
-    *   `--no-mmap`：關閉內存映射，強制將模型權重完整預載入物理顯存中，防止推理中途因為讀取硬碟造成 Token 生成卡頓。
+    *  --parallel 1：限制單一平行推理序列，避免並行請求瞬間擠爆 4090 顯存。
+    *  -b 2048：邏輯 Batch Size。定義了一次 Prompt 處理（Prefill 預填）可累積處理的最大 Token 上限。
+    *  -ub 1024：物理 Micro-Batch Size。指每次實際交給 GPU Kernel 進行矩陣並行運算的 Token 數量。
+    *  --no-mmap：關閉內存映射，強制將模型權重完整預載入物理顯存中，防止推理中途因為讀取硬碟造成 Token 生成卡頓。
 
 ---
 
@@ -160,14 +160,14 @@ docker run --rm --name llama-server --gpus all \
 ```
 
 1.  **降低 --ctx-size **：
-    *   **原理**：KV Cache 是隨著長度呈線性爆發的，降低最大 Context 能立刻釋放出最大筆的顯存餘額 [11, 16]。
+    *   **原理**：KV Cache 是隨著長度呈線性爆發的，降低最大 Context 能立刻釋放出最大筆的顯存餘額。
 2.  **降低物理微批次 -ub`**：
     *   **原理**：-ub（物理微批次）的大小決定了單次 GPU Kernel 計算時 CUDA 工作區與暫存的峰值顯存佔用。發生 OOM 時，優先將 -ub 1024` 降為 512 或 256。若預填提示詞過長，再適度調降邏輯批次 -b。此調整僅會略微拉長 Prompt 的載入（Prefill）時間，但絕不會影響模型的生成品質與最大 Context 容量。
 3.  **確認啟用 KV Cache 量化**：
-    *   **原理**：檢查日誌，確認 --cache-type-k/v q8_0 已生效。這能在幾乎無感的情況下減少一半的對話緩存開銷 [14, 17]。
+    *   **原理**：檢查日誌，確認 --cache-type-k/v q8_0 已生效。這能在幾乎無感的情況下減少一半的對話緩存開銷。
 4.  **減少 --n-gpu-layers 進行記憶體分流 (Offload)**：
-    *   **原理**：這是容量優先的最後手段。例如將 GPU Layers 從 99 降到 80，此時前 80 層 Transformer 會留在 4090 VRAM 運作，而剩餘的 19 層則移至 64GB 的系統 RAM 中由 CPU 慢速計算 [17, 18]。
-    *   **代價**：每生成一個 Token，中間計算數據必須透過 PCIe 匯流排在 GPU VRAM 與系統 RAM 之間高頻傳輸，這會帶來嚴重的 PCIe 傳輸延遲，使 Token 生成速度（tokens/s）暴跌 [17, 18]。
+    *   **原理**：這是容量優先的最後手段。例如將 GPU Layers 從 99 降到 80，此時前 80 層 Transformer 會留在 4090 VRAM 運作，而剩餘的 19 層則移至 64GB 的系統 RAM 中由 CPU 慢速計算。
+    *   **代價**：每生成一個 Token，中間計算數據必須透過 PCIe 匯流排在 GPU VRAM 與系統 RAM 之間高頻傳輸，這會帶來嚴重的 PCIe 傳輸延遲，使 Token 生成速度（tokens/s）暴跌。
 
 ---
 
@@ -180,7 +180,7 @@ docker run --rm --name llama-server --gpus all \
 ### 倉庫 (VRAM) 與高速工作台 (SRAM)
 要理解 Flash Attention，我們可以使用空間來作比喻：
 *   **VRAM** 像是一個距離核心較遠、容量巨大但搬運速度慢的大型倉庫（負責存放完整的 Q、K、V 及模型參數）。
-*   **SRAM** 則是 GPU 核心旁邊、容量僅約 16MB 但讀寫極速的高速 shared memory 工作台 [3, 19]。
+*   **SRAM** 則是 GPU 核心旁邊、容量僅約 16MB 但讀寫極速的高速 shared memory 工作台。
 
 ### 運作三大步驟：
 1.  **分塊載入 (Tiling)**：不一次讀取整張巨大的 Attention 矩陣，而是從 VRAM 倉庫中載入一小塊一小塊的 Q、K、V 數據到 SRAM 工作台上。
