@@ -153,7 +153,7 @@ docker run --rm --name llama-server --gpus all \
 
 ## 🛠️ 7. 對話遇到 OOM 崩潰？黃金排障四步驟
 
-當您在終端機看到 `Out of Memory (OOM)` 錯誤時，切忌盲目亂調，請依照以下「由低風險至高影響」的黃金順序依次排查：
+當您在終端機看到 Out of Memory (OOM) 錯誤時，切忌盲目亂調，請依照以下「由低風險至高影響」的黃金順序依次排查：
 
 ```
 [步驟 1：降 Context] ───► [步驟 2：降 Micro-Batch] ───► [步驟 3：KV Cache 量化] ───► [步驟 4：CPU/RAM 分流]
