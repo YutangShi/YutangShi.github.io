@@ -1,3 +1,19 @@
+---
+title: "設計即程式碼：用 YAML 與大綱驅動 NotebookLM 簡報"
+meta_title: "NotebookLM 簡報：用 YAML 與大綱控制內容與版型"
+description: "使用 YAML 定義視覺規格，搭配簡報大綱，降低 NotebookLM 生成簡報時的版面與內容落差。"
+date: 2026-08-11T00:00:00.000Z
+author: Allen Shi
+categories:
+  - AI 自動化
+tags:
+  - NotebookLM
+  - Gemini
+  - YAML
+  - 簡報
+draft: false
+---
+
 # 「設計即程式碼」：如何用 YAML 與大綱驅動，在 Gemini Notebook 打造精準且不具 AI 味的專業簡報
 
 當我們使用 AI 工具來生成簡報時，常常會遇到一種「抽盲盒」的隨機與挫折感。在對話框裡輸入「現代感」、「專業風」或「科技感」等模糊的形容詞，AI 往往會因為無法理解這些抽象概念，只能隨機套用一些無趣的版面、或是塞滿花俏且過度設計的元素。這種現象在社群中被稱為「AI 味」或「廉價的 AI 醜簡報」。
@@ -13,8 +29,6 @@
 ## 視覺概念：設計即程式碼 (Design as Code)
 
 在深入步驟之前，讓我們先理解這個核心觀念：將視覺設計轉化為結構化流程，讓 AI 依照規格穩定執行。
-
-![設計即程式碼：用 YAML 掌控簡報風格](design_as_code_yaml.jpg)
 
 ---
 
@@ -120,8 +134,6 @@ slides:
 這套工作流的靈魂，在於**「大綱驅動 (Outline-Driven)」**。其核心邏輯是**先建立邏輯嚴密的「骨架」，再套上 YAML 的「皮膚」**，最後進行雙軌融合。
 
 以下是完整的四個實戰步驟：
-
-![大綱驅動簡報生成工作流](outline_driven_workflow.jpg)
 
 ### 步驟一：善用提問深度萃取內容
 不要直接把幾萬字的原始資料丟給 AI 叫它「做簡報」。
