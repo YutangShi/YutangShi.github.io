@@ -170,6 +170,34 @@
   @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px] dark:prose-td:text-darkmode-text;
 }
 
+.notebooklm-callout {
+  @apply my-8 rounded-lg border border-primary/30 bg-primary/5 px-6 py-5 text-text dark:border-darkmode-primary/40 dark:bg-darkmode-primary/10 dark:text-darkmode-text;
+}
+
+.notebooklm-callout strong {
+  @apply block text-lg text-text-dark dark:text-darkmode-text-dark;
+}
+
+.notebooklm-callout ol {
+  @apply mb-0 mt-3;
+}
+
+.notebooklm-yaml-example {
+  @apply my-8 overflow-hidden rounded-lg border border-border bg-light shadow-sm dark:border-darkmode-border dark:bg-darkmode-light;
+}
+
+.content .notebooklm-yaml-example__title {
+  @apply m-0 border-b border-border bg-primary px-5 py-3 font-semibold tracking-wide text-white dark:border-darkmode-border dark:bg-darkmode-primary dark:text-text-dark;
+}
+
+.content .notebooklm-yaml-example pre {
+  @apply m-0 max-h-[38rem] overflow-auto rounded-none bg-[#0f172a] p-5 text-sm leading-7 text-slate-100 dark:bg-[#0f172a];
+}
+
+.content .notebooklm-yaml-example code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
 /* portfolio */
 .portfolio-intro {
   @apply mb-10 max-w-2xl text-lg leading-relaxed text-text dark:text-darkmode-text;
