@@ -19,7 +19,9 @@ draft: false
 解法是把內容與風格拆開處理：先固定簡報大綱，再用 YAML 把配色、排版與每頁結構寫成可重複套用的規格。這篇文章會帶你完成這套流程，並說明生成後仍該人工檢查的地方。
 
 <aside class="notebooklm-callout" aria-label="閱讀重點">
-  <strong>這篇文章的核心流程</strong>
+  <h2 id="article-workflow" class="notebooklm-callout__title">
+    這篇文章的核心流程 <a class="notebooklm-anchor" href="#article-workflow" aria-label="連結至這篇文章的核心流程">#</a>
+  </h2>
   <ol>
     <li>整理可確認的簡報大綱。</li>
     <li>用 YAML 定義全域視覺規格與每頁版型。</li>
