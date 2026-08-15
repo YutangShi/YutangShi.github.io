@@ -21,9 +21,10 @@ const {
 } = config.site;
 
 const { theme_switcher }: { theme_switcher: boolean } = config.settings;
+const brandName = logo_text || title;
 ---
 
-<a href="/" class="navbar-brand inline-block">
+<a href="/" class="navbar-brand inline-flex items-center gap-3">
   {
     src || srcDarkmode || logo || logo_darkmode ? (
       <>
@@ -53,11 +54,10 @@ const { theme_switcher }: { theme_switcher: boolean } = config.settings;
             format="webp"
           />
         )}
+        <span class="navbar-brand-label">{brandName}</span>
       </>
-    ) : logo_text ? (
-      logo_text
     ) : (
-      title
+      brandName
     )
   }
 </a>

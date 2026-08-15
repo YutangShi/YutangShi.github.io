@@ -14,6 +14,10 @@
   }
 }
 
+.navbar-brand-label {
+  @apply whitespace-nowrap text-base font-semibold tracking-tight text-text-dark dark:text-darkmode-text-dark;
+}
+
 .navbar-nav {
   @apply text-center lg:text-left;
 }

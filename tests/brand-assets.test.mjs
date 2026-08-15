@@ -35,6 +35,20 @@ test("base layout declares the configured favicon as an SVG", async () => {
   );
 });
 
+test("navigation logo presents the Allen 科技觀察 blog name", async () => {
+  const [config, logo] = await Promise.all([
+    readSiteConfig(),
+    readFile(
+      new URL("../src/layouts/components/Logo.astro", import.meta.url),
+      "utf8",
+    ),
+  ]);
+
+  assert.equal(config.site.logo_text, "Allen 科技觀察");
+  assert.match(logo, /class="navbar-brand-label"/);
+  assert.match(logo, /\{brandName\}/);
+});
+
 test("homepage preserves the blog collection and editorial layout hooks", async () => {
   const homepage = await readFile(homePagePath, "utf8");
 
