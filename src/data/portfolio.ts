@@ -14,6 +14,27 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    slug: "ginseng-official-store",
+    title: "金蔘官方購物網站",
+    category: "電子商務",
+    summary: "金蔘股份有限公司的人蔘與健康食品官方購物網站。",
+    image: "/images/portfolio/ginseng-store.png",
+    technologies: ["電子商務", "商品型錄", "購物車", "會員服務"],
+    website: "https://www.ginseng.com.tw/",
+    overview:
+      "金蔘官方網站整合人蔘與健康食品的商品展示、購物車、會員服務與客服資訊，提供消費者從商品瀏覽到結帳的官方購買入口。",
+    highlights: [
+      { title: "商品總覽", items: ["呈現人蔘、黑蔘與健康食品商品", "提供商品價格與加入購物車入口"] },
+      { title: "購物服務", items: ["支援購物車與結帳流程", "提供會員權益、退換貨與常見問題說明"] },
+      { title: "品牌服務", items: ["提供品牌故事、安心品質與人蔘介紹內容", "整合客服電話、電子郵件與 LINE 聯絡資訊"] },
+    ],
+    challenges: [
+      { title: "商品資訊呈現", problem: "健康食品商品需要讓消費者快速辨識品項與購買選項。", solution: "以商品總覽集中呈現商品名稱、價格與加入購物車入口，降低瀏覽與選購門檻。" },
+      { title: "購買前疑慮", problem: "消費者在結帳前會需要確認會員、退換貨與產品相關資訊。", solution: "在官方網站提供會員權益、退換貨說明、常見問題與品質資訊等支援入口。" },
+    ],
+    outcomes: ["建立人蔘與健康食品的官方線上購買入口", "串連商品瀏覽、購物車與結帳流程", "集中提供品牌內容與多元客服聯絡方式"],
+  },
+  {
     slug: "1on1-today",
     title: "1on1.today 全球家教共享平台",
     category: "平台開發",
