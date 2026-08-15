@@ -3,6 +3,9 @@ dist/
 .output/
 .json/
 
+# Legacy Hexo deployment output; not part of the Astro site.
+.deploy_git/
+
 # generated types
 .astro/
 
