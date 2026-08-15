@@ -30,4 +30,4 @@ MySQL、PostgreSQL、AuroraDB、Redis、資料庫效能優化，以及 TTS Whisp
 - SRE 雲地維運經驗
 - DevOps 架構規劃
 
-若你正在規劃 AI 自動化、可觀測性或雲端可靠性改善，歡迎[聯絡我](/contact)。
+若你正在規劃 AI 自動化、可觀測性或雲端可靠性改善，歡迎[來信聯絡](mailto:yutangshi@gmail.com)。

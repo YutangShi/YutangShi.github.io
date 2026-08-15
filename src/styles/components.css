@@ -202,6 +202,11 @@
   @apply bg-transparent p-0 text-white dark:text-white;
 }
 
+.content .notebooklm-yaml-example code,
+.content .notebooklm-yaml-example code * {
+  color: #fff !important;
+}
+
 /* portfolio */
 .portfolio-intro {
   @apply mb-10 max-w-2xl text-lg leading-relaxed text-text dark:text-darkmode-text;

@@ -30,11 +30,11 @@
 
   "params": {
     "contact_form_action": "mailto:yutangshi@gmail.com",
-    "copyright": "© Allen Shi. 使用 [Astroplate](https://github.com/zeon-studio/astroplate) 建置。"
+    "copyright": "© Allen Shi. 本網站使用 Astro 7 與 Tailwind CSS 建置為靜態網站，部署於 Cloudflare Pages。"
   },
 
   "navigation_button": {
-    "enable": true,
+    "enable": false,
     "label": "GitHub",
     "link": "https://github.com/YutangShi"
   },

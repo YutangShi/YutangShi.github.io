@@ -2,6 +2,7 @@
 title: "如何精準控制 Gemini Notebook 生成的簡報內容與版型"
 meta_title: "NotebookLM 簡報：用 YAML 與大綱控制內容與版型"
 description: "使用 YAML 定義視覺規格，搭配簡報大綱，降低 NotebookLM 生成簡報時的版面與內容落差。"
+image: /images/blog/gemini-notebook-presentation-guide-cover.png
 date: 2026-08-11T00:00:00.000Z
 author: Allen Shi
 categories:
