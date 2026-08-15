@@ -14,11 +14,33 @@ const posts = sortByDate(await getSinglePage("blog"));
   description={postIndex.data.description}
   image={postIndex.data.image}
 >
+  <section class="site-overview" aria-labelledby="site-overview-title">
+    <div class="container site-overview-grid">
+      <div>
+        <p class="site-overview-kicker">Production notes for resilient systems</p>
+        <h1 id="site-overview-title" class="site-overview-title">
+          把 AI 自動化帶進可觀測、可回滾的 SRE 工作流程
+        </h1>
+        <p class="site-overview-summary">
+          聚焦平台工程、可觀測性與事件應變：以可複製的架構、實作細節與失敗模式，將自動化從實驗推進到可靠的日常營運。
+        </p>
+      </div>
+      <aside class="site-overview-panel" aria-label="網站主題">
+        <h2>本站關注的系統能力</h2>
+        <ul class="site-overview-list">
+          <li><strong>Observe</strong>讓訊號、追蹤與告警可以形成決策。</li>
+          <li><strong>Automate</strong>將重複處置做成安全、可驗證的流程。</li>
+          <li><strong>Recover</strong>為失敗設計回滾、責任邊界與量化 KPI。</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
   <section class="section home-articles">
     <div class="container">
       <div class="home-articles-heading">
         <p class="home-articles-kicker">技術文章</p>
-        <h1>AI 自動化、SRE 與平台工程實戰</h1>
+        <h2>AI 自動化、SRE 與平台工程實戰</h2>
         <p>{postIndex.data.description}</p>
       </div>
 

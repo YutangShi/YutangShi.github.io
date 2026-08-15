@@ -56,3 +56,22 @@ test("NotebookLM YAML example forces every syntax token to white in light mode",
     /\.content \.notebooklm-yaml-example code \*\s*\{[^}]*color:\s*#fff !important;/s,
   );
 });
+
+test("the production domain exposes a root sitemap.xml index", async () => {
+  const robots = await readFile(
+    new URL("../public/robots.txt", import.meta.url),
+    "utf8",
+  );
+  const sitemap = await readFile(
+    new URL("../public/sitemap.xml", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(
+    robots,
+    /^Sitemap: https:\/\/allen-life\.dev\/sitemap\.xml$/m,
+  );
+  assert.equal(config.site.base_url, "https://allen-life.dev");
+  assert.match(sitemap, /<sitemapindex[^>]*>/);
+  assert.match(sitemap, /<loc>https:\/\/allen-life\.dev\/sitemap-0\.xml<\/loc>/);
+});
