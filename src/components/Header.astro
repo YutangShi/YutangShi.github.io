@@ -1,0 +1,251 @@
+---
+import { SITE_CONFIG } from '../utils/config';
+
+const currentPath = Astro.url.pathname;
+const phone = SITE_CONFIG.phone?.trim();
+const phoneDigits = phone ? phone.replace(/[\s()-]/g, '') : '';
+---
+
+<header class="header-shell">
+  <div class="container">
+    <nav class="site-nav" aria-label="主選單">
+      <a href="/" class="brand" aria-label="回到首頁">
+        <span class="brand-primary">一杯咖啡</span>
+        <span class="brand-accent">自動化</span>
+      </a>
+
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="切換選單">
+        <span></span>
+        <span></span>
+      </button>
+
+      <div id="primary-nav" class="nav-panel">
+        <div class="nav-links">
+          {SITE_CONFIG.navigation.map((item) => (
+            <a href={item.href} class={`nav-link ${currentPath === item.href ? 'active' : ''}`}>
+              {item.name}
+            </a>
+          ))}
+        </div>
+        <div class="nav-actions">
+          {phone ? (
+            <a class="contact-chip" href={`tel:${phoneDigits}`} aria-label="撥打電話">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.6 10.8a15.7 15.7 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.2 11 11 0 0 0 3.4.5 1 1 0 0 1 1 1V21a1 1 0 0 1-1 1C10.9 22 2 13.1 2 2a1 1 0 0 1 1-1h4.5a1 1 0 0 1 1 1 11 11 0 0 0 .5 3.4 1 1 0 0 1-.2 1z"></path>
+              </svg>
+              <span>{phone}</span>
+            </a>
+          ) : (
+            <a class="contact-chip" href={SITE_CONFIG.social.email} aria-label="寄信聯絡">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm0 2v.5l9 5.6 9-5.6V7l-9 5.6L3 7z"></path>
+              </svg>
+              <span>Email</span>
+            </a>
+          )}
+          <a class="btn nav-cta" href="/contact">Get Quote</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header-shell {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding-top: 0.65rem;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.1rem;
+    border: 1px solid #cdd7e5;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.9rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-text);
+    padding: 0.35rem 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 1.06rem;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-primary {
+    color: #0f172a;
+  }
+
+  .brand-accent {
+    color: var(--color-primary);
+  }
+
+  .menu-btn {
+    display: none;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    border-radius: 999px;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.23rem;
+  }
+
+  .menu-btn span {
+    width: 1rem;
+    height: 2px;
+    border-radius: 10px;
+    background: var(--color-text);
+    transition: transform 0.2s ease;
+  }
+
+  .nav-panel {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.18rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.55rem;
+    padding: 0 0.72rem;
+    font-size: 0.9rem;
+    color: #334155;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: #0f172a;
+    background: #edf3ff;
+    text-decoration: none;
+  }
+
+  .nav-link.active {
+    color: #1d4ed8;
+    background: #e7efff;
+    font-weight: 600;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .contact-chip {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid #d4deec;
+    background: #ffffff;
+    border-radius: 999px;
+    color: #0f172a;
+    padding: 0 0.72rem;
+    font-size: 0.88rem;
+  }
+
+  .contact-chip svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  .contact-chip:hover {
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+    text-decoration: none;
+  }
+
+  .nav-cta {
+    min-height: 38px;
+    padding: 0 0.85rem;
+    font-size: 0.86rem;
+  }
+
+  @media (max-width: 900px) {
+    .site-nav {
+      border-radius: 0.9rem;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .menu-btn {
+      display: inline-flex;
+      margin-left: auto;
+    }
+
+    .nav-panel {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      padding-top: 0.55rem;
+      gap: 0.55rem;
+    }
+
+    .nav-panel.open {
+      display: flex;
+    }
+
+    .nav-links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .nav-link {
+      min-height: 44px;
+      justify-content: center;
+    }
+
+    .nav-actions {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .contact-chip,
+    .nav-cta {
+      width: 100%;
+      justify-content: center;
+      min-height: 44px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.querySelector('.menu-btn');
+    const nav = document.querySelector('.nav-panel');
+    if (!button || !nav) return;
+
+    button.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      button.setAttribute('aria-expanded', String(open));
+    });
+  });
+</script>
