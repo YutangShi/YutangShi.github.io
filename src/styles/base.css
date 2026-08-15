@@ -1,9 +1,9 @@
 html {
-  @apply text-base-sm md:text-base;
+  @apply scroll-smooth text-base-sm md:text-base;
 }
 
 body {
-  @apply bg-body text-base dark:bg-darkmode-body font-primary font-normal leading-relaxed text-text dark:text-darkmode-text;
+  @apply bg-body text-base dark:bg-darkmode-body font-primary font-normal leading-relaxed text-text antialiased dark:text-darkmode-text;
 }
 
 h1,
@@ -60,4 +60,20 @@ blockquote > p {
 
 button {
   @apply cursor-pointer;
+}
+
+:where(a, button, input, select, summary, textarea):focus-visible {
+  @apply outline-2 outline-offset-4 outline-primary dark:outline-darkmode-primary;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    @apply scroll-auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    @apply !animate-none !transition-none;
+  }
 }

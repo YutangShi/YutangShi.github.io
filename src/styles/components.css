@@ -1,6 +1,6 @@
 /* section style */
 .section {
-  @apply py-24 xl:py-28;
+  @apply py-20 xl:py-24;
 }
 
 .section-sm {
@@ -20,7 +20,7 @@
   @apply inline-block;
 }
 .social-icons li a {
-  @apply flex h-9 w-9 items-center justify-center rounded-sm bg-primary text-center leading-9 text-white dark:bg-darkmode-primary dark:text-text-dark;
+  @apply flex h-11 w-11 items-center justify-center rounded-md bg-primary text-center leading-9 text-white transition-colors hover:bg-primary/90 dark:bg-darkmode-primary dark:text-dark dark:hover:bg-darkmode-primary/85;
 }
 .social-icons li a svg {
   @apply h-5 w-5;
@@ -331,6 +331,47 @@
 }
 
 /* homepage article index */
+.site-overview {
+  @apply border-b border-border bg-light py-14 dark:border-darkmode-border dark:bg-darkmode-light md:py-20;
+}
+
+.site-overview-grid {
+  @apply grid gap-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)] lg:items-end;
+}
+
+.site-overview-kicker,
+.home-articles-kicker {
+  @apply mb-3 text-sm font-semibold tracking-[0.14em] text-primary uppercase dark:text-darkmode-primary;
+}
+
+.site-overview-title {
+  @apply mb-6 max-w-4xl font-primary text-h1-sm font-semibold tracking-tight text-text-dark md:text-h1 dark:text-darkmode-text-dark;
+}
+
+.site-overview-summary {
+  @apply max-w-3xl text-lg leading-relaxed text-text dark:text-darkmode-text;
+}
+
+.site-overview-panel {
+  @apply border-l-4 border-primary bg-body p-6 shadow-sm dark:border-darkmode-primary dark:bg-darkmode-body;
+}
+
+.site-overview-panel h2 {
+  @apply mb-5 font-primary text-xl font-semibold text-text-dark dark:text-darkmode-text-dark;
+}
+
+.site-overview-list {
+  @apply m-0 grid gap-4 !list-none !pl-0;
+}
+
+.site-overview-list li {
+  @apply !m-0 border-b border-border pb-4 text-text last:border-b-0 last:pb-0 dark:border-darkmode-border dark:text-darkmode-text;
+}
+
+.site-overview-list strong {
+  @apply block text-sm tracking-wide text-text-dark dark:text-darkmode-text-dark;
+}
+
 .home-articles {
   @apply py-16 xl:py-20;
 }
@@ -340,11 +381,11 @@
 }
 
 .home-articles-kicker {
-  @apply mb-3 text-sm font-semibold text-primary dark:text-darkmode-primary;
+  @apply mb-3;
 }
 
-.home-articles-heading h1 {
-  @apply mb-5 font-primary text-h2-sm font-semibold text-text-dark md:text-h2 dark:text-darkmode-text-light;
+.home-articles-heading h2 {
+  @apply mb-5 font-primary text-h2-sm font-semibold tracking-tight text-text-dark md:text-h2 dark:text-darkmode-text-light;
 }
 
 .home-articles-heading > p:last-child {
@@ -356,7 +397,7 @@
 }
 
 .home-post-card {
-  @apply h-full rounded-lg border border-border bg-light p-6 transition duration-200 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg dark:border-darkmode-border dark:bg-darkmode-light;
+  @apply h-full rounded-md border border-border bg-light p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg dark:border-darkmode-border dark:bg-darkmode-light;
 }
 
 .home-post-card > div {
@@ -372,7 +413,7 @@
 }
 
 .home-post-card ul {
-  @apply text-sm text-text dark:text-darkmode-text;
+  @apply text-sm text-text-light dark:text-darkmode-text-light;
 }
 
 .home-post-card p {

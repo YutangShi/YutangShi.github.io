@@ -1,14 +1,14 @@
 {
   "site": {
     "title": "Allen | AI 自動化 SRE 實戰",
-    "base_url": "https://yutangshi.github.io",
+    "base_url": "https://allen-life.dev",
     "base_path": "/",
     "trailing_slash": false,
-    "favicon": "/images/favicon.png",
-    "logo": "",
-    "logo_darkmode": "",
-    "logo_width": "150",
-    "logo_height": "30",
+    "favicon": "/images/favicon.svg",
+    "logo": "/images/allen-sre-mark.svg",
+    "logo_darkmode": "/images/allen-sre-mark.svg",
+    "logo_width": "40",
+    "logo_height": "40",
     "logo_text": "Allen AI 自動化"
   },
 
