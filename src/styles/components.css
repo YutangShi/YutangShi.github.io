@@ -170,16 +170,10 @@
   @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px] dark:prose-td:text-darkmode-text;
 }
 
-/* Tailwind Typography assigns a light preformatted-code color by default.
- * Override it for the light surface while preserving the dark-mode contrast. */
+/* Keep code block text legible against the dark code surface in every theme. */
 .content pre code,
 .content pre code * {
-  color: var(--color-text-dark);
-}
-
-.dark .content pre code,
-.dark .content pre code * {
-  color: var(--color-darkmode-text-dark);
+  color: #fff !important;
 }
 
 .notebooklm-callout {

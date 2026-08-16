@@ -9,8 +9,8 @@ const posts = sortByDate(await getSinglePage("blog"));
 ---
 
 <Base
-  title="AI 自動化 SRE 實戰"
-  meta_title="AI 自動化 SRE 實戰"
+  title="AI 自動化 SRE"
+  meta_title="AI 自動化"
   description={postIndex.data.description}
   image={postIndex.data.image}
 >
@@ -19,7 +19,7 @@ const posts = sortByDate(await getSinglePage("blog"));
       <div>
         <p class="site-overview-kicker">Production notes for resilient systems</p>
         <h1 id="site-overview-title" class="site-overview-title">
-          把 AI 自動化帶進可觀測、可回滾的 SRE 工作流程
+          解構現代雲原生架構
         </h1>
         <p class="site-overview-summary">
           聚焦平台工程、可觀測性與事件應變：以可複製的架構、實作細節與失敗模式，將自動化從實驗推進到可靠的日常營運。
@@ -40,7 +40,7 @@ const posts = sortByDate(await getSinglePage("blog"));
     <div class="container">
       <div class="home-articles-heading">
         <p class="home-articles-kicker">技術文章</p>
-        <h2>AI 自動化、SRE 與平台工程實戰</h2>
+        <h2>複雜架構中尋找簡潔，重複流程中引入 AI</h2>
         <p>{postIndex.data.description}</p>
       </div>
 
